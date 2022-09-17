@@ -4,7 +4,7 @@ import random
 
 intents = discord.Intents.default()
 intents.message_content = True
-bot = commands.Bot(command_prefix='!', intents=intents)
+bot = commands.Bot(command_prefix='.', intents=intents)
 
 '''
 봇이 반응을 해야하는 명령어인지 구분하기 위해 메세지 앞에 붙이는 접두사(prefix)를 설정합니다. 현재 !로 
@@ -59,5 +59,9 @@ async def 테스트(ctx):
 @bot.command()
 async def 물기(ctx, *, text):
     await ctx.send("'" + text + "'을(를) 물... 거라고 생각하셨으면 오산입니다. 저는 매우 착하기 때문이죠.\n - 개발자 하늘토끼")
+
+@bot.command()
+async def 물어뜯기(ctx, *, text):
+    await ctx.send("'" + text + "'을(를) 물어뜯을... 게 아니라 님부터 물어뜯어야겠어요. 콱!\n - 개발자 하늘토끼")
 
 bot.run(open("token.txt","r").readline())
