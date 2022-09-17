@@ -17,6 +17,8 @@ def 확률처리(arg,jujakApply):
     # arg문 정제(?)
     if(arg[len(arg)-2:len(arg)] == '확률'):
         arg = arg[0:len(arg)-2]
+    if(arg[len(arg)-3:len(arg)] == '가능성'):
+        arg = arg[0:len(arg)-3]
     if(arg[len(arg)-1:len(arg)] == ' '):
         arg = arg[0:len(arg)-1]
     if(jujakApply == True):
@@ -53,5 +55,9 @@ async def 확률(ctx,*,text):
 @bot.command()
 async def 테스트(ctx):
     await ctx.send("입국 심사 : <#1019793951642898522>, 신원 확인 : <#1019801276004974643>")
+    
+@bot.command()
+async def 물기(ctx, *, text):
+    await ctx.send("'" + text + "'을(를) 물... 거라고 생각하셨으면 오산입니다. 저는 매우 착하기 때문이죠.\n - 개발자 하늘토끼")
 
-bot.run()
+bot.run(open("token.txt","r").readline())
