@@ -16,7 +16,7 @@ bot = commands.Bot(command_prefix='.설레 ', intents=intents)
 str.startswith 메서드를 사용할 필요가 없습니다.
 '''
 
-ver = "3.0_2022101400 rev 0.0 build 12"
+ver = "3.0_2022101501 rev 0.0 build 12"
 
 def 확률처리(arg):
     # arg문 정제(?)
