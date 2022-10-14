@@ -4,6 +4,7 @@ from discord.ext import commands
 import random
 import sys
 from datetime import datetime as dt
+import Module.SeolReLib as SRLib
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -88,6 +89,10 @@ async def 야식메뉴추천(ctx):
 @bot.command()
 async def 정보(ctx):
     await ctx.send("설레봇의 정보입니다!\n> 버전 : "+ver+"\n> 기반 : 2.5_2021021703 rev 6.3 build 14 (2021년 2월 18일 1시 0분 45초)\n> DB1 : PJU:K:C:B:2021103105 (2021년 10월 31일 4시 3분 51초)\n> DB2 : b102dff1ef5ddf5e3e9d7a4028656a90aa921252 (2022년 9월 21일 2시 47분 0초)\n> 봇이 시작된 시간 : " + LoadedTime)
+
+@bot.command()
+async def 열번분석(ctx,*,text):
+    await ctx.send(SRLib.열번분류(text))
 
 @bot.command()
 async def 도박(ctx,*,text):
