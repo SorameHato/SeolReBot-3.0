@@ -8,7 +8,7 @@ import Module.SeolReLib as SRLib
 
 intents = discord.Intents.default()
 intents.message_content = True
-bot = commands.Bot(command_prefix='.', intents=intents)
+bot = commands.Bot(command_prefix='.설레 ', intents=intents)
 
 '''
 봇이 반응을 해야하는 명령어인지 구분하기 위해 메세지 앞에 붙이는 접두사(prefix)를 설정합니다. 현재 !로 
@@ -16,7 +16,7 @@ bot = commands.Bot(command_prefix='.', intents=intents)
 str.startswith 메서드를 사용할 필요가 없습니다.
 '''
 
-ver = "3.0_2022101400 rev 0.0 build 10"
+ver = "3.0_2022101400 rev 0.0 build 12"
 
 def 확률처리(arg):
     # arg문 정제(?)
