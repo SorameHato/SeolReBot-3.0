@@ -3,6 +3,8 @@ import discord
 from discord.ext import commands
 import asyncio
 from datetime import datetime as dt
+import os
+import sys
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -10,8 +12,14 @@ bot = commands.Bot(command_prefix='.설레 ', intents=intents)
 
 ver = "3.0_2022102102 rev 0.0 build 20"
 
+async def load_extensions():
+    for filename in os.listdir('Cogs'):
+        if filename.endswith('.py'):
+            await bot.load_extension('Cogs.{}'.format(filename[:-3]))
+
 async def main():
     async with bot:
+        await load_extensions()
         with open('token.txt','r') as token:
             await bot.start(token.readline())
     global LoadedTime
