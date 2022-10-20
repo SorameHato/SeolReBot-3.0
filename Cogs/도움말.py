@@ -2,7 +2,7 @@
 import discord
 from discord.ext import commands as bot
 
-class 도움말(bot.Cog):
+class _도움말(bot.Cog):
     def __init__(self,bot):
         self.bot = bot
     
@@ -19,4 +19,4 @@ class 도움말(bot.Cog):
             await ctx.send('아직 존재하지 않는 페이지를 입력하셨어요. 설레봇은 2020년 5월에 만들어진 따끈따끈한 봇이라 아직 기능이 그렇게 많지는 않답니다. 앞으로 더 발전할 설레봇을 기대해주세요!')
 
 async def setup(bot):
-    await bot.add_cog(Ping(bot))
+    await bot.add_cog(_도움말(bot))

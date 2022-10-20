@@ -2,7 +2,7 @@
 import discord
 from discord.ext import commands as bot
 
-class 열번분석(bot.Cog):
+class _열번분석(bot.Cog):
     def __init__(self,bot):
         self.bot = bot
     
@@ -168,4 +168,4 @@ class 열번분석(bot.Cog):
             await ctx.send('열번이 올바르지 않거나, 설빈레피딕스의 열번이 아니에요. 다시 확인하시고 입력해주세요!')
 
 async def setup(bot):
-    await bot.add_cog(Ping(bot))
+    await bot.add_cog(_열번분석(bot))

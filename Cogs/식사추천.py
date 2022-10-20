@@ -3,7 +3,7 @@ import discord
 from discord.ext import commands as bot
 import random
 
-class 식사추천(bot.Cog):
+class _식사추천(bot.Cog):
     def __init__(self,bot):
         self.bot = bot
     
@@ -17,19 +17,20 @@ class 식사추천(bot.Cog):
     
     @bot.command()
     async def 아침메뉴추천(self, ctx):
-        await ctx.send("유설레가 추천하는 오늘의 아침 메뉴는? "+식사추천()+"입니다!\n점심, 저녁식사 메뉴를 추천하는 함수를 돌려 쓰고 있어서 아침으로 먹기에는 부담스러운 음식이 나올지도 몰라요. 양해해주세요!")
+        await ctx.send("유설레가 추천하는 오늘의 아침 메뉴는? "+self.식사추천()+"입니다!\n점심, 저녁식사 메뉴를 추천하는 함수를 돌려 쓰고 있어서 아침으로 먹기에는 부담스러운 음식이 나올지도 몰라요. 양해해주세요!")
 
     @bot.command()
     async def 점심메뉴추천(self, ctx):
-        await ctx.send("유설레가 추천하는 오늘의 점심 메뉴는? "+식사추천()+"입니다!\n저녁식사 메뉴를 추천하는 함수를 돌려 쓰고 있어서 점심으로 먹기에는 부담스러운 음식이 나올지도 몰라요. 양해해주세요!")
+        await ctx.send("유설레가 추천하는 오늘의 점심 메뉴는? "+self.식사추천()+"입니다!\n저녁식사 메뉴를 추천하는 함수를 돌려 쓰고 있어서 점심으로 먹기에는 부담스러운 음식이 나올지도 몰라요. 양해해주세요!")
 
     @bot.command()
     async def 저녁메뉴추천(self, ctx):
-        await ctx.send("유설레가 추천하는 오늘의 저녁 메뉴는? "+식사추천()+"입니다!")
+        await ctx.send("유설레가 추천하는 오늘의 저녁 메뉴는? "+self.식사추천()+"입니다!")
 
     @bot.command()
     async def 야식메뉴추천(self, ctx):
-        await ctx.send("유설레가 추천하는 오늘의 야식 메뉴는? "+야식추천()+"입니다!")
+        await ctx.send("유설레가 추천하는 오늘의 야식 메뉴는? "+self.야식추천()+"입니다!")
 
 async def setup(bot):
-    await bot.add_cog(Ping(bot))
+    await bot.add_cog(_식사추천(bot))
+# 클래스명을 식사추천으로 쓰면 함수명하고 겹쳐서 TypeError: __init__() missing 1 required positional argument: 'bot' 오류가 난다!

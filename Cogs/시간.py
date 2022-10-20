@@ -3,7 +3,7 @@ import discord
 from discord.ext import commands as bot
 from datetime import datetime as dt
 
-class 시간(bot.Cog):
+class _시간(bot.Cog):
     def __init__(self,bot):
         self.bot = bot
     
@@ -32,7 +32,7 @@ class 시간(bot.Cog):
     
     @bot.command()
     async def 시간(self,ctx):
-        await ctx.send('삐, 삐, 삐! 당신의 설레임과 함께, 설빈레피딕스에서 {0:04d}년 {1:02d}월 {2:02d}일 {3:02d}시 {4:02d}분 {5:02d}.{6:03d}초를 알려드립니다.\n{7}\n이 사담은 2020년 9월 경 설레봇을 \'신 교통동호인 채팅방\'에서 돌릴 때 작성되었어요. 하늘토끼의 가상국가/가상철도 세계관과 관련되어 있거나 지금과는 맞지 않는 내용이 있을 수 있으니 양해 부탁드려요!'.format(dt.now().year, dt.now().month, dt.now().day, dt.now().hour, dt.now().minute, dt.now().second, int(dt.now().microsecond/1000),시간사담(dt.now().hour,dt.now().minute)))
+        await ctx.send('삐, 삐, 삐! 당신의 설레임과 함께, 설빈레피딕스에서 {0:04d}년 {1:02d}월 {2:02d}일 {3:02d}시 {4:02d}분 {5:02d}.{6:03d}초를 알려드립니다.\n{7}\n이 사담은 2020년 9월 경 설레봇을 \'신 교통동호인 채팅방\'에서 돌릴 때 작성되었어요. 하늘토끼의 가상국가/가상철도 세계관과 관련되어 있거나 지금과는 맞지 않는 내용이 있을 수 있으니 양해 부탁드려요!'.format(dt.now().year, dt.now().month, dt.now().day, dt.now().hour, dt.now().minute, dt.now().second, int(dt.now().microsecond/1000),self.시간사담(dt.now().hour,dt.now().minute)))
 
 async def setup(bot):
-    await bot.add_cog(Ping(bot))
+    await bot.add_cog(_시간(bot))

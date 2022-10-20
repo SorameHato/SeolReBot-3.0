@@ -3,11 +3,11 @@ import discord
 from discord.ext import commands as bot
 import random
 
-class 확률(bot.Cog):
+class _확률(bot.Cog):
     def __init__(self,bot):
         self.bot = bot
     
-    def 확률처리(self, arg):
+    def 확률처리(self,arg):
         # arg문 정제(?)
         if(arg[len(arg)-2:len(arg)] == '확률'):
             arg = arg[0:len(arg)-2]
@@ -21,7 +21,7 @@ class 확률(bot.Cog):
     
     @bot.command()
     async def 확률(self, ctx,*,text):
-        await ctx.send(확률처리(text))
+        await ctx.send(self.확률처리(text))
 
 async def setup(bot):
-    await bot.add_cog(Ping(bot))
+    await bot.add_cog(_확률(bot))
