@@ -4,7 +4,7 @@ from discord.ext import commands as bot
 import random
 
 class 확률(bot.Cog):
-    def __init(self,bot):
+    def __init__(self,bot):
         self.bot = bot
     
     def 확률처리(self, arg):
