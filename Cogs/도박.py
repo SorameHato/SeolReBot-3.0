@@ -144,6 +144,7 @@ class _도박(bot.Cog):
                 embed = discord.Embed(title='조회 결과에요!', color=0xccffff)
                 embed.add_field(name='닉네임',value=ctx.message.author,inline=True)
                 embed.add_field(name='소지금',value=잔액,inline=True)
+                #마지막 회생일 추가
                 embed.set_footer(text='설레봇 룰렛 | code = {}'.format(결과))
             elif 잔액 == -1:
                 pass #데이터 초기화(추가)
