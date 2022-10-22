@@ -56,6 +56,15 @@ class _도박(bot.Cog):
         else:
             return status
      
+    def 잭팟뽑기:
+        with open('seed_basic.pickle','rb') as a:
+            seed = pickle.load(a)
+            return random.choice(list3)
+     
+    def 잭팟:
+        결과 = self.잭팟뽑기()
+        
+     
     @bot.command()
     async def 도박(ctx,*,text):
         메뉴 = text.split(' ')[0]
