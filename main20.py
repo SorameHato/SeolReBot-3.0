@@ -60,10 +60,9 @@ async def on_ready():
 @bot.event
 async def on_command_error(ctx, error):
     print('오류 발생 | 보낸 사람 : {}, 내용 : {}, 오류 : {}'.format(ctx.message.author,ctx.message.content,error))
-    embed = discord.Embed(title='자세한 내용',color=0xfae5fa)
+    embed = discord.Embed(title='자세한 내용',description=error,color=0xfae5fa)
     embed.add_field(name="보낸 분",value=ctx.message.author,inline=False)
     embed.add_field(name="보낸 내용",value=ctx.message.content,inline=False)
-    embed.add_field(name="오류 내용",value=error,inline=False)
     embed.set_footer(text='설레봇 버전 {}'.format(ver))
     await ctx.send('오류가 발생했어요!',embed=embed)
 
@@ -72,10 +71,10 @@ async def load_extensions():
         if filename.endswith('.py'):
             await bot.load_extension('Cogs.{}'.format(filename[:-3]))
 
-async def main():
-    async with bot:
-        await load_extensions()
-        with open('token.txt','r') as token:
-            bot.run(token.readline())
+# async def main():
+    # async with bot:
+        # await load_extensions()
 
-asyncio.run(main())
+asyncio.run(load_extensions())
+with open('token.txt','r') as token:
+    bot.run(token.readline())

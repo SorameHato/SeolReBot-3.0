@@ -11,7 +11,7 @@ from datetime import datetime as dt
 # 0 : 유저ID, 1 : 소지금, 2 : 마지막으로 회생한 날짜
 # 확인용 각 시드가 나온 횟수 : seedtimes.pickle
 
-class _도박(bot.Cog):
+class c도박(bot.Cog):
     def __init__(self,bot):
         self.bot = bot
      
@@ -73,7 +73,7 @@ class _도박(bot.Cog):
             return random.choice(list3)
      
     def 잭팟(self, uid, amount):
-        a = 조회(uid)
+        a = self.조회(uid)
         if a < 0:
             return -1
         else:
@@ -123,11 +123,11 @@ class _도박(bot.Cog):
                 return embed
      
     @bot.command()
-    async def 도박(ctx,*,text='조회'):
+    async def 도박(self,ctx,*,text='조회'):
         메뉴 = text.split(' ')[0]
         if 메뉴 == '룰렛' :
             try:
-                amount = int(text.split(' ')[1]
+                amount = int(text.split(' ')[1])
             except(ValueError):
                 print('오류 발생 | 보낸 사람 : {}, 내용 : {}, 오류 : {}'.format(ctx.message.author,ctx.message.content,error))
                 embed = discord.Embed(title='자세한 내용',description='{}: 룰렛에 베팅할 금액이 정상적으로 입력되지 않았어요. 금액은 숫자로만 입력해주세요!'.format(error),color=0xfae5fa)
@@ -137,10 +137,10 @@ class _도박(bot.Cog):
                 await ctx.send('오류가 발생했어요!',embed=embed)
             else:
                 embed1 = self.잭팟(ctx.message.author.id,amount)
-                if embed1 = -1:
+                if embed1 == -1:
                     embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='{}님의 데이터가 존재하지 않아요.'.format(ctx.message.author),color=0xfae5fa)
                     embed2.set_footer(text='설레봇 룰렛 | code = {}'.format(embed1))
-                elif embed1 = -2:
+                elif embed1 == -2:
                     embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='소지금이 부족해요.',color=0xfae5fa)
                     embed2.add_field(name='요청한 금액',value=text.split(' ')[1],inline=True)
                     embed2.add_field(name='소지금',value=조회(ctx.message.author.id),inline=True)
@@ -148,7 +148,7 @@ class _도박(bot.Cog):
                     await ctx.send('돈이 부족해요!',embed=embed2)
                 else:
                     await ctx.send('룰렛의 결과에요!\n> 소지금이 음수로 표시되는 경우 진짜로 잔액이 마이너스가 된 게 아니라 오류로 룰렛의 결과가 반영이 되지 않은 경우에요. 이 경우, 하늘토끼를 호출해주시면 반영해드릴게요.',embed=embed1)
-        if 메뉴 == '조회':
+        elif 메뉴 == '조회':
             잔액 = 조회(ctx.message.author.id)
             if 잔액 >= 0:
                 embed = discord.Embed(title='조회 결과에요!', color=0xccffff)
@@ -164,11 +164,11 @@ class _도박(bot.Cog):
                 embed.add_field(name='소지금',value=잔액,inline=False)
                 embed.set_footer(text='설레봇 룰렛 | code = {}'.format(잔액))
                 await ctx.send(embed=embed)
-        if(메뉴 == "회생"):
+        elif(메뉴 == "회생"):
             await ctx.send("아직 회생 부분의 코드가 완성되지 않았어요. 하지만 벌써부터 회생을 하려는 걸 보니 당신은 도박 중독자이신 것 같네요.\n한국도박문제예방치유원에서 운영하는 도박문제 전화상담 헬프라인은 국번 없이 1336번이에요. 한 번 전화해서 도움을 받아보시는 게 어떤가요?")
-        if 메뉴 == '임베드':
+        elif 메뉴 == '임베드':
             try:
-                amount = int(text.split(' ')[1]
+                amount = int(text.split(' ')[1])
             except(ValueError):
                 print('오류 발생 | 보낸 사람 : {}, 내용 : {}, 오류 : {}'.format(ctx.message.author,ctx.message.content,error))
                 embed = discord.Embed(title='자세한 내용',description='{}: 임베드 종류가 제대로 입력되지 않았어요. 하토님, 데이터 변경은 수동으로 해야 하는 거 아시죠? 현타가 오면 이 노래를 듣고 온 뒤에 작업하세요.\nhttps://youtu.be/eIX_wA-ZZH4'.format(error),color=0xfae5fa)
@@ -183,7 +183,7 @@ class _도박(bot.Cog):
                     embed.add_field(name='확률',value='0.0029%',inline=True)
                     embed.set_image(url='https://pbs.twimg.com/media/EQAknWIUEAIsnZS?format=png&name=900x900')
                 elif amount == 2:
-                    embed = discord.Embed(title='777 Lucky! 잭팟이 터졌어요! 100배에요!',description='운이 엄청 좋은 당신을 미즈하라 치즈루가 같이 축하드려요. (이치노세 치즈루의 이름의 어원 __센__바즈루)',color=0xffd07b)
+                    embed = discord.Embed(title='777 Lucky! 잭팟이 터졌어요! 1000배에요!',description='운이 엄청 좋은 당신을 미즈하라 치즈루가 같이 축하드려요. (이치노세 치즈루의 이름의 어원 __센__바즈루)',color=0xffd07b)
                     embed.add_field(name='배율',value='x1000',inline=True)
                     embed.add_field(name='확률',value='0.0057%',inline=True)
                     embed.set_image(url='https://pbs.twimg.com/media/FfxUJ5xUoAAtFrz?format=jpg&name=large')
@@ -192,4 +192,4 @@ class _도박(bot.Cog):
                 await ctx.send('하토님, 소지금 수동으로 처리하는 거 잊지 마세요!',embed=embed)
 
 async def setup(bot):
-    await bot.add_cog(_도박(bot))
+    await bot.add_cog(c도박(bot))
