@@ -10,7 +10,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='.설레 ', intents=intents)
 
-ver = "3.0_2022102106 rev 0.0 build 24"
+ver = "3.0_2022102401 rev 0.0 build 25"
 
 # @bot.command(name="unload")
 # async def unload_extension(ctx, extension=None):
@@ -76,6 +76,6 @@ async def main():
     async with bot:
         await load_extensions()
         with open('token.txt','r') as token:
-            await bot.start(token.readline())
+            bot.run(token.readline())
 
 asyncio.run(main())
