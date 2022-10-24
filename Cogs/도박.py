@@ -44,13 +44,14 @@ class c도박(bot.Cog):
     output : 인출/입금 후 잔액 (단, 해당 유저의 데이터가 없는 경우 -1, 잔고가 부족한 경우 -2)'''
     def 변경(self,uid,amount):
         db = list()
+        amount = int(amount)
         status = -1
         with open('data.csv','r',newline='',encoding='utf-8') as a:
             reader = csv.reader(a)
             for line in reader:
                 if line[0] == str(uid):
                     if int(line[1]) + amount >= 0:
-                        line[1] = int(line[1]) + int(amount)
+                        line[1] = int(line[1]) + amount
                         ret = line[1]
                         with open('log.txt','a',encoding='utf-8') as b:
                             b.write('{}\t{}\t변경\t소지금 : {} → {} (amount : {})\n'.format(dt.now(),uid,ret-amount,ret,amount))
