@@ -28,7 +28,7 @@ class c도박(bot.Cog):
                     with open('log.txt','a',encoding='utf-8') as b:
                         b.write('{}\t{}\t조회\t소지금 : {}\n'.format(dt.now(),uid,line[1]))
                     try:
-                        return float(line[1])
+                        return int(line[1])
                     except(ValueError):
                         return -3
         # .설레 도박 조회 명령어에서는 -1값이 반환되면 자동으로 db추가를 진행하는 기능을 추가해야 함
@@ -49,8 +49,8 @@ class c도박(bot.Cog):
             reader = csv.reader(a)
             for line in reader:
                 if line[0] == str(uid):
-                    if float(line[1]) + amount >= 0:
-                        line[1] = float(line[1]) + amount
+                    if int(line[1]) + amount >= 0:
+                        line[1] = int(line[1]) + int(amount)
                         ret = line[1]
                         with open('log.txt','a',encoding='utf-8') as b:
                             b.write('{}\t{}\t변경\t소지금 : {} → {} (amount : {})\n'.format(dt.now(),uid,ret-amount,ret,amount))
@@ -101,7 +101,7 @@ class c도박(bot.Cog):
                     embed.add_field(name='소지금',value=b,inline=False)
                     embed.set_footer(text='설레봇 룰렛 | code = {}'.format(결과))
                 elif 결과>=20 and 결과<=45:
-                    배율목록=[5.73,5.2,4.86,4.28,3.71,3.29,2.5252,2.06,1.95,1.87,1.79,1.71,1.64,1.52,1.46,1.4,1.34,1.28,1.23,1.18,1.14,1.1,1.07,1.05,1.03,1.02]
+                    배율목록=[5.73,5.2,4.86,4.28,3.71,3.29,2.52,2.06,1.95,1.87,1.79,1.71,1.64,1.52,1.46,1.4,1.34,1.28,1.23,1.18,1.14,1.1,1.07,1.05,1.03,1.02]
                     배율 = 배율목록[결과-20]
                     b = self.변경(uid,amount*(배율-1))
                     embed = discord.Embed(title='Lucky! 축하드려요! 이득이에요!', color=0xccffff)
@@ -139,18 +139,21 @@ class c도박(bot.Cog):
                 embed.set_footer(text='설레봇 버전 {}'.format(ver))
                 await ctx.send('오류가 발생했어요!',embed=embed)
             else:
-                embed1 = self.잭팟(ctx.message.author.id,amount)
-                if embed1 == -1:
-                    embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='{}님의 데이터가 존재하지 않아요.'.format(ctx.message.author),color=0xfae5fa)
-                    embed2.set_footer(text='설레봇 룰렛 | code = {}'.format(embed1))
-                elif embed1 == -2:
-                    embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='소지금이 부족해요.',color=0xfae5fa)
-                    embed2.add_field(name='요청한 금액',value=text.split(' ')[1],inline=True)
-                    embed2.add_field(name='소지금',value=조회(ctx.message.author.id),inline=True)
-                    embed2.set_footer(text='설레봇 룰렛 | code = {}'.format(embed1))
-                    await ctx.send('돈이 부족해요!',embed=embed2)
+                if amount % 100 == 0:
+                    embed1 = self.잭팟(ctx.message.author.id,amount)
+                    if embed1 == -1:
+                        embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='{}님의 데이터가 존재하지 않아요.'.format(ctx.message.author),color=0xfae5fa)
+                        embed2.set_footer(text='설레봇 룰렛 | code = {}'.format(embed1))
+                    elif embed1 == -2:
+                        embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='소지금이 부족해요.',color=0xfae5fa)
+                        embed2.add_field(name='요청한 금액',value=text.split(' ')[1],inline=True)
+                        embed2.add_field(name='소지금',value=조회(ctx.message.author.id),inline=True)
+                        embed2.set_footer(text='설레봇 룰렛 | code = {}'.format(embed1))
+                        await ctx.send('돈이 부족해요!',embed=embed2)
+                    else:
+                        await ctx.send('룰렛의 결과에요!\n> 소지금이 음수로 표시되는 경우 진짜로 잔액이 마이너스가 된 게 아니라 오류로 룰렛의 결과가 반영이 되지 않은 경우에요. 이 경우, 하늘토끼를 호출해주시면 반영해드릴게요.',embed=embed1)
                 else:
-                    await ctx.send('룰렛의 결과에요!\n> 소지금이 음수로 표시되는 경우 진짜로 잔액이 마이너스가 된 게 아니라 오류로 룰렛의 결과가 반영이 되지 않은 경우에요. 이 경우, 하늘토끼를 호출해주시면 반영해드릴게요.',embed=embed1)
+                    await ctx.send('float형의 데이터가 불안정한 문제가 있어 모든 데이터를 int형으로 처리하기 위해 도박 기능을 100원 단위로만 쓸 수 있게 제한중이에요. 금액을 100원 단위로 입력해주세요!')
         elif 메뉴 == '조회':
             잔액 = self.조회(ctx.message.author.id)
             if 잔액 >= 0:
