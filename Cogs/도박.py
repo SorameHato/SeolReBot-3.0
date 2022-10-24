@@ -186,16 +186,41 @@ class c도박(bot.Cog):
                 embed.set_footer(text='설레봇 버전 {}'.format(ver))
                 await ctx.send('오류가 발생했어요!',embed=embed)
             else:
-                if amount == 1:
-                    embed = discord.Embed(title='777 Huge Lucky! 잭팟이 터졌어요! 무려 5572배에요!',description='운이 엄청 좋은 당신을 코코나츠가 같이 축하드려요. (코코나츠 페이스북 사용자명 coconatsu__5572__)',color=0xffd07b)
+                if amount == 0:
+                    embed = discord.Embed(title='777 A Lot Huge Lucky! 잭팟이 터졌어요! 무려 5572배에요!',description='운이 엄청 좋은 당신을 코코나츠가 같이 축하드려요. (코코나츠 페이스북 사용자명 coconatsu__5572__)',color=0xffd07b)
                     embed.add_field(name='배율',value='x5572',inline=True)
                     embed.add_field(name='확률',value='0.0029%',inline=True)
                     embed.set_image(url='https://pbs.twimg.com/media/EQAknWIUEAIsnZS?format=png&name=900x900')
-                elif amount == 2:
-                    embed = discord.Embed(title='777 Lucky! 잭팟이 터졌어요! 1000배에요!',description='운이 엄청 좋은 당신을 미즈하라 치즈루가 같이 축하드려요. (이치노세 치즈루의 이름의 어원 __센__바즈루)',color=0xffd07b)
+                elif amount == 1:
+                    embed = discord.Embed(title='777 Huge Lucky! 잭팟이 터졌어요! 1000배에요!',description='운이 엄청 좋은 당신을 미즈하라 치즈루가 같이 축하드려요. (이치노세 치즈루의 이름의 어원 __센__바즈루)',color=0xffd07b)
                     embed.add_field(name='배율',value='x1000',inline=True)
                     embed.add_field(name='확률',value='0.0057%',inline=True)
                     embed.set_image(url='https://pbs.twimg.com/media/FfxUJ5xUoAAtFrz?format=jpg&name=large')
+                elif amount == 2:
+                    embed = discord.Embed(title='777 Lucky! 잭팟이 터졌어요! 505배에요!',description='운이 엄청 좋은 당신을 나카노 이츠키가 같이 축하드려요. (이츠키의 생일 5월 5일)',color=0xffd07b)
+                    embed.add_field(name='배율',value='x505',inline=True)
+                    embed.add_field(name='확률',value='0.0057%',inline=True)
+                    embed.set_image(url='https://pbs.twimg.com/media/Ff2li4AVsAAgX0r?format=jpg&name=large')
+                elif amount == 3:
+                    embed = discord.Embed(title='777 Lucky! 잭팟이 터졌어요! 428배에요!',description='운이 엄청 좋은 당신을 나카노 요츠바가 같이 축하드려요. (요츠바의 고로아와세 428)',color=0xffd07b)
+                    embed.add_field(name='배율',value='x428',inline=True)
+                    embed.add_field(name='확률',value='0.0057%',inline=True)
+                    embed.set_image(url='https://pbs.twimg.com/media/Ff2lk-YUoAA5syI?format=jpg&name=large')
+                elif amount == 4:
+                    embed = discord.Embed(title='777 Lucky! 잭팟이 터졌어요! 390배에요!',description='운이 엄청 좋은 당신을 나카노 미쿠가 같이 축하드려요. (미쿠의 고로아와세 39 × 10)',color=0xffd07b)
+                    embed.add_field(name='배율',value='x390',inline=True)
+                    embed.add_field(name='확률',value='0.0057%',inline=True)
+                    embed.set_image(url='https://pbs.twimg.com/media/FfxgC7vUcAASYYo?format=jpg&name=large')
+                elif amount == 7:
+                    embed = discord.Embed(title='777 Lucky! 잭팟이 터졌어요! 200배에요!',description='운이 엄청 좋은 당신을 나카노 니노가 같이 축하드려요. (다섯 쌍둥이 중 둘째라 200)',color=0xffd07b)
+                    embed.add_field(name='배율',value='x200',inline=True)
+                    embed.add_field(name='확률',value='0.0057%',inline=True)
+                    embed.set_image(url='https://pbs.twimg.com/media/Ff2m7pLVUAAkwWb?format=jpg&name=large')
+                elif amount == 8:
+                    embed = discord.Embed(title='777 Lucky! 잭팟이 터졌어요! 187배에요!',description='운이 엄청 좋은 당신을 나카노 이치카가 같이 축하드려요. (이치카 > 一花 > 이치하나로도 읽을 수 있음 > 고로아와세로 187)',color=0xffd07b)
+                    embed.add_field(name='배율',value='x187',inline=True)
+                    embed.add_field(name='확률',value='0.0057%',inline=True)
+                    embed.set_image(url='https://pbs.twimg.com/media/Ff2lhEnUYAAK0Bx?format=jpg&name=large')
                 embed.add_field(name='소지금',value='하늘토끼가 수동으로 계산할 예정입니다.',inline=False)
                 embed.set_footer(text='설레봇 룰렛 | code = {}'.format(amount))
                 await ctx.send('하토님, 소지금 수동으로 처리하는 거 잊지 마세요!',embed=embed)
