@@ -23,16 +23,19 @@ class c도박(bot.Cog):
         with open('data.csv','r',newline='',encoding='utf-8') as a:
             reader = csv.reader(a)
             for line in reader:
-                if line[0] == uid:
+                if line[0] == str(uid):
                     exist = True
                     with open('log.txt','a',encoding='utf-8') as b:
-                        b.write('{}\t{}\t조회\t소지금 : {}'.format(dt.now(),uid,line[1]))
-                    return line[1]
+                        b.write('{}\t{}\t조회\t소지금 : {}\n'.format(dt.now(),uid,line[1]))
+                    try:
+                        return float(line[1])
+                    except(ValueError):
+                        return -3
         # .설레 도박 조회 명령어에서는 -1값이 반환되면 자동으로 db추가를 진행하는 기능을 추가해야 함
         # 이 외의 경우에는 그냥 데이터가 없다고만 출력
         if exist == False:
             with open('log.txt','a',encoding='utf-8') as b:
-                b.write('{}\t{}\t조회\t잔액 : 데이터 없음'.format(dt.now(),uid))
+                b.write('{}\t{}\t조회\t잔액 : 데이터 없음\n'.format(dt.now(),uid))
             return -1
      
     '''해당 유저의 잔고를 변경하는 명령어
@@ -45,16 +48,16 @@ class c도박(bot.Cog):
         with open('data.csv','r',newline='',encoding='utf-8') as a:
             reader = csv.reader(a)
             for line in reader:
-                if line[0] == uid:
-                    if line[1] + amount >= 0:
-                        line[1] += amount
+                if line[0] == str(uid):
+                    if float(line[1]) + amount >= 0:
+                        line[1] = float(line[1]) + amount
                         ret = line[1]
                         with open('log.txt','a',encoding='utf-8') as b:
-                            b.write('{}\t{}\t변경\t소지금 : {} → {} (amount : {})'.format(dt.now(),uid,ret-amount,ret,amount))
+                            b.write('{}\t{}\t변경\t소지금 : {} → {} (amount : {})\n'.format(dt.now(),uid,ret-amount,ret,amount))
                         status = 1
                     else:
                         with open('log.txt','a',encoding='utf-8') as b:
-                            b.write('{}\t{}\t변경\t소지금 : {} → (잔고 부족으로 인한 변경 실패, amount : {})'.format(dt.now(),uid,line[1],amount))
+                            b.write('{}\t{}\t변경\t소지금 : {} → (잔고 부족으로 인한 변경 실패, amount : {})\n'.format(dt.now(),uid,line[1],amount))
                         status = -2
                 db.append(line)
         if status == 1:
@@ -62,7 +65,7 @@ class c도박(bot.Cog):
                 writer = csv.writer(a)
                 writer.writerows(db)
             with open('log.txt','a',encoding='utf-8') as b:
-                b.write('{}\t{}\t변경\t데이터 기록 완료'.format(dt.now(),uid))
+                b.write('{}\t{}\t변경\t데이터 기록 완료\n'.format(dt.now(),uid))
             return ret
         else:
             return status
@@ -70,7 +73,7 @@ class c도박(bot.Cog):
     def 잭팟뽑기(self):
         with open('seed_basic.pickle','rb') as a:
             seed = pickle.load(a)
-            return random.choice(list3)
+            return random.choice(seed)
      
     def 잭팟(self, uid, amount):
         a = self.조회(uid)
@@ -82,7 +85,7 @@ class c도박(bot.Cog):
             else:
                 결과 = self.잭팟뽑기()
                 with open('log.txt','a',encoding='utf-8') as b:
-                    b.write('{}\t{}\t룰렛\t결과 : {}, amount : {}'.format(dt.now(),uid,결과,amount))
+                    b.write('{}\t{}\t룰렛\t결과 : {}, amount : {}\n'.format(dt.now(),uid,결과,amount))
                 #todo : 결과별로 코드 표 참고해서 embed로 결과 만들기, 배율 해서 잔액에 결과값 더하기 (배율은 표에 나와있는 배율 - 1.0으로 해야 함)
                 if 결과 == 46:
                     embed = discord.Embed(title='아쉽게도 본전이에요.', color=0xccffff)
@@ -149,16 +152,16 @@ class c도박(bot.Cog):
                 else:
                     await ctx.send('룰렛의 결과에요!\n> 소지금이 음수로 표시되는 경우 진짜로 잔액이 마이너스가 된 게 아니라 오류로 룰렛의 결과가 반영이 되지 않은 경우에요. 이 경우, 하늘토끼를 호출해주시면 반영해드릴게요.',embed=embed1)
         elif 메뉴 == '조회':
-            잔액 = 조회(ctx.message.author.id)
+            잔액 = self.조회(ctx.message.author.id)
             if 잔액 >= 0:
                 embed = discord.Embed(title='조회 결과에요!', color=0xccffff)
                 embed.add_field(name='닉네임',value=ctx.message.author,inline=True)
                 embed.add_field(name='소지금',value=잔액,inline=True)
                 #마지막 회생일 추가
-                embed.set_footer(text='설레봇 룰렛 | code = {}'.format(결과))
+                embed.set_footer(text='설레봇 룰렛')
                 await ctx.send(embed=embed)
             elif 잔액 == -1:
-                pass #데이터 초기화(추가)
+                await ctx.send('데이터 초기화는 아직 구현하기 전이에요!') #데이터 초기화(추가)
             else:
                 embed = discord.Embed(title='처리 중 오류가 발생했어요!',description='데이터가 올바르게 읽히지 않았어요. csv 파일을 직접 수정해야 해요. 하늘토끼를 불러주세요.',color=0xfae5fa)
                 embed.add_field(name='소지금',value=잔액,inline=False)
