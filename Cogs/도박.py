@@ -165,14 +165,16 @@ class c도박(bot.Cog):
                 embed.set_footer(text='설레봇 룰렛')
                 await ctx.send(embed=embed)
             elif 잔액 == -1:
-                await ctx.send('데이터 초기화는 아직 구현하기 전이에요!') #데이터 초기화(추가)
+                embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='{}님의 데이터가 존재하지 않아요.'.format(ctx.message.author),color=0xfae5fa)
+                embed2.set_footer(text='설레봇 룰렛 | code = -1')
+                await ctx.send('자동 등록 기능은 구현이 어려울 것 같아요. 도박 기능을 이용하시려면 하늘토끼를 불러주세요!',embed=embed2) #데이터 초기화(추가)
             else:
                 embed = discord.Embed(title='처리 중 오류가 발생했어요!',description='데이터가 올바르게 읽히지 않았어요. csv 파일을 직접 수정해야 해요. 하늘토끼를 불러주세요.',color=0xfae5fa)
                 embed.add_field(name='소지금',value=잔액,inline=False)
                 embed.set_footer(text='설레봇 룰렛 | code = {}'.format(잔액))
                 await ctx.send(embed=embed)
         elif(메뉴 == "회생"):
-            await ctx.send("아직 회생 부분의 코드가 완성되지 않았어요. 하지만 벌써부터 회생을 하려는 걸 보니 당신은 도박 중독자이신 것 같네요.\n한국도박문제예방치유원에서 운영하는 도박문제 전화상담 헬프라인은 국번 없이 1336번이에요. 한 번 전화해서 도움을 받아보시는 게 어떤가요?")
+            await ctx.send("아쉽게도 자동 회생 기능은 지금의 하늘토끼의 기술로는 구현하기 힘들다는 결론이 났어요. 2학년 때 고급파이썬을 배우면 구현해볼게요. 일단은 하늘토끼를 불러주세요.\n추가로, 한 가지 유용한 정보를 드릴게요. 한국도박문제예방치유원에서 운영하는 도박문제 전화상담 헬프라인은 국번 없이 1336번이에요. 한 번 전화해서 도움을 받아보시는 게 어떤가요?")
         elif 메뉴 == '임베드':
             try:
                 amount = int(text.split(' ')[1])
