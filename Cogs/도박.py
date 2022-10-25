@@ -5,9 +5,6 @@ import pickle
 import random
 import csv
 from datetime import datetime as dt
-# intents = discord.Intents.default()
-# intents.message_content = True
-# client = discord.Client(intents=intents)
 
 # 시드값 : seed.pickle
 # 데이터베이스 : data.pickle (2차원 배열)
