@@ -1,17 +1,20 @@
 # coding: utf-8
 import discord
-from discord.ext import commands as bot
+from discord.ext import commands
 import pickle
 import random
 import csv
 from datetime import datetime as dt
+# intents = discord.Intents.default()
+# intents.message_content = True
+# client = discord.Client(intents=intents)
 
 # 시드값 : seed.pickle
 # 데이터베이스 : data.pickle (2차원 배열)
 # 0 : 유저ID, 1 : 소지금, 2 : 마지막으로 회생한 날짜
 # 확인용 각 시드가 나온 횟수 : seedtimes.pickle
 
-class c도박(bot.Cog):
+class c도박(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
      
@@ -90,14 +93,14 @@ class c도박(bot.Cog):
                 writer.writerows(db)
             with open('log.txt','a',encoding='utf-8') as b:
                 b.write('{}\t{}\t설정\t데이터 기록 완료\n'.format(dt.now(),uid))
-            return ret
+            return amount
         else:
             with open('data.csv','a',newline='',encoding='utf-8') as a:
                 writer = csv.writer(a)
                 writer.writerow([uid,amount])
             with open('log.txt','a',encoding='utf-8') as b:
                 b.write('{time}\t{uid}\t설정\t데이터 생성 완료, 초기 금액 : {amount}\n{time}\t{uid}\t설정\t데이터 기록 완료\n'.format(time=dt.now(),uid=uid,amount=amount))
-            return ret * -1
+            return amount * -1
      
     def 잭팟뽑기(self):
         with open('seed_basic.pickle','rb') as a:
@@ -154,7 +157,7 @@ class c도박(bot.Cog):
                     print('{} 현재 룰렛 6배 이상 발생!'.format(dt.now()))
                 return embed
      
-    @bot.command()
+    @commands.command()
     async def 도박(self,ctx,*,text='조회'):
         메뉴 = text.split(' ')[0]
         if 메뉴 == '룰렛' :
@@ -256,11 +259,10 @@ class c도박(bot.Cog):
                 await ctx.send('하토님, 소지금 수동으로 처리하는 거 잊지 마세요!',embed=embed)
         elif 메뉴 == '설정':
             if ctx.message.author.id == 971036318035501066:
-                uid = int(text.splie(' ')[1])
+                uid = int(text.split(' ')[1])
                 amount = int(text.split(' ')[2])
                 s결과 = self.설정(uid,amount)
-                client = discord.Client
-                user = client.get_user(int(uid))
+                user = str(await self.bot.fetch_user(uid))
                 if s결과 < 0:
                     await ctx.send('{}님의 데이터를 새로 등록하고 소지금을 {}(으)로 설정했어요!'.format(user,s결과 * -1))
                 else:
@@ -273,8 +275,7 @@ class c도박(bot.Cog):
                 amount = int(text.split(' ')[2])
                 s결과 = self.변경(uid,amount)
                 await ctx.send(f'uid : {uid}')
-                client = discord.Client
-                user = client.get_user(int(uid))
+                user = str(await self.bot.fetch_user(uid))
                 if s결과 >= 0:
                     await ctx.send('{}님의 소지금을 {}(으)로 변경했어요!'.format(user,s결과))
                 elif s결과 == -1:

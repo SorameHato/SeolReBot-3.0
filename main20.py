@@ -11,6 +11,7 @@ intents.message_content = True
 bot = commands.Bot(command_prefix='.설레 ', intents=intents)
 
 ver = "3.0_2022102501 rev 0.0 build 29"
+bot.srver = ver
 
 # @bot.command(name="unload")
 # async def unload_extension(ctx, extension=None):
@@ -47,14 +48,11 @@ async def 셧다운(ctx):
     else:
         await ctx.send('소유주 인증에 실패했습니다.')
 
-@bot.command()
-async def 정보(ctx):
-    await ctx.send("설레봇의 정보입니다!\n> 버전 : "+ver+"\n> 기반 : 2.5_2021021703 rev 6.3 build 14 (2021년 2월 18일 1시 0분 45초)\n> DB1 : PJU:K:C:B:2021103105 (2021년 10월 31일 4시 3분 51초)\n> DB2 : b102dff1ef5ddf5e3e9d7a4028656a90aa921252 (2022년 9월 21일 2시 47분 0초)\n> 설레봇을 개발한 사람 : 하늘토끼(ghwls030306@s-r.ze.am)\n> 설레봇이 시작된 시간 : " + LoadedTime)
-
 @bot.event
 async def on_ready():
     global LoadedTime
     LoadedTime = "{0:04d}년 {1:02d}월 {2:02d}일 {3:02d}시 {4:02d}분 {5:02d}.{6:03d}초".format(dt.now().year, dt.now().month, dt.now().day, dt.now().hour, dt.now().minute, dt.now().second, int(dt.now().microsecond/1000))
+    bot.LoadedTime = LoadedTime
     print('┌────────────────────────────────────────────────────────┐\n│   {name}(#{id})으로 로그인되었습니다.    │\n│ 봇이 시작된 시각 : {LoadedTime} │\n└────────────────────────────────────────────────────────┘'.format(name=bot.user.name,id=bot.user.id,LoadedTime=LoadedTime))
 
 # @bot.event
