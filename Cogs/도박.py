@@ -259,7 +259,8 @@ class c도박(bot.Cog):
                 uid = int(text.splie(' ')[1])
                 amount = int(text.split(' ')[2])
                 s결과 = self.설정(uid,amount)
-                user = discord.Client.get_user(uid)
+                client = discord.Client
+                user = client.get_user(int(uid))
                 if s결과 < 0:
                     await ctx.send('{}님의 데이터를 새로 등록하고 소지금을 {}(으)로 설정했어요!'.format(user,s결과 * -1))
                 else:
@@ -271,7 +272,9 @@ class c도박(bot.Cog):
                 uid = int(text.split(' ')[1])
                 amount = int(text.split(' ')[2])
                 s결과 = self.변경(uid,amount)
-                user = discord.Client.get_user(uid)
+                await ctx.send(f'uid : {uid}')
+                client = discord.Client
+                user = client.get_user(int(uid))
                 if s결과 >= 0:
                     await ctx.send('{}님의 소지금을 {}(으)로 변경했어요!'.format(user,s결과))
                 elif s결과 == -1:
