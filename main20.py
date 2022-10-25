@@ -10,7 +10,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='.설레 ', intents=intents)
 
-ver = "3.0_2022102403 rev 0.0 build 27"
+ver = "3.0_2022102500 rev 0.0 build 28"
 
 # @bot.command(name="unload")
 # async def unload_extension(ctx, extension=None):
