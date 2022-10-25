@@ -71,6 +71,34 @@ class c도박(bot.Cog):
         else:
             return status
      
+    def 설정(self,uid,amount):
+        db = list()
+        status = -1
+        with open('data.csv','r',newline='',encoding='utf-8') as a:
+            reader = csv.reader(a)
+            for line in reader:
+                if line[0] == str(uid):
+                    original = line[1]
+                    line[1] = amount
+                    with open('log.txt','a',encoding='utf-8') as b:
+                        b.write('{}\t{}\t설정\t소지금 : {} → {}\n'.format(dt.now(),uid,original,amount))
+                    status = 1
+                db.append(line)
+        if status == 1:
+            with open('data.csv','w',newline='',encoding='utf-8') as a:
+                writer = csv.writer(a)
+                writer.writerows(db)
+            with open('log.txt','a',encoding='utf-8') as b:
+                b.write('{}\t{}\t설정\t데이터 기록 완료\n'.format(dt.now(),uid))
+            return ret
+        else:
+            with open('data.csv','a',newline='',encoding='utf-8') as a:
+                writer = csv.writer(a)
+                writer.writerow([uid,amount])
+            with open('log.txt','a',encoding='utf-8') as b:
+                b.write('{time}\t{uid}\t설정\t데이터 생성 완료, 초기 금액 : {amount}\n{time}\t{uid}\t설정\t데이터 기록 완료\n'.format(time=dt.now(),uid=uid,amount=amount))
+            return ret * -1
+     
     def 잭팟뽑기(self):
         with open('seed_basic.pickle','rb') as a:
             seed = pickle.load(a)
@@ -143,7 +171,7 @@ class c도박(bot.Cog):
                 if amount % 100 == 0:
                     embed1 = self.잭팟(ctx.message.author.id,amount)
                     if embed1 == -1:
-                        embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='{}님의 데이터가 존재하지 않아요.'.format(ctx.message.author),color=0xfae5fa)
+                        embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='{}님의 데이터가 존재하지 않아요. 먼저 조회를 하시면, 등록해드릴게요!'.format(ctx.message.author),color=0xfae5fa)
                         embed2.set_footer(text='설레봇 룰렛 | code = {}'.format(embed1))
                     elif embed1 == -2:
                         embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='소지금이 부족해요.',color=0xfae5fa)
@@ -161,20 +189,22 @@ class c도박(bot.Cog):
                 embed = discord.Embed(title='조회 결과에요!', color=0xccffff)
                 embed.add_field(name='닉네임',value=ctx.message.author,inline=True)
                 embed.add_field(name='소지금',value=잔액,inline=True)
-                #마지막 회생일 추가
                 embed.set_footer(text='설레봇 룰렛')
                 await ctx.send(embed=embed)
             elif 잔액 == -1:
-                embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='{}님의 데이터가 존재하지 않아요.'.format(ctx.message.author),color=0xfae5fa)
-                embed2.set_footer(text='설레봇 룰렛 | code = -1')
-                await ctx.send('자동 등록 기능은 구현이 어려울 것 같아요. 도박 기능을 이용하시려면 하늘토끼를 불러주세요!',embed=embed2) #데이터 초기화(추가)
+                s결과 = self.설정(ctx.message.author.id,1000000)
+                embed = discord.Embed(title='조회 결과에요!', color=0xccffff)
+                embed.add_field(name='닉네임',value=ctx.message.author,inline=True)
+                embed.add_field(name='소지금',value=s결과 * -1,inline=True)
+                embed.set_footer(text='설레봇 룰렛')
+                await ctx.send('{}님의 데이터가 없어서 새로 등록했어요!'.format(ctx.message.author),embed=embed)
             else:
                 embed = discord.Embed(title='처리 중 오류가 발생했어요!',description='데이터가 올바르게 읽히지 않았어요. csv 파일을 직접 수정해야 해요. 하늘토끼를 불러주세요.',color=0xfae5fa)
                 embed.add_field(name='소지금',value=잔액,inline=False)
                 embed.set_footer(text='설레봇 룰렛 | code = {}'.format(잔액))
                 await ctx.send(embed=embed)
         elif(메뉴 == "회생"):
-            await ctx.send("아쉽게도 자동 회생 기능은 지금의 하늘토끼의 기술로는 구현하기 힘들다는 결론이 났어요. 2학년 때 고급파이썬을 배우면 구현해볼게요. 일단은 하늘토끼를 불러주세요.\n추가로, 한 가지 유용한 정보를 드릴게요. 한국도박문제예방치유원에서 운영하는 도박문제 전화상담 헬프라인은 국번 없이 1336번이에요. 한 번 전화해서 도움을 받아보시는 게 어떤가요?")
+            await ctx.send("아쉽게도 자동 회생 기능은 지금의 하늘토끼의 기술로는 구현하기 힘들다는 결론이 났어요. 2학년 때 고급파이썬을 배우면 구현해볼게요. 일단은 하늘토끼를 불러주세요.\n유용한 정보를 한 가지 드릴게요. 한국도박문제예방치유원에서 운영하는 도박문제 전화상담 헬프라인은 국번 없이 1336번이에요. 한 번 전화해서 도움을 받아보시는 게 어떤가요?")
         elif 메뉴 == '임베드':
             try:
                 amount = int(text.split(' ')[1])
@@ -224,6 +254,39 @@ class c도박(bot.Cog):
                 embed.add_field(name='소지금',value='하늘토끼가 수동으로 계산할 예정입니다.',inline=False)
                 embed.set_footer(text='설레봇 룰렛 | code = {}'.format(amount))
                 await ctx.send('하토님, 소지금 수동으로 처리하는 거 잊지 마세요!',embed=embed)
+        elif 메뉴 == '설정':
+            if ctx.message.author.id == 971036318035501066:
+                uid = int(text.splie(' ')[1])
+                amount = int(text.split(' ')[2])
+                s결과 = self.설정(uid,amount)
+                user = bot.get_user(uid)
+                if s결과 < 0:
+                    await ctx.send('{}님의 데이터를 새로 등록하고 소지금을 {}(으)로 설정했어요!'.format(user,s결과 * -1))
+                else:
+                    await ctx.send('{}님의 소지금을 {}(으)로 설정했어요!'.format(user,s결과))
+            else:
+                await ctx.send('이 메뉴는 하늘토끼만 사용할 수 있어요.')
+        elif 메뉴 == '변경':
+            if ctx.message.author.id == 971036318035501066:
+                uid = int(text.splie(' ')[1])
+                amount = int(text.split(' ')[2])
+                s결과 = self.변경(uid,amount)
+                user = bot.get_user(uid)
+                if s결과 >= 0:
+                    await ctx.send('{}님의 소지금을 {}(으)로 변경했어요!'.format(user,s결과))
+                elif s결과 = -1:
+                    await ctx.send('{}님의 데이터가 존재하지 않아요. 먼저 설정을 해주세요!'.format(user))
+                elif s결과 = -2:
+                    await ctx.send('{}님의 잔고가 부족해 소지금을 변경할 수 없었어요.'.format(user))
+                else:
+                    embed = discord.Embed(title='처리 중 오류가 발생했어요!',description='데이터가 올바르게 읽히지 않았어요. csv 파일을 직접 수정해야 해요. 하늘토끼를 불러주세요.',color=0xfae5fa)
+                    embed.add_field(name='소지금',value=잔액,inline=False)
+                    embed.set_footer(text='설레봇 룰렛 | code = {}'.format(s결과))
+                    await ctx.send(embed=embed)
+            else:
+                await ctx.send('이 메뉴는 하늘토끼만 사용할 수 있어요.')
+        else:
+            await ctx.send('메뉴가 올바르지 않아요. 도움말의 3페이지를 참고해주세요.')
 
 async def setup(bot):
     await bot.add_cog(c도박(bot))
