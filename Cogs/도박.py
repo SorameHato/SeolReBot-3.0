@@ -274,9 +274,9 @@ class c도박(bot.Cog):
                 user = bot.get_user(uid)
                 if s결과 >= 0:
                     await ctx.send('{}님의 소지금을 {}(으)로 변경했어요!'.format(user,s결과))
-                elif s결과 = -1:
+                elif s결과 == -1:
                     await ctx.send('{}님의 데이터가 존재하지 않아요. 먼저 설정을 해주세요!'.format(user))
-                elif s결과 = -2:
+                elif s결과 == -2:
                     await ctx.send('{}님의 잔고가 부족해 소지금을 변경할 수 없었어요.'.format(user))
                 else:
                     embed = discord.Embed(title='처리 중 오류가 발생했어요!',description='데이터가 올바르게 읽히지 않았어요. csv 파일을 직접 수정해야 해요. 하늘토끼를 불러주세요.',color=0xfae5fa)
