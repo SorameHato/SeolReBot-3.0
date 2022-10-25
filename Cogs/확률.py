@@ -1,9 +1,9 @@
 # coding: utf-8
 import discord
-from discord.ext import commands as bot
+from discord.ext import commands
 import random
 
-class _확률(bot.Cog):
+class _확률(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
     
@@ -19,7 +19,7 @@ class _확률(bot.Cog):
             arg = arg[0:len(arg)-1]
         return("{arg} 확률은 {rnd}%입니다.".format(arg=arg,rnd=random.randint(0,100)))
     
-    @bot.command()
+    @commands.command()
     async def 확률(self, ctx,*,text):
         await ctx.send(self.확률처리(text))
 

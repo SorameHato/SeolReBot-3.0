@@ -1,12 +1,12 @@
 # coding: utf-8
 import discord
-from discord.ext import commands as bot
+from discord.ext import commands
 
-class _열번분석(bot.Cog):
+class _열번분석(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
     
-    @bot.command()
+    @commands.command()
     async def 열번분석(self,ctx,*,text):
         arg=text
         if arg[0:2]=='SM' and len(arg) == 9: #설빈레피딕스 도시철도 열차

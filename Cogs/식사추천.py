@@ -1,9 +1,9 @@
 # coding: utf-8
 import discord
-from discord.ext import commands as bot
+from discord.ext import commands
 import random
 
-class _식사추천(bot.Cog):
+class _식사추천(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
     
@@ -15,19 +15,19 @@ class _식사추천(bot.Cog):
         야식list = ["치킨","피자","떡볶이","순대","족발","보쌈","라면","우동","빵","탕수육","부대찌개","회","제육볶음","타코야끼","카레","잔치국수","곱창","육회","계란말이","어묵탕","김치찌개","라멘","해장국","모둠튀김","매운새우깡","쌀새우깡","새우깡블랙","콩나물해장라면"]
         return(random.choice(야식list))
     
-    @bot.command()
+    @commands.command()
     async def 아침메뉴추천(self, ctx):
         await ctx.send("유설레가 추천하는 오늘의 아침 메뉴는? "+self.식사추천()+"입니다!\n점심, 저녁식사 메뉴를 추천하는 함수를 돌려 쓰고 있어서 아침으로 먹기에는 부담스러운 음식이 나올지도 몰라요. 양해해주세요!")
 
-    @bot.command()
+    @commands.command()
     async def 점심메뉴추천(self, ctx):
         await ctx.send("유설레가 추천하는 오늘의 점심 메뉴는? "+self.식사추천()+"입니다!\n저녁식사 메뉴를 추천하는 함수를 돌려 쓰고 있어서 점심으로 먹기에는 부담스러운 음식이 나올지도 몰라요. 양해해주세요!")
 
-    @bot.command()
+    @commands.command()
     async def 저녁메뉴추천(self, ctx):
         await ctx.send("유설레가 추천하는 오늘의 저녁 메뉴는? "+self.식사추천()+"입니다!")
 
-    @bot.command()
+    @commands.command()
     async def 야식메뉴추천(self, ctx):
         await ctx.send("유설레가 추천하는 오늘의 야식 메뉴는? "+self.야식추천()+"입니다!")
 

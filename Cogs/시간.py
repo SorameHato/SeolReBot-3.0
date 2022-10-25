@@ -1,9 +1,9 @@
 # coding: utf-8
 import discord
-from discord.ext import commands as bot
+from discord.ext import commands
 from datetime import datetime as dt
 
-class _시간(bot.Cog):
+class _시간(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
     
@@ -30,7 +30,7 @@ class _시간(bot.Cog):
         else:
             return('오류가 발생해 사담을 처리하지 못했어요. 명령어를 처리하는 도중에 각 시 59분 59초가 지나면 드물게 발생할 수 있는 오류니까, 다시 한 번 시도해주세요!')
     
-    @bot.command()
+    @commands.command()
     async def 시간(self,ctx):
         await ctx.send('삐, 삐, 삐! 당신의 설레임과 함께, 설빈레피딕스에서 {0:04d}년 {1:02d}월 {2:02d}일 {3:02d}시 {4:02d}분 {5:02d}.{6:03d}초를 알려드립니다.\n{7}\n이 사담은 2020년 9월 경 설레봇을 \'신 교통동호인 채팅방\'에서 돌릴 때 작성되었어요. 하늘토끼의 가상국가/가상철도 세계관과 관련되어 있거나 지금과는 맞지 않는 내용이 있을 수 있으니 양해 부탁드려요!'.format(dt.now().year, dt.now().month, dt.now().day, dt.now().hour, dt.now().minute, dt.now().second, int(dt.now().microsecond/1000),self.시간사담(dt.now().hour,dt.now().minute)))
 

@@ -1,12 +1,12 @@
 # coding: utf-8
 import discord
-from discord.ext import commands as bot
+from discord.ext import commands
 
-class _도움말(bot.Cog):
+class _도움말(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
     
-    @bot.command()
+    @commands.command()
     async def 도움말(self,ctx,*,text='0'):
         num = text.split(' ')[0]
         if(num == '1' or num == '0' or num == ''):

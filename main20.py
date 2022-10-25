@@ -10,7 +10,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='.설레 ', intents=intents)
 
-ver = "3.0_2022102501 rev 0.0 build 29"
+ver = "3.0_2022102601 rev 0.0 build 31"
 bot.srver = ver
 
 # @bot.command(name="unload")
@@ -55,23 +55,19 @@ async def on_ready():
     bot.LoadedTime = LoadedTime
     print('┌────────────────────────────────────────────────────────┐\n│   {name}(#{id})으로 로그인되었습니다.    │\n│ 봇이 시작된 시각 : {LoadedTime} │\n└────────────────────────────────────────────────────────┘'.format(name=bot.user.name,id=bot.user.id,LoadedTime=LoadedTime))
 
-# @bot.event
-# async def on_command_error(ctx, error):
-    # print('오류 발생 | 보낸 사람 : {}, 내용 : {}, 오류 : {}'.format(ctx.message.author,ctx.message.content,error))
-    # embed = discord.Embed(title='자세한 내용',description=error,color=0xfae5fa)
-    # embed.add_field(name="보낸 분",value=ctx.message.author,inline=False)
-    # embed.add_field(name="보낸 내용",value=ctx.message.content,inline=False)
-    # embed.set_footer(text='설레봇 버전 {}'.format(ver))
-    # await ctx.send('오류가 발생했어요!',embed=embed)
+@bot.event
+async def on_command_error(ctx, error):
+    print('오류 발생 | 보낸 사람 : {}, 내용 : {}, 오류 : {}'.format(ctx.message.author,ctx.message.content,error))
+    embed = discord.Embed(title='자세한 내용',description=error,color=0xfae5fa)
+    embed.add_field(name="보낸 분",value=ctx.message.author,inline=False)
+    embed.add_field(name="보낸 내용",value=ctx.message.content,inline=False)
+    embed.set_footer(text='설레봇 버전 {}'.format(ver))
+    await ctx.send('오류가 발생했어요!',embed=embed)
 
 async def load_extensions():
     for filename in os.listdir('Cogs'):
         if filename.endswith('.py'):
             await bot.load_extension('Cogs.{}'.format(filename[:-3]))
-
-# async def main():
-    # async with bot:
-        # await load_extensions()
 
 asyncio.run(load_extensions())
 with open('token.txt','r') as token:
