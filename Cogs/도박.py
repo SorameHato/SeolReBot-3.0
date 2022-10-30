@@ -241,6 +241,16 @@ class c도박(commands.Cog):
                     embed.add_field(name='배율',value='x390',inline=True)
                     embed.add_field(name='확률',value='0.0057%',inline=True)
                     embed.set_image(url='https://pbs.twimg.com/media/FfxgC7vUcAASYYo?format=jpg&name=large')
+                elif amount == 5:
+                    embed = discord.Embed(title='777 Lucky! 잭팟이 터졌어요! 385배에요!',description='운이 엄청 좋은 당신을 호시노 미야코가 같이 축하드려요. (미야코 고로아와세 385)',color=0xffd07b)
+                    embed.add_field(name='배율',value='x385',inline=True)
+                    embed.add_field(name='확률',value='0.0057%',inline=True)
+                    embed.set_image(url='https://pbs.twimg.com/media/Ff2q7iHVEAUgZUV?format=jpg&name=large')
+                elif amount == 6:
+                    embed = discord.Embed(title='777 Lucky! 잭팟이 터졌어요! 315배에요!',description='운이 엄청 좋은 당신을 타케시타 미이코가 같이 축하드려요. (미이코 고로아와세 315)',color=0xffd07b)
+                    embed.add_field(name='배율',value='x',inline=True)
+                    embed.add_field(name='확률',value='0.0057%',inline=True)
+                    #embed.set_image(url='')
                 elif amount == 7:
                     embed = discord.Embed(title='777 Lucky! 잭팟이 터졌어요! 200배에요!',description='운이 엄청 좋은 당신을 나카노 니노가 같이 축하드려요. (다섯 쌍둥이 중 둘째라 200)',color=0xffd07b)
                     embed.add_field(name='배율',value='x200',inline=True)
@@ -251,6 +261,61 @@ class c도박(commands.Cog):
                     embed.add_field(name='배율',value='x187',inline=True)
                     embed.add_field(name='확률',value='0.0057%',inline=True)
                     embed.set_image(url='https://pbs.twimg.com/media/Ff2lhEnUYAAK0Bx?format=jpg&name=large')
+                elif amount == 9:
+                    embed = discord.Embed(title='777 Lucky! 잭팟이 터졌어요! 123배에요!',description='운이 엄청 좋은 당신을 아지타니 히후미가 같이 축하드려요. (히후미 고로아와세 123)',color=0xffd07b)
+                    embed.add_field(name='배율',value='x123',inline=True)
+                    embed.add_field(name='확률',value='0.0057%',inline=True)
+                    #embed.set_image(url='')
+                elif amount == 10:
+                    embed = discord.Embed(title='Lucky! 잭팟이 터졌어요! 87배에요!',description='운이 엄청 좋은 당신을 시로사키 하나가 같이 축하드려요. (하나 고로아와세 87)',color=0xffd07b)
+                    embed.add_field(name='배율',value='x87',inline=True)
+                    embed.add_field(name='확률',value='0.0086%',inline=True)
+                    #embed.set_image(url='')
+                elif amount == 11:
+                    embed = discord.Embed(title='Lucky! 잭팟이 터졌어요! 62배에요!',description='운이 엄청 좋은 당신을 오나루토 무니가 같이 축하드려요. (무니 고로아와세 62)',color=0xffd07b)
+                    embed.add_field(name='배율',value='x62',inline=True)
+                    embed.add_field(name='확률',value='0.0086%',inline=True)
+                    #embed.set_image(url='')
+                elif amount == 12:
+                    embed = discord.Embed(title='Lucky! 잭팟이 터졌어요! 51배에요!',description='운이 엄청 좋은 당신을 코이즈미 우타가 같이 축하드려요. (코이즈미 우타의 코이 부분 고로아와세 51)',color=0xffd07b)
+                    embed.add_field(name='배율',value='x51',inline=True)
+                    embed.add_field(name='확률',value='0.0086%',inline=True)
+                    #embed.set_image(url='')
+                elif amount == 13:
+                    embed = discord.Embed(title='Lucky! 잭팟이 터졌어요! 36배에요!',description='운이 엄청 좋은 당신을 사쿠라다 미유가 같이 축하드려요. (미유 고로아와세 36)',color=0xffd07b)
+                    embed.add_field(name='배율',value='x36',inline=True)
+                    embed.add_field(name='확률',value='0.0086%',inline=True)
+                    #embed.set_image(url='')
+                elif amount == 14:
+                    embed = discord.Embed(title='Lucky! 잭팟이 터졌어요! 14배에요!',description='운이 엄청 좋은 당신을 미나기 히요리가 같이 축하드려요. (작가 공인 미나기 히요리는 14り라서 14배)',color=0xffd07b)
+                    embed.add_field(name='배율',value='x14',inline=True)
+                    embed.add_field(name='확률',value='0.0086%',inline=True)
+                    #embed.set_image(url='')
+                elif amount == 15:
+                    embed = discord.Embed(title='축하드려요! 무려 10배에요!',description='운이 좋은 당신을 하나마키 토와가 같이 축하드려요. (\'토\'와 → 十을 \'토\' 로도 읽을 수 있어서 10배)',color=0x04ccff)
+                    embed.add_field(name='배율',value='x10',inline=True)
+                    embed.add_field(name='확률',value='0.0998%',inline=True)
+                    #embed.set_image(url='')
+                elif amount == 16:
+                    embed = discord.Embed(title='축하드려요! 무려 9배에요!',description='운이 좋은 당신을 시라토리 쿠루미가 같이 축하드려요. (\'쿠\'루미 → 9)',color=0x04ccff)
+                    embed.add_field(name='배율',value='x9',inline=True)
+                    embed.add_field(name='확률',value='0.0998%',inline=True)
+                    #embed.set_image(url='')
+                elif amount == 17:
+                    embed = discord.Embed(title='축하드려요! 무려 8배에요!',description='운이 좋은 당신을 야마가타 마리카가 같이 축하드려요. (마리카는 まり花 → 花는 하나로도 읽을 수 있음 → 하나는 고로아와세하면 87, 근데 87은 이미 와타텐의 귀여운 생명체 하나짱이 있어서 8배)',color=0x04ccff)
+                    embed.add_field(name='배율',value='x8',inline=True)
+                    embed.add_field(name='확률',value='0.0998%',inline=True)
+                    #embed.set_image(url='')
+                elif amount == 18:
+                    embed = discord.Embed(title='축하드려요! 무려 7배에요!',description='운이 좋은 당신을 아하렌 레이나가 같이 축하드려요. (레이\'나\' → 7)',color=0x04ccff)
+                    embed.add_field(name='배율',value='x7',inline=True)
+                    embed.add_field(name='확률',value='0.0998%',inline=True)
+                    embed.set_image(url='https://pbs.twimg.com/media/Ff2uutSUYAA--TD?format=jpg&name=large')
+                elif amount == 19:
+                    embed = discord.Embed(title='축하드려요! 무려 6배에요!',description='운이 좋은 당신을 사라시나 루카가 같이 축하드려요. (\'루\'카 → 루(る)는 로(ろ)하고 비슷하게 생겼으니까 6배)',color=0x04ccff)
+                    embed.add_field(name='배율',value='x6',inline=True)
+                    embed.add_field(name='확률',value='0.0998%',inline=True)
+                    embed.set_image(url='https://pbs.twimg.com/media/Ff2uBqVVEAADdOr?format=jpg&name=large')
                 embed.add_field(name='소지금',value='하늘토끼가 수동으로 계산할 예정입니다.',inline=False)
                 embed.set_footer(text='설레봇 룰렛 | code = {}'.format(amount))
                 await ctx.send('하토님, 소지금 수동으로 처리하는 거 잊지 마세요!',embed=embed)
