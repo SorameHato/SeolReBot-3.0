@@ -176,7 +176,7 @@ class c도박(commands.Cog):
                     elif embed1 == -2:
                         embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='소지금이 부족해요.',color=0xfae5fa)
                         embed2.add_field(name='요청한 금액',value=text.split(' ')[1],inline=True)
-                        embed2.add_field(name='소지금',value=조회(ctx.message.author.id),inline=True)
+                        embed2.add_field(name='소지금',value=self.조회(ctx.message.author.id),inline=True)
                         embed2.set_footer(text='설레봇 룰렛 | code = {}'.format(embed1))
                         await ctx.send('돈이 부족해요!',embed=embed2)
                     else:
