@@ -10,7 +10,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='.설레 ', intents=intents)
 
-ver = "3.0_2022110500 rev 0.24 build 34"
+ver = "3.0_2022110601 rev 0.25.1 build 36"
 bot.srver = ver
 
 # @bot.command(name="unload")
