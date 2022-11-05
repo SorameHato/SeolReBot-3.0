@@ -308,6 +308,7 @@ class c도박(commands.Cog):
                     if embed1 == -1:
                         embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='{}님의 데이터가 존재하지 않아요. 먼저 조회를 하시면, 등록해드릴게요!'.format(ctx.message.author),color=0xfae5fa)
                         embed2.set_footer(text='설레봇 룰렛 | code = {}'.format(embed1))
+                        await ctx.send('데이터 조회는 .설레 도박 조회 명령어로 하실 수 있어요!',embed=embed2)
                     elif embed1 == -2:
                         embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='소지금이 부족해요.',color=0xfae5fa)
                         embed2.add_field(name='요청한 금액',value=text.split(' ')[1],inline=True)
