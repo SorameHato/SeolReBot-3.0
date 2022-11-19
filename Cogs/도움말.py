@@ -21,17 +21,18 @@ class _도움말(commands.Cog):
             embed = discord.Embed(color=0x04ccff)
             embed.add_field(name='.설레 아침메뉴추천 | .설레 점심메뉴추천 | .설레 저녁메뉴추천 | .설레 야식메뉴추천',value='설레봇이 랜덤으로 아침/점심/저녁/야식으로 무엇을 먹을 지 추천해주는 명령어에요!',inline = False)
             embed.add_field(name='.설레 열번분석 [다이어그램]',value='가상 철도회사 설빈레피딕스의 다이어그램 번호를 분석할 수 있는 명령어에요.\n아메카제, 쿠로카제, S특급 세레나데 닛소라, 슈퍼 라이너 스카이 같이 메구로 철도선에 직결하거나 메구로 철도선에서 직결해 들어오는 열차는 메구로 철도선의 다이어그램(1031T, 45M)이 아닌 설빈레피딕스에서 부여한 9자리 다이어그램(SMLN21031, SMLN14045)을 입력해야 하는 점 유의해주세요!',inline = False)
+            embed.add_field(name='.설레 약어조회',value='가상 철도회사 설빈레피딕스의 STORM 전산망에서 쓰이는 약어를 조회할 수 있는 명령어에요.',inline = False)
             embed.add_field(name='.설레 시간',value='설레봇이 간단한 사담과 함께 시간을 알려주는 명령어에요. 사담은 2021년 2월의 사담 데이터 그대로라 지금과 맞지 않는 내용이 있을 수 있으니까, 양해 부탁드려요!\n또한 시간은 하늘토끼의 컴퓨터 시계를 기준으로 표시돼요. KRISS 한국표준과학연구원 표준시계서버와 매일 동기화를 한다고는 하는데도 맨날 2초씩 3초씩 차이가 나니까, 시간이 조금 틀려도 양해 부탁드려요.',inline = False)
             embed.set_footer(text='설레봇 버전 {}'.format(self.bot.srver))
             await ctx.send('설레봇의 명령어 목록입니다!(2/3)',embed=embed)
         elif(num == '3'):
             embed = discord.Embed(color=0x04ccff)
-            embed.add_field(name='.설레 도박 조회',value='소지금을 조회할 수 있어요.',inline = False)
-            embed.add_field(name='.설레 도박 룰렛',value='룰렛을 돌릴 수 있어요.',inline = False)
-            embed.add_field(name='.설레 도박 회생',value='원래는 1주일에 한 번 개인회생을 할 수 있는데.. 아직 미 구현 상태에요. 하늘토끼를 불러주세요.',inline = False)
-            embed.add_field(name='.설레 도박 이체',value='소지금을 다른 분께 이체할 수 있는 명령어인데... 정말 죄송하게도 구현이 힘들 것 같아요. 하늘토끼를 불러주시면 수동으로 처리해드릴게요.',inline = False)
+            embed.add_field(name='.설레 도박 조회',value='소지금을 조회할 수 있는 명령어에요.',inline = False)
+            embed.add_field(name='.설레 도박 룰렛 [금액]',value='룰렛을 돌릴 수 있는 명령어에요.',inline = False)
+            embed.add_field(name='.설레 도박 회생',value='1주일에 한 번 개인회생을 할 수 있는 명령어에요. 회생을 하면 금액이 초기금액으로 초기화돼요.',inline = False)
+            embed.add_field(name='.설레 도박 이체 [보낼 분 멘션] [금액]',value='소지금을 다른 분께 이체할 수 있는 명령어에요.',inline = False)
             embed.set_footer(text='설레봇 버전 {}'.format(self.bot.srver))
-            await ctx.send('설레봇의 명령어 목록입니다!(3/3)\n이 페이지는 도박 명령어만 다루는 특별 페이지에요. 현재 도박봇의 경우 Python 자체의 의사난수 알고리즘에 문제가 있는 건지 확률이 일정하지 않아요. 3억 6140만 6740번(시드 개수의 10310배)이나 테스트를 돌려봤는데도 이론상 확률과 유의미하게 차이가 나요. 아나콘다 3.10 버전이 나오면 바로 업데이트할 테니까, 그 때까진 양해 부탁드릴게요!\n만약 데이터가 없다고 뜨면, 먼저 조회를 해보세요!',embed=embed)
+            await ctx.send('설레봇의 명령어 목록입니다!(3/3)\n이 페이지는 도박 명령어만 다루는 특별 페이지에요. 현재 도박봇의 경우 Python 자체의 의사난수 알고리즘에 문제가 있는 건지 확률이 일정하지 않아요. 3억 6140만 6740번(시드 개수의 10310배)이나 테스트를 돌려봤는데도 이론상 확률과 유의미하게 차이가 나요. (약 0.02% 정도) 아나콘다 3.10 버전이 나오면 바로 업데이트할 테니까, 그 때까진 양해 부탁드릴게요!\n만약 데이터가 없다고 뜨면, 먼저 조회를 해보세요!',embed=embed)
         else:
             await ctx.send('아직 존재하지 않는 페이지를 입력하셨어요. 설레봇은 2020년 5월에 만들어진 따끈따끈한 봇이라 아직 기능이 그렇게 많지는 않답니다. 앞으로 더 발전할 설레봇을 기대해주세요!')
 
