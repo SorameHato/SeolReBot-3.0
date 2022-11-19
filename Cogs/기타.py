@@ -20,6 +20,10 @@ class 기타(commands.Cog):
         await ctx.send('테스트 결과입니다!\n> 멘션할 때 들어오는 데이터의 타입 : {}, 정제 결과 : {}'.format(type(mention),mention))
     
     @commands.command()
+    async def 테스트3(self, ctx):
+        await ctx.send(f'서버ID : {ctx.message.guild.id}')
+    
+    @commands.command()
     async def 정보(self, ctx):
         embed = discord.Embed(title='설레봇의 정보입니다!',color=0x04ccff)
         embed.add_field(name='버전',value=self.bot.srver,inline = False)

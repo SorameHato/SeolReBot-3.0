@@ -75,7 +75,7 @@ class c도박(commands.Cog):
         else:
             return status
      
-    def 설정(self,uid,amount):
+    def 설정(self,uid,amount,revival=False):
         db = list()
         status = -1
         with open('data.csv','r',newline='',encoding='utf-8') as a:
@@ -84,8 +84,13 @@ class c도박(commands.Cog):
                 if line[0] == str(uid):
                     original = line[1]
                     line[1] = amount
-                    with open('log.txt','a',encoding='utf-8') as b:
-                        b.write('{}\t{}\t설정\t소지금 : {} → {}\n'.format(dt.now(),uid,original,amount))
+                    if revival == True:
+                        line[2] = int(time.time())
+                        with open('log.txt','a',encoding='utf-8') as b:
+                            b.write('{}\t{}\t설정\t소지금 : {} → {} (회생)\n'.format(dt.now(),uid,original,amount))
+                    else:
+                        with open('log.txt','a',encoding='utf-8') as b:
+                            b.write('{}\t{}\t설정\t소지금 : {} → {}\n'.format(dt.now(),uid,original,amount))
                     status = 1
                 db.append(line)
         if status == 1:
@@ -108,7 +113,7 @@ class c도박(commands.Cog):
             seed = pickle.load(a)
             return random.choice(seed)
      
-    def 잭팟(self, uid, amount):
+    def 잭팟(self, uid, amount, 화폐단위):
         a = self.조회(uid)
         if a < 0:
             return -1
@@ -124,14 +129,14 @@ class c도박(commands.Cog):
                     embed = discord.Embed(title='아쉽게도 본전이에요.', color=0xccffff)
                     embed.add_field(name='배율',value='x1',inline=True)
                     embed.add_field(name='확률',value='9.0945%',inline=True)
-                    embed.add_field(name='소지금',value=a,inline=False)
+                    embed.add_field(name='소지금',value=f'{a}{화폐단위}',inline=False)
                     embed.set_footer(text='설레봇 룰렛 | code = {}'.format(결과))
                 elif 결과 == 55:
                     b = self.변경(uid,0-amount)
                     embed = discord.Embed(title='꽝이에요... 정말 운이 없었네요...', color=0xccffff)
                     embed.add_field(name='배율',value='x0',inline=True)
                     embed.add_field(name='확률',value='3.9910%',inline=True)
-                    embed.add_field(name='소지금',value=b,inline=False)
+                    embed.add_field(name='소지금',value=f'{b}{화폐단위}',inline=False)
                     embed.set_footer(text='설레봇 룰렛 | code = {}'.format(결과))
                 elif 결과>=20 and 결과<=45:
                     배율목록=[5.73,5.2,4.86,4.28,3.71,3.29,2.52,2.06,1.95,1.87,1.79,1.71,1.64,1.52,1.46,1.4,1.34,1.28,1.23,1.18,1.14,1.1,1.07,1.05,1.03,1.02]
@@ -140,7 +145,7 @@ class c도박(commands.Cog):
                     embed = discord.Embed(title='Lucky! 축하드려요! 이득이에요!', color=0xccffff)
                     embed.add_field(name='배율',value='x{}'.format(배율),inline=True)
                     embed.add_field(name='확률',value='3.5688%' if 배율<1.2 else '1.9969%' if 배율<2 else '0.6875%',inline=True)
-                    embed.add_field(name='소지금',value=b,inline=False)
+                    embed.add_field(name='소지금',value=f'{b}{화폐단위}',inline=False)
                     embed.set_footer(text='설레봇 룰렛 | code = {}'.format(결과))
                 elif 결과>=47 and 결과<=54:
                     배율목록=[0.98,0.92,0.84,0.72,0.6,0.4,0.15,0.1]
@@ -149,12 +154,12 @@ class c도박(commands.Cog):
                     embed = discord.Embed(title='운이 없었네요...', color=0xccffff)
                     embed.add_field(name='배율',value='x{}'.format(배율),inline=True)
                     embed.add_field(name='확률',value='2.7472%' if 배율<0.7 else '4.9952%',inline=True)
-                    embed.add_field(name='소지금',value=b,inline=False)
+                    embed.add_field(name='소지금',value=f'{b}{화폐단위}',inline=False)
                     embed.set_footer(text='설레봇 룰렛 | code = {}'.format(결과))
                 elif 결과<=19:
                     embed, 배율 = self.고배율임베드(결과)
                     b = self.변경(uid,amount*(배율-1))
-                    embed.add_field(name='소지금',value=b,inline=False)
+                    embed.add_field(name='소지금',value=f'{b}{화폐단위}',inline=False)
                     embed.set_footer(text='설레봇 룰렛 | code = {}'.format(결과))
                 else:
                     embed = discord.Embed(title='처리 중 오류가 발생했어요!',description='올바르지 않은 결과가 나왔어요.',color=0xfae5fa)
@@ -298,7 +303,7 @@ class c도박(commands.Cog):
                 if line[0] == str(uid):
                     exist = True
                     with open('log.txt','a',encoding='utf-8') as b:
-                        b.write('{}\t{}\t회생조회\t회생일 : {}\n'.format(dt.now(),uid,line[2]))
+                        b.write('{}\t{}\t회생\t회생일 : {}\n'.format(dt.now(),uid,line[2]))
                     try:
                         return int(line[2])
                     except(ValueError):
@@ -307,12 +312,28 @@ class c도박(commands.Cog):
         # 이 외의 경우에는 그냥 데이터가 없다고만 출력
         if exist == False:
             with open('log.txt','a',encoding='utf-8') as b:
-                b.write('{}\t{}\t회생조회\t회생일 : 데이터 없음\n'.format(dt.now(),uid))
+                b.write('{}\t{}\t회생\t회생일 : 데이터 없음\n'.format(dt.now(),uid))
+            return -1
+     
+    def 서버설정체크(self,svid,amount):
+        '''해당 서버의 설정을 체크하는 명령어
+        input : svid(서버의 ID), amount(필요한 데이터가 있는 행 번호, 1 : 화폐 단위, 2 : 시작 금액)
+        output : 요청한 데이터'''
+        exist = False
+        svid = str(svid)
+        with open('gamble_server_setting.csv','r',newline='',encoding='utf-8') as a:
+            reader = csv.reader(a)
+            for line in reader:
+                if line[0] == str(svid):
+                    exist = True
+                    return line[amount]
+        if exist == False:
             return -1
      
     @commands.command()
     async def 도박(self,ctx,*,text='조회'):
         메뉴 = text.split(' ')[0]
+        화폐단위 = self.서버설정체크(ctx.message.guild.id,1)
         if 메뉴 == '룰렛' :
             try:
                 amount = int(text.split(' ')[1])
@@ -325,7 +346,7 @@ class c도박(commands.Cog):
                 await ctx.send('오류가 발생했어요!',embed=embed)
             else:
                 if amount % 100 == 0:
-                    embed1 = self.잭팟(ctx.message.author.id,amount)
+                    embed1 = self.잭팟(ctx.message.author.id,amount,화폐단위)
                     if embed1 == -1:
                         embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='{}님의 데이터가 존재하지 않아요. 먼저 조회를 하시면, 등록해드릴게요!'.format(ctx.message.author),color=0xfae5fa)
                         embed2.set_footer(text='설레봇 룰렛 | code = {}'.format(embed1))
@@ -333,7 +354,7 @@ class c도박(commands.Cog):
                     elif embed1 == -2:
                         embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='소지금이 부족해요.',color=0xfae5fa)
                         embed2.add_field(name='요청한 금액',value=text.split(' ')[1],inline=True)
-                        embed2.add_field(name='소지금',value=self.조회(ctx.message.author.id),inline=True)
+                        embed2.add_field(name='소지금',value=f'{self.조회(ctx.message.author.id)}{화폐단위}',inline=True)
                         embed2.set_footer(text='설레봇 룰렛 | code = {}'.format(embed1))
                         await ctx.send('돈이 부족해요!',embed=embed2)
                     else:
@@ -345,25 +366,35 @@ class c도박(commands.Cog):
             if 잔액 >= 0:
                 embed = discord.Embed(title='조회 결과에요!', color=0xccffff)
                 embed.add_field(name='닉네임',value=ctx.message.author,inline=True)
-                embed.add_field(name='소지금',value=잔액,inline=True)
+                embed.add_field(name='소지금',value=f'{잔액}{화폐단위}',inline=True)
                 embed.set_footer(text='설레봇 룰렛')
                 await ctx.send(embed=embed)
             elif 잔액 == -1:
-                s결과 = self.설정(ctx.message.author.id,1000000)
+                s결과 = self.설정(ctx.message.author.id,int(self.서버설정체크(ctx.message.guild.id,2)))
                 embed = discord.Embed(title='조회 결과에요!', color=0xccffff)
                 embed.add_field(name='닉네임',value=ctx.message.author,inline=True)
-                embed.add_field(name='소지금',value=s결과 * -1,inline=True)
+                embed.add_field(name='소지금',value=f'{s결과 * -1}{화폐단위}',inline=True)
                 embed.set_footer(text='설레봇 룰렛')
                 await ctx.send('{}님의 데이터가 없어서 새로 등록했어요!'.format(ctx.message.author),embed=embed)
             else:
                 embed = discord.Embed(title='처리 중 오류가 발생했어요!',description='데이터가 올바르게 읽히지 않았어요. csv 파일을 직접 수정해야 해요. 하늘토끼를 불러주세요.',color=0xfae5fa)
-                embed.add_field(name='소지금',value=잔액,inline=False)
+                embed.add_field(name='소지금',value=f'{잔액}{화폐단위}',inline=False)
                 embed.set_footer(text='설레봇 룰렛 | code = {}'.format(잔액))
                 await ctx.send(embed=embed)
         elif(메뉴 == "회생"):
             h결과 = self.회생일체크(ctx.message.author.id)
-            if h결과 >= int(time.time())-604800:
+            if int(h결과) >= time.time()-604800:
                 await ctx.send('회생은 일주일에 한 번만 할 수 있어요!\n한국도박문제예방치유원에서 운영하는 도박문제 전화상담 헬프라인은 국번 없이 1336번이에요. 한 번 전화해서 도움을 받아보시는 게 어떤가요?')
+            else:
+                if text=='회생 신청':
+                    s결과 = self.설정(ctx.message.author.id,int(self.서버설정체크(ctx.message.guild.id,2)),True)
+                    embed = discord.Embed(title='회생 절차가 완료되었어요!', color=0xccffff)
+                    embed.add_field(name='닉네임',value=ctx.message.author,inline=True)
+                    embed.add_field(name='소지금',value=f'{s결과}{화폐단위}',inline=True)
+                    embed.set_footer(text='설레봇 룰렛')
+                    await ctx.send(embed=embed)
+                else:
+                    await ctx.send(f'정말로 회생 신청을 하실건가요? 소지금액이 {self.서버설정체크(ctx.message.guild.id,2)}{화폐단위}로 초기화돼요.\n정말로 회생 신청을 하고 싶으시면, .설레 도박 회생 신청 을 입력해주세요.')
         elif 메뉴 == '임베드':
             try:
                 amount = int(text.split(' ')[1])
@@ -389,9 +420,9 @@ class c도박(commands.Cog):
                 s결과 = self.설정(uid,amount)
                 user = str(await self.bot.fetch_user(uid))
                 if s결과 < 0:
-                    await ctx.send('{}님의 데이터를 새로 등록하고 소지금을 {}(으)로 설정했어요!'.format(user,s결과 * -1))
+                    await ctx.send(f'{user}님의 데이터를 새로 등록하고 소지금을 {s결과 * -1}{화폐단위}(으)로 설정했어요!')
                 else:
-                    await ctx.send('{}님의 소지금을 {}(으)로 설정했어요!'.format(user,s결과))
+                    await ctx.send(f'{user}님의 소지금을 {s결과}{화폐단위}(으)로 설정했어요!')
             else:
                 await ctx.send('이 메뉴는 하늘토끼만 사용할 수 있어요.')
         elif 메뉴 == '변경':
@@ -404,14 +435,14 @@ class c도박(commands.Cog):
                 s결과 = self.변경(uid,amount,True)
                 user = str(await self.bot.fetch_user(uid))
                 if s결과 >= 0:
-                    await ctx.send('{}님의 소지금을 {}(으)로 변경했어요!'.format(user,s결과))
+                    await ctx.send(f'{user}님의 소지금을 {s결과}{화폐단위}(으)로 변경했어요!')
                 elif s결과 == -1:
-                    await ctx.send('{}님의 데이터가 존재하지 않아요. 먼저 설정을 해주세요!'.format(user))
+                    await ctx.send(f'{user}님의 데이터가 존재하지 않아요. 먼저 설정을 해주세요!')
                 elif s결과 == -2:
-                    await ctx.send('{}님의 잔고가 부족해 소지금을 변경할 수 없었어요.'.format(user))
+                    await ctx.send(f'{user}님의 잔고가 부족해 소지금을 변경할 수 없었어요.')
                 else:
                     embed = discord.Embed(title='처리 중 오류가 발생했어요!',description='데이터가 올바르게 읽히지 않았어요. csv 파일을 직접 수정해야 해요. 하늘토끼를 불러주세요.',color=0xfae5fa)
-                    embed.add_field(name='소지금',value=잔액,inline=False)
+                    embed.add_field(name='소지금',value=f'{잔액}{화폐단위}',inline=False)
                     embed.set_footer(text='설레봇 룰렛 | code = {}'.format(s결과))
                     await ctx.send(embed=embed)
             else:
