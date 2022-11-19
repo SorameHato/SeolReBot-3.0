@@ -10,10 +10,10 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='.설레 ', intents=intents)
 
-ver = "3.0_2022111902 rev 0.25.6 build 41"
+ver = "3.0_2022111905 rev 0.26.2 build 44"
 bot.srver = ver
 
-# @bot.command(name="unload")
+# @bot.command(name="관리 언로드")
 # async def unload_extension(ctx, extension=None):
     # if extension is not None:
         # await unload_function(extension)

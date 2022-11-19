@@ -7,8 +7,7 @@ class _열번분석(commands.Cog):
         self.bot = bot
     
     @commands.command()
-    async def 열번분석(self,ctx,*,text):
-        arg=text
+    async def 열번분석(self,ctx,*,arg):
         if arg[0:2]=='SM' and len(arg) == 9: #설빈레피딕스 도시철도 열차
             종류=0 #기본값
             노선명='존재하지 않는 노선입니다.'                        #노선/등급/라이너 정보가 오류로 인해
@@ -18,7 +17,7 @@ class _열번분석(commands.Cog):
             열차번호=1048576                                          #얘는 사실 처리가 귀찮아서 콜록
             
             등급=arg[2:4] #SM'OL'21031
-            등급분류=[['OR',1,'일반'],['SW',1,'일반쾌속'],['PW',1,'선별쾌속'],['RP',1,'일반급행'],['CM',1,'통근급행'],['LM',1,'쾌속급행'],['XC',1,'특별급행'],['EX',1,'고속급행'],['LN',2,'라이너']] #등급 분류 데이터
+            등급분류=[['OR',1,'일반'],['SW',1,'일반쾌속'],['PW',1,'선별쾌속'],['RP',1,'일반급행'],['CM',1,'통근급행'],['LM',1,'쾌속급행'],['XC',1,'특별급행'],['EX',1,'고속급행'],['LC',1,'각역정차(시온 어반 네트워크)'],['SC',1,'구간급행(시온 어반 네트워크)'],['UR',1,'어반급행(시온 어반 네트워크)'],['DT',1,'도심급행(시온 어반 네트워크)'],['LN',2,'라이너']] #등급 분류 데이터
             for i in range(len(등급분류)):
                 if(등급==등급분류[i][0]):
                     종류=등급분류[i][1] #도시철도 열차는 1, 라이너는 2
@@ -169,6 +168,23 @@ class _열번분석(commands.Cog):
             await ctx.send('아직 화물열차는 구현되지 않았어요. 빠른 시일 내에 구현할게요!')
         else: #설레 열차가 아닌 경우
             await ctx.send('열번이 올바르지 않거나, 설빈레피딕스의 열번이 아니에요. 다시 확인하시고 입력해주세요!')
+    
+    @commands.command()
+    async def 약어조회(self,ctx,text=''):
+        embed = discord.Embed(title='전산 상 약어 목록이에요!',description='설빈레피딕스의 STORM 전산망에서 쓰이는 약어 목록이에요.',color=0x04ccff)
+        embed.set_footer(text='설빈레피딕스 전산 약어 조회 결과')
+        if(text=='도시철도'):
+            embed.add_field(name='등급명',value='일반\n일반쾌속\n선별쾌속\n일반급행\n통근급행\n쾌속급행\n특별급행\n고속급행',inline=True)
+            embed.add_field(name='약어',value='일반\n일쾌\n선쾌\n일급\n통급\n쾌급\n특급\n고속',inline=True)
+            embed.add_field(name='전광판',value='ORdN\nOdSW\nPTSW\nOdRP\nCMRP\nLMRP\nXCRP\nEXRP',inline=True)
+        elif(text=='라이너'):
+            embed.add_field(name='라이너명',value='Dawn Express\nGlowing Express\nSunset Liner\nSatellite Network\nRiverShore Express\nUrban Liner\n쿠로카제\n아오조라\n유키카제\n아메카제\n호시유메\nCassioPeia\nForest Liner\nStarlight Express\nTwilight Express NightLiner',inline=True)
+            embed.add_field(name='약어',value='다운\n글로\n선셋\n새틀\n리버\n어반\n쿠로\n아오\n유키\n아메\n호시\n카페\n포레\n스타\n트익',inline=True)
+            embed.add_field(name='전광판',value='dAWN\nGLOW\nSNST\nSTNW\nRIVR\nURBN\nKUR\nAO\nYUKI\nAME\nHOSH\nCASP\nFORE\nSTAR\nTWEX',inline=True)
+        else:
+            embed.add_field(name='도시철도 약어 조회',value='.설레 약어조회 도시철도',inline=False)
+            embed.add_field(name='라이너 열차 약어 조회',value='.설레 약어조회 라이너',inline=False)
+        await ctx.send(embed=embed)
 
 async def setup(bot):
     await bot.add_cog(_열번분석(bot))
