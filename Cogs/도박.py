@@ -31,7 +31,7 @@ class c도박(commands.Cog):
                     try:
                         return int(line[1])
                     except(ValueError):
-                        return -3
+                        return -3 #금액이 올바르지 않은 경우 (str형이라던가...)
         # .설레 도박 조회 명령어에서는 -1값이 반환되면 자동으로 db추가를 진행하는 기능을 추가해야 함
         # 이 외의 경우에는 그냥 데이터가 없다고만 출력
         if exist == False:
@@ -345,7 +345,7 @@ class c도박(commands.Cog):
                 embed.set_footer(text='설레봇 버전 {}'.format(self.bot.srver))
                 await ctx.send('오류가 발생했어요!',embed=embed)
             else:
-                if amount % 100 == 0:
+                if amount % 100 == 0 and amount > 0:
                     embed1 = self.잭팟(ctx.message.author.id,amount,화폐단위)
                     if embed1 == -1:
                         embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='{}님의 데이터가 존재하지 않아요. 먼저 조회를 하시면, 등록해드릴게요!'.format(ctx.message.author),color=0xfae5fa)
@@ -360,7 +360,7 @@ class c도박(commands.Cog):
                     else:
                         await ctx.send('룰렛의 결과에요!\n> 소지금이 음수로 표시되는 경우 진짜로 잔액이 마이너스가 된 게 아니라 오류로 룰렛의 결과가 반영이 되지 않은 경우에요. 이 경우, 하늘토끼를 호출해주시면 반영해드릴게요.',embed=embed1)
                 else:
-                    await ctx.send('float형의 데이터가 불안정한 문제가 있어 모든 데이터를 int형으로 처리하기 위해 도박 기능을 100원 단위로만 쓸 수 있게 제한중이에요. 금액을 100원 단위로 입력해주세요!')
+                    await ctx.send('float형의 데이터가 불안정한 문제가 있어 모든 데이터를 int형으로 처리하기 위해 도박 기능을 100원 단위로만 쓸 수 있게 제한중이에요. 금액을 100원 단위로 입력해주세요! 또는 금액이 음수에요. 금액은 양수로 입력해주세요!')
         elif 메뉴 == '조회':
             잔액 = self.조회(ctx.message.author.id)
             if 잔액 >= 0:
@@ -447,6 +447,43 @@ class c도박(commands.Cog):
                     await ctx.send(embed=embed)
             else:
                 await ctx.send('이 메뉴는 하늘토끼만 사용할 수 있어요.')
+        elif 메뉴 == '이체':
+            try:
+                amount = int(text.split(' ')[2])
+            except(ValueError):
+                embed = discord.Embed(title='자세한 내용',description='ValueError: 이체할 금액이 정상적으로 입력되지 않았어요. 금액은 숫자로만 입력해주세요!',color=0xfae5fa)
+                embed.add_field(name="보낸 분",value=ctx.message.author,inline=False)
+                embed.add_field(name="보낸 내용",value=ctx.message.content,inline=False)
+                embed.set_footer(text='설레봇 버전 {}'.format(self.bot.srver))
+                await ctx.send('오류가 발생했어요!',embed=embed)
+            except(IndexError):
+                embed = discord.Embed(title='자세한 내용',description='IndexError: 돈을 받을 분과 금액 중 한 가지 이상이 입력되지 않았어요. 두 개 전부 입력해주세요.',color=0xfae5fa)
+                embed.add_field(name="보낸 분",value=ctx.message.author,inline=False)
+                embed.add_field(name="보낸 내용",value=ctx.message.content,inline=False)
+                embed.set_footer(text='설레봇 버전 {}'.format(self.bot.srver))
+                await ctx.send('오류가 발생했어요!',embed=embed)
+            else:
+                소지금 = self.조회(ctx.message.author.id)
+                if 소지금 >= amount and amount > 0:
+                    상대 = text.split(' ')[1][2:-1]
+                    상대닉네임 = str(await self.bot.fetch_user(상대))
+                    상대소지금 = self.조회(상대)
+                    if 상대소지금 == -1:
+                        await ctx.send(f'{상대닉네임}님의 데이터가 없어서 이체에 실패했어요. 확인 후 다시 입력해주세요.')
+                    elif 상대소지금 < 0:
+                        await ctx.send(f'{상대닉네임}님의 데이터가 손상되어서 이체에 실패했어요. 하늘토끼를 불러주세요.')
+                    else:
+                        결과1 = self.변경(ctx.message.author.id,amount * -1)
+                        결과2 = self.변경(상대,amount)
+                        embed = discord.Embed(title='이체가 성공적으로 완료되었어요!', color=0xccffff)
+                        embed.add_field(name='닉네임',value=f'보내는 분 : {ctx.message.author}\n　받는 분 : {상대닉네임}',inline=True)
+                        embed.add_field(name='소지금',value=f'{결과1}{화폐단위}\n{결과2}{화폐단위}',inline=True)
+                        embed.set_footer(text='설레봇 룰렛')
+                        await ctx.send('혹시 소지금이 음수로 나오면 하늘토끼를 불러주세요! 오류가 발생한 거에요.',embed=embed)
+                        with open('log.txt','a',encoding='utf-8') as b:
+                            b.write(f'{dt.now()}\t{ctx.message.author.id}\t이체\t받는 분 : {상대}, amount : {amount}, 결과1 : {결과1}, 결과2 : {결과2}\n')
+                else:
+                    await ctx.send(f'데이터가 없거나 소지금이 부족하거나 금액이 0 또는 음수에요. 확인 후 다시 입력해주세요. 현재 소지금은 {소지금}{화폐단위}에요.')
         else:
             await ctx.send('메뉴가 올바르지 않아요. 도움말의 3페이지를 참고해주세요.')
 
