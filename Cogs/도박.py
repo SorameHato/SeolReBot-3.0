@@ -234,13 +234,13 @@ class c도박(commands.Cog):
             embed = discord.Embed(title='Lucky! 잭팟이 터졌어요! 62배에요!',description='운이 엄청 좋은 당신을 오나루토 무니가 같이 축하드려요. (무니 고로아와세 62)',color=0xffbbee)
             embed.add_field(name='배율',value='x62',inline=True)
             embed.add_field(name='확률',value='0.0998%',inline=True)
-            #embed.set_image(url='')
+            embed.set_image(url='https://pbs.twimg.com/media/Fh6I21NUUAA1IZC?format=jpg&name=large')
         elif amount == 12:
             배율 = 52
-            embed = discord.Embed(title='Lucky! 잭팟이 터졌어요! 52배에요!',description='운이 엄청 좋은 당신을 우메기리 아메토가 같이 축하드려요. (우메기리 아메토는 beatmania IIDX의 ROOTS26의 캐릭터 → 26 × 2 = 52)\n사진 출처 : 제가 좋아하는 작가님의 트윗 https://twitter.com/2P_con/status/1582638164875055105',color=0xffbbee)
+            embed = discord.Embed(title='Lucky! 잭팟이 터졌어요! 52배에요!',description='운이 엄청 좋은 당신을 우메기리 아메토가 같이 축하드려요. (우메기리 아메토는 beatmania IIDX의 ROOTS26의 캐릭터 → 26 × 2 = 52)',color=0xffbbee)
             embed.add_field(name='배율',value='x52',inline=True)
             embed.add_field(name='확률',value='0.0998%',inline=True)
-            embed.set_image(url='https://pbs.twimg.com/media/FfapA4uaMAAw4R5?format=jpg&name=large')
+            embed.set_image(url='https://pbs.twimg.com/media/Fh6IztHUAAAjsWr?format=jpg&name=large')
         elif amount == 13:
             배율 = 36
             embed = discord.Embed(title='Lucky! 잭팟이 터졌어요! 36배에요!',description='운이 엄청 좋은 당신을 사쿠라다 미유가 같이 축하드려요. (미유 고로아와세 36)',color=0xffbbee)
@@ -296,11 +296,11 @@ class c도박(commands.Cog):
             try:
                 amount = int(text.split(' ')[1])
             except(ValueError):
-                print('오류 발생 | 보낸 사람 : {}, 내용 : {}, 오류 : {}'.format(ctx.message.author,ctx.message.content,error))
-                embed = discord.Embed(title='자세한 내용',description='{}: 룰렛에 베팅할 금액이 정상적으로 입력되지 않았어요. 금액은 숫자로만 입력해주세요!'.format(error),color=0xfae5fa)
+                print('오류 발생 | 보낸 사람 : {}, 내용 : {}, 오류 : {}'.format(ctx.message.author,ctx.message.content,'ValueError: 룰렛에 베팅할 금액이 정상적으로 입력되지 않았어요. 금액은 숫자로만 입력해주세요!'))
+                embed = discord.Embed(title='자세한 내용',description='ValueError: 룰렛에 베팅할 금액이 정상적으로 입력되지 않았어요. 금액은 숫자로만 입력해주세요!',color=0xfae5fa)
                 embed.add_field(name="보낸 분",value=ctx.message.author,inline=False)
                 embed.add_field(name="보낸 내용",value=ctx.message.content,inline=False)
-                embed.set_footer(text='설레봇 버전 {}'.format(ver))
+                embed.set_footer(text='설레봇 버전 {}'.format(self.bot.srver))
                 await ctx.send('오류가 발생했어요!',embed=embed)
             else:
                 if amount % 100 == 0:
