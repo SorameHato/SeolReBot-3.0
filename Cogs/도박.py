@@ -5,6 +5,7 @@ import pickle
 import random
 import csv
 from datetime import datetime as dt
+import time
 
 # 시드값 : seed.pickle
 # 데이터베이스 : data.pickle (2차원 배열)
@@ -15,10 +16,10 @@ class c도박(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
      
-    '''해당 유저의 잔고를 조회하는 명령어
-    input : uid (ctx.message.author.id 로 얻은 해당 유저의 id)
-    output : 해당 유저의 잔액(단, 해당 유저의 데이터가 없는 경우 -1)'''
     def 조회(self,uid):
+        '''해당 유저의 잔고를 조회하는 명령어
+        input : uid (ctx.message.author.id 로 얻은 해당 유저의 id)
+        output : 해당 유저의 잔액(단, 해당 유저의 데이터가 없는 경우 -1)'''
         exist = False
         with open('data.csv','r',newline='',encoding='utf-8') as a:
             reader = csv.reader(a)
@@ -38,11 +39,11 @@ class c도박(commands.Cog):
                 b.write('{}\t{}\t조회\t잔액 : 데이터 없음\n'.format(dt.now(),uid))
             return -1
      
-    '''해당 유저의 잔고를 변경하는 명령어
-    input : uid (ctx.message.author.id 로 얻은 해당 유저의 id)
-    amount (얼마나 변경할 것인지, 주의해야 할 점은 잔액을 인출하는 경우 음수로 입력해야 함, 그리고 절댓값을 입력하는 게 아님. 26만원에서 25만 5천원으로 변경하고 싶으면 255000이 아닌 -5000으로 입력해야 함)
-    output : 인출/입금 후 잔액 (단, 해당 유저의 데이터가 없는 경우 -1, 잔고가 부족한 경우 -2)'''
     def 변경(self,uid,amount,manual=False):
+        '''해당 유저의 잔고를 변경하는 명령어
+        input : uid (ctx.message.author.id 로 얻은 해당 유저의 id)
+        amount (얼마나 변경할 것인지, 주의해야 할 점은 잔액을 인출하는 경우 음수로 입력해야 함, 그리고 절댓값을 입력하는 게 아님. 26만원에서 25만 5천원으로 변경하고 싶으면 255000이 아닌 -5000으로 입력해야 함)
+        output : 인출/입금 후 잔액 (단, 해당 유저의 데이터가 없는 경우 -1, 잔고가 부족한 경우 -2)'''
         db = list()
         amount = int(amount)
         status = -1
@@ -97,7 +98,7 @@ class c도박(commands.Cog):
         else:
             with open('data.csv','a',newline='',encoding='utf-8') as a:
                 writer = csv.writer(a)
-                writer.writerow([uid,amount])
+                writer.writerow([uid,amount,int(time.time())-604800])
             with open('log.txt','a',encoding='utf-8') as b:
                 b.write('{time}\t{uid}\t설정\t데이터 생성 완료, 초기 금액 : {amount}\n{time}\t{uid}\t설정\t데이터 기록 완료\n'.format(time=dt.now(),uid=uid,amount=amount))
             return amount * -1
@@ -161,7 +162,7 @@ class c도박(commands.Cog):
                     embed.set_footer(text='설레봇 룰렛 | code = {}'.format(결과))
                     print('{} 현재 룰렛에서 올바르지 않은 결과 발생!'.format(dt.now()))
                 return embed
-    
+     
     def 고배율임베드(self, amount):
         if amount == 0:
             배율 = 5572
@@ -289,6 +290,26 @@ class c도박(commands.Cog):
             print('{} 현재 룰렛에서 올바르지 않은 결과 발생!'.format(dt.now()))
         return embed,배율
      
+    def 회생일체크(self,uid):
+        exist = False
+        with open('data.csv','r',newline='',encoding='utf-8') as a:
+            reader = csv.reader(a)
+            for line in reader:
+                if line[0] == str(uid):
+                    exist = True
+                    with open('log.txt','a',encoding='utf-8') as b:
+                        b.write('{}\t{}\t회생조회\t회생일 : {}\n'.format(dt.now(),uid,line[2]))
+                    try:
+                        return int(line[2])
+                    except(ValueError):
+                        return -3
+        # .설레 도박 조회 명령어에서는 -1값이 반환되면 자동으로 db추가를 진행하는 기능을 추가해야 함
+        # 이 외의 경우에는 그냥 데이터가 없다고만 출력
+        if exist == False:
+            with open('log.txt','a',encoding='utf-8') as b:
+                b.write('{}\t{}\t회생조회\t회생일 : 데이터 없음\n'.format(dt.now(),uid))
+            return -1
+     
     @commands.command()
     async def 도박(self,ctx,*,text='조회'):
         메뉴 = text.split(' ')[0]
@@ -340,7 +361,9 @@ class c도박(commands.Cog):
                 embed.set_footer(text='설레봇 룰렛 | code = {}'.format(잔액))
                 await ctx.send(embed=embed)
         elif(메뉴 == "회생"):
-            await ctx.send("아쉽게도 자동 회생 기능은 지금의 하늘토끼의 기술로는 구현하기 힘들다는 결론이 났어요. 2학년 때 고급파이썬을 배우면 구현해볼게요. 일단은 하늘토끼를 불러주세요.\n유용한 정보를 한 가지 드릴게요. 한국도박문제예방치유원에서 운영하는 도박문제 전화상담 헬프라인은 국번 없이 1336번이에요. 한 번 전화해서 도움을 받아보시는 게 어떤가요?")
+            h결과 = self.회생일체크(ctx.message.author.id)
+            if h결과 >= int(time.time())-604800:
+                await ctx.send('회생은 일주일에 한 번만 할 수 있어요!\n한국도박문제예방치유원에서 운영하는 도박문제 전화상담 헬프라인은 국번 없이 1336번이에요. 한 번 전화해서 도움을 받아보시는 게 어떤가요?')
         elif 메뉴 == '임베드':
             try:
                 amount = int(text.split(' ')[1])
@@ -358,7 +381,10 @@ class c도박(commands.Cog):
                 await ctx.send('하토님, 소지금 수동으로 처리하는 거 잊지 마세요! 룰렛 돌린 금액 × (배율-1) 만큼 더하셔야 돼요.',embed=embed)
         elif 메뉴 == '설정':
             if ctx.message.author.id == 971036318035501066:
-                uid = int(text.split(' ')[1])
+                if text.split(' ')[1][:2] == '<@':
+                    uid = int(text.split(' ')[1][2:-1])
+                else:
+                    uid = int(text.split(' ')[1])
                 amount = int(text.split(' ')[2])
                 s결과 = self.설정(uid,amount)
                 user = str(await self.bot.fetch_user(uid))
@@ -370,7 +396,10 @@ class c도박(commands.Cog):
                 await ctx.send('이 메뉴는 하늘토끼만 사용할 수 있어요.')
         elif 메뉴 == '변경':
             if ctx.message.author.id == 971036318035501066:
-                uid = int(text.split(' ')[1])
+                if text.split(' ')[1][:2] == '<@':
+                    uid = int(text.split(' ')[1][2:-1])
+                else:
+                    uid = int(text.split(' ')[1])
                 amount = int(text.split(' ')[2])
                 s결과 = self.변경(uid,amount,True)
                 user = str(await self.bot.fetch_user(uid))

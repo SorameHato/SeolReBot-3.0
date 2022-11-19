@@ -16,8 +16,7 @@ class 기타(commands.Cog):
     
     @commands.command()
     async def 테스트2(self, ctx, mention):
-        mention = mention[2:]
-        mention = mention[:-1]
+        mention = mention[2:-1]
         await ctx.send('테스트 결과입니다!\n> 멘션할 때 들어오는 데이터의 타입 : {}, 정제 결과 : {}'.format(type(mention),mention))
     
     @commands.command()

@@ -154,3 +154,4 @@ cython_debug/
 token.txt
 log.txt
 data.csv
+data_formal.csv
