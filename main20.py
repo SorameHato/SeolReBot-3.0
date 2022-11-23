@@ -10,7 +10,7 @@ intents = discord.Intents.default()
 intents.message_content = True
 bot = commands.Bot(command_prefix='.설레 ', intents=intents)
 
-ver = "3.0_2022111915 rev 29.1 build 54"
+ver = "3.0_2022111915-03(20221122) rev 30.2 build 57"
 bot.srver = ver
 
 # @bot.command(name="관리 언로드")

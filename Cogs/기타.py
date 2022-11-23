@@ -1,6 +1,9 @@
 # coding: utf-8
 import discord
 from discord.ext import commands
+import math
+import asyncio
+import time
 
 class 기타(commands.Cog):
     def __init__(self,bot):
@@ -22,6 +25,16 @@ class 기타(commands.Cog):
     @commands.command()
     async def 테스트3(self, ctx):
         await ctx.send(f'서버ID : {ctx.message.guild.id}')
+    
+    @commands.command()
+    async def 타이머(self,ctx,*,text):
+        times = int(text.split(' ')[0])
+        times_글자수 = int(math.log10(times))+2
+        message = text[times_글자수:]
+        await ctx.send(f'{times}초 뒤에 "{message}"라는 메세지를 전송할게요!')
+        await asyncio.sleep(times)
+        await ctx.send(message)
+        
     
     @commands.command()
     async def 정보(self, ctx):
