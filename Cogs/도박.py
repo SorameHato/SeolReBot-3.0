@@ -267,10 +267,10 @@ class c도박(commands.Cog):
             #embed.set_image(url='')
         elif amount == 16:
             배율 = 9    
-            embed = discord.Embed(title='축하드려요! 무려 9배에요!',description='운이 좋은 당신을 시라토리 쿠루미가 같이 축하드려요. (\'쿠\'루미 → 9)',color=0xbbbbff)
+            embed = discord.Embed(title='축하드려요! 무려 9배에요!',description='운이 좋은 당신을 신인 성우 육성 게임/애니메이션 CUE!의 전원이 같이 축하드려요. (\'큐\' → 九 → 9)',color=0xbbbbff)
             embed.add_field(name='배율',value='x9',inline=True)
             embed.add_field(name='확률',value='0.4992%',inline=True)
-            #embed.set_image(url='')
+            embed.set_image(url='https://pbs.twimg.com/media/FiynUdRUoAAFh8i?format=jpg&name=large')
         elif amount == 17:
             배율 = 8    
             embed = discord.Embed(title='축하드려요! 무려 8배에요!',description='운이 좋은 당신을 야마가타 마리카가 같이 축하드려요. (마리카는 まり花 → 花는 하나로도 읽을 수 있음 → 하나는 고로아와세하면 87, 근데 87은 이미 와타텐의 귀여운 생명체 하나짱이 있어서 8배)',color=0xbbbbff)
