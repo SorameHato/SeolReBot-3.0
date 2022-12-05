@@ -19,7 +19,7 @@ class c도박(commands.Cog):
     def 조회(self,uid):
         '''해당 유저의 잔고를 조회하는 명령어
         input : uid (ctx.message.author.id 로 얻은 해당 유저의 id)
-        output : 해당 유저의 잔액(단, 해당 유저의 데이터가 없는 경우 -1)'''
+        output: 해당 유저의 잔액(단, 해당 유저의 데이터가 없는 경우 -1, 데이터가 잘못 읽힌 경우 (str형으로 읽힌다던가...) -3)'''
         exist = False
         with open('data.csv','r',newline='',encoding='utf-8') as a:
             reader = csv.reader(a)
@@ -42,27 +42,33 @@ class c도박(commands.Cog):
     def 변경(self,uid,amount,manual=False):
         '''해당 유저의 잔고를 변경하는 명령어
         input : uid (ctx.message.author.id 로 얻은 해당 유저의 id)
-        amount (얼마나 변경할 것인지, 주의해야 할 점은 잔액을 인출하는 경우 음수로 입력해야 함, 그리고 절댓값을 입력하는 게 아님. 26만원에서 25만 5천원으로 변경하고 싶으면 255000이 아닌 -5000으로 입력해야 함)
-        output : 인출/입금 후 잔액 (단, 해당 유저의 데이터가 없는 경우 -1, 잔고가 부족한 경우 -2)'''
+                amount (얼마나 변경할 것인지, 주의해야 할 점은 잔액을 인출하는 경우 음수로 입력해야 함, 그리고 절댓값을 입력하는 게 아님. 26만원에서 25만 5천원으로 변경하고 싶으면 255000이 아닌 -5000으로 입력해야 함, 그리고 int형으로 입력해야 함)
+                manual (수동으로 변경하는 경우 True, 아니면 생략하거나 False, 로그 기록에서 차이가 있음)
+        output: 인출/입금 후 잔액 (단, 해당 유저의 데이터가 없는 경우 -1, 잔고가 부족한 경우 -2, 데이터가 잘못 읽힌 경우 -3)'''
         db = list()
         amount = int(amount)
-        status = -1
+        status = -1 #기본값 (데이터가 없는 경우)
         with open('data.csv','r',newline='',encoding='utf-8') as a:
             reader = csv.reader(a)
             for line in reader:
                 if line[0] == str(uid):
-                    if int(line[1]) + amount >= 0:
-                        line[1] = int(line[1]) + amount
-                        ret = line[1]
-                        with open('log.txt','a',encoding='utf-8') as b:
-                            b.write('{}\t{}\t변경\t소지금 : {} → {} (amount : {})\n'.format(dt.now(),uid,ret-amount,ret,amount))
-                        status = 1
+                    try:
+                        int(line[1]) #금액을 int형으로 변환할 수 있는지 체크
+                    except(ValueError):
+                        status = -3 #금액이 올바르지 않은 경우 (str형이라던가...)
                     else:
-                        with open('log.txt','a',encoding='utf-8') as b:
-                            b.write('{}\t{}\t변경\t소지금 : {} → (잔고 부족으로 인한 변경 실패, amount : {})\n'.format(dt.now(),uid,line[1],amount))
-                        status = -2
+                        if int(line[1]) + amount >= 0: #잔고가 충분한지 확인
+                            line[1] = int(line[1]) + amount
+                            ret = line[1]
+                            with open('log.txt','a',encoding='utf-8') as b:
+                                b.write('{}\t{}\t변경\t소지금 : {} → {} (amount : {})\n'.format(dt.now(),uid,ret-amount,ret,amount))
+                            status = 1
+                        else: #잔고가 부족한 경우
+                            with open('log.txt','a',encoding='utf-8') as b:
+                                b.write('{}\t{}\t변경\t소지금 : {} → (잔고 부족으로 인한 변경 실패, amount : {})\n'.format(dt.now(),uid,line[1],amount))
+                            status = -2
                 db.append(line)
-        if status == 1:
+        if status == 1: #정상적으로 처리된 경우
             with open('data.csv','w',newline='',encoding='utf-8') as a:
                 writer = csv.writer(a)
                 writer.writerows(db)
@@ -72,20 +78,25 @@ class c도박(commands.Cog):
                 else:
                     b.write('{}\t{}\t변경\t데이터 기록 완료\n'.format(dt.now(),uid))
             return ret
-        else:
+        else: #예외가 발생한 경우
             return status
      
     def 설정(self,uid,amount,revival=False):
+        '''해당 유저의 잔고를 특정 금액으로 설정하는 명령어
+        input : uid (ctx.message.author.id 로 얻은 해당 유저의 id)
+                amount (잔고를 얼마로 설정할 것인지, int형으로 입력해야 함)
+                revival (회생을 하는 경우 True, 수동으로 변경하거나 데이터 초기 생성인 경우 생략하거나 False, 로그 기록 상에만 차이가 있음)
+        output: 설정 후 잔액 (단, 해당 유저의 데이터가 없어서 새로 만드는 경우 -1 × 설정 후 잔액)'''
         db = list()
-        status = -1
+        status = -1 #기본값 (데이터가 없는 경우)
         with open('data.csv','r',newline='',encoding='utf-8') as a:
             reader = csv.reader(a)
             for line in reader:
                 if line[0] == str(uid):
-                    original = line[1]
-                    line[1] = amount
-                    if revival == True:
-                        line[2] = int(time.time())
+                    original = line[1] #로그 기록용으로 원래의 값을 저장해 둠
+                    line[1] = amount   #값을 주어진 amount로 설정함
+                    if revival == True:            #회생을 하는 경우
+                        line[2] = int(time.time()) #최종 회생 시간을 현재 시간으로 설정
                         with open('log.txt','a',encoding='utf-8') as b:
                             b.write('{}\t{}\t설정\t소지금 : {} → {} (회생)\n'.format(dt.now(),uid,original,amount))
                     else:
@@ -100,10 +111,10 @@ class c도박(commands.Cog):
             with open('log.txt','a',encoding='utf-8') as b:
                 b.write('{}\t{}\t설정\t데이터 기록 완료\n'.format(dt.now(),uid))
             return amount
-        else:
+        else: #일치하는 데이터가 없는 경우 (초기 생성)
             with open('data.csv','a',newline='',encoding='utf-8') as a:
                 writer = csv.writer(a)
-                writer.writerow([uid,amount,int(time.time())-604800])
+                writer.writerow([uid,amount,int(time.time())-604800]) #데이터 생성 작업, 최초 1회한도로 바로 회생이 가능하도록 회생시간을 현재 시간으로부터 정확히 1주일 전으로 설정함
             with open('log.txt','a',encoding='utf-8') as b:
                 b.write('{time}\t{uid}\t설정\t데이터 생성 완료, 초기 금액 : {amount}\n{time}\t{uid}\t설정\t데이터 기록 완료\n'.format(time=dt.now(),uid=uid,amount=amount))
             return amount * -1
