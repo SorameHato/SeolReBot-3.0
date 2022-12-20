@@ -11,7 +11,7 @@ class 기타(commands.Cog):
     
     @commands.command()
     async def ping(self, ctx):
-        await ctx.send(f'pong! {round(round(bot.latency, 4)*1000)}ms') # 봇의 핑을 pong! 이라는 메세지와 함께 전송한다. latency는 일정 시간마다 측정됨에 따라 정확하지 않을 수 있다.
+        await ctx.send(f'pong! {round(round(self.bot.latency, 4)*1000)}ms') # 봇의 핑을 pong! 이라는 메세지와 함께 전송한다. latency는 일정 시간마다 측정됨에 따라 정확하지 않을 수 있다.
     
     @commands.command()
     async def 테스트(self, ctx):
