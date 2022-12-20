@@ -1,13 +1,18 @@
 # coding: utf-8
 import discord
 from discord.ext import commands
+global guild_ids
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
+from main31 import guild_ids
 
 class _열번분석(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
     
-    @commands.command()
-    async def 열번분석(self,ctx,*,arg):
+    @commands.slash_command(name='열번분석',guild_ids=guild_ids,description='가상 철도회사 설빈레피딕스의 열차 번호를 분석해드려요!')
+    async def 열번분석(self,ctx,*,arg:discord.Option(str,'\'SM\'으로 시작하는 9자리 열번을 입력해주세요.',name='열번')):
         if arg[0:2]=='SM' and len(arg) == 9: #설빈레피딕스 도시철도 열차
             종류=0 #기본값
             노선명='존재하지 않는 노선입니다.'                        #노선/등급/라이너 정보가 오류로 인해
@@ -23,7 +28,7 @@ class _열번분석(commands.Cog):
                     종류=등급분류[i][1] #도시철도 열차는 1, 라이너는 2
                     등급명=등급분류[i][2] #등급명
             if(종류==0): #등급 분류에 실패한 경우
-                await ctx.send('등급이 올바르지 않아요! V03.01 개편 이후의 열번을 입력해주세요.')
+                await ctx.respond('등급이 올바르지 않아요! V03.01 개편 이후의 열번을 입력해주세요.')
             elif(종류==1): #도시철도
                 try:
                     노선 = int(arg[4:6])
@@ -56,15 +61,15 @@ class _열번분석(commands.Cog):
                 embed.add_field(name="노선명",value=노선명, inline=True)
                 embed.add_field(name="등급명",value=등급명, inline=True)
                 embed.set_footer(text='설빈레피딕스 도시철도 열차 열번 분석 결과')
-                await ctx.send(embed=embed)
+                await ctx.respond(embed=embed)
             elif(종류==2): #라이너
                 try:
                     열번 = int(arg[4:9])
                 except(ValueError):
-                    await ctx.send('라이너 열차의 경우, SMLN 뒤의 다섯자리는 전부 숫자로 변경되었어요. 다시 확인하시고 입력해주세요.')
+                    await ctx.respond('라이너 열차의 경우, SMLN 뒤의 다섯자리는 전부 숫자로 변경되었어요. 다시 확인하시고 입력해주세요.')
                 else:
                     if(열번<=9999 or 열번>=40000):
-                        await ctx.send('라이너 열차의 열번이 올바르지 않아요.')
+                        await ctx.respond('라이너 열차의 열번이 올바르지 않아요.')
                     else:
                         if(열번<=20000):
                             라이너종류='통근 라이너'
@@ -161,16 +166,16 @@ class _열번분석(commands.Cog):
                         else:
                             embed.add_field(name="라이너 이름",value=라이너명, inline=False)
                         embed.set_footer(text='설빈레피딕스 라이너 열차 열번 분석 결과')
-                        await ctx.send(embed=embed)
+                        await ctx.respond(embed=embed)
             else:
-                await ctx.send('데이터 처리 중 오류가 발생했어요. 다시 시도하시거나 열번을 다시 확인해주세요!')
+                await ctx.respond('데이터 처리 중 오류가 발생했어요. 다시 시도하시거나 열번을 다시 확인해주세요!')
         elif arg[0:2]=='SF': #설빈레피딕스 화물열차
-            await ctx.send('아직 화물열차는 구현되지 않았어요. 빠른 시일 내에 구현할게요!')
+            await ctx.respond('아직 화물열차는 구현되지 않았어요. 빠른 시일 내에 구현할게요!')
         else: #설레 열차가 아닌 경우
-            await ctx.send('열번이 올바르지 않거나, 설빈레피딕스의 열번이 아니에요. 다시 확인하시고 입력해주세요!')
+            await ctx.respond('열번이 올바르지 않거나, 설빈레피딕스의 열번이 아니에요. 다시 확인하시고 입력해주세요!')
     
-    @commands.command()
-    async def 약어조회(self,ctx,text=''):
+    @commands.slash_command(name='약어조회',guild_ids=guild_ids,description='가상 철도회사 설빈레피딕스의 STORM 전산망에서 쓰이는 약어 목록을 조회할 수 있어요!')
+    async def 약어조회(self,ctx,text:discord.Option(str,'조회하고 싶으신 약어의 종류를 선택해주세요.',name='종류',choices=['도시철도','라이너'],required=True)):
         embed = discord.Embed(title='전산 상 약어 목록이에요!',description='설빈레피딕스의 STORM 전산망에서 쓰이는 약어 목록이에요.',color=0x04ccff)
         embed.set_footer(text='설빈레피딕스 전산 약어 조회 결과')
         if(text=='도시철도'):
@@ -182,9 +187,9 @@ class _열번분석(commands.Cog):
             embed.add_field(name='약어',value='다운\n글로\n선셋\n새틀\n리버\n어반\n쿠로\n아오\n유키\n아메\n호시\n카페\n포레\n스타\n트익',inline=True)
             embed.add_field(name='전광판',value='dAWN\nGLOW\nSNST\nSTNW\nRIVR\nURBN\nKUR\nAO\nYUKI\nAME\nHOSH\nCASP\nFORE\nSTAR\nTWEX',inline=True)
         else:
-            embed.add_field(name='도시철도 약어 조회',value='.설레 약어조회 도시철도',inline=False)
-            embed.add_field(name='라이너 열차 약어 조회',value='.설레 약어조회 라이너',inline=False)
-        await ctx.send(embed=embed)
+            embed.add_field(name='도시철도 약어 조회',value='/약어조회 도시철도',inline=False)
+            embed.add_field(name='라이너 열차 약어 조회',value='/약어조회 라이너',inline=False)
+        await ctx.respond(embed=embed)
 
-async def setup(bot):
-    await bot.add_cog(_열번분석(bot))
+def setup(bot):
+    bot.add_cog(_열번분석(bot))
