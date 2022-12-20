@@ -6,7 +6,7 @@ global guild_ids
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__)))) #상위폴더의 파일을 import할 수 있게 해주는 거
-from main31 import guild_ids
+from main import guild_ids
 
 class _확률(commands.Cog):
     def __init__(self,bot):

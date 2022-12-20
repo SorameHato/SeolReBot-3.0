@@ -6,7 +6,7 @@ global guild_ids
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
-from main31 import guild_ids
+from main import guild_ids
 
 class _식사추천(commands.Cog):
     def __init__(self,bot):
