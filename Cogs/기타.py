@@ -17,12 +17,12 @@ class _기타(commands.Cog):
     
     @commands.slash_command(name='선서', description='단비교를 만들고 싶은 하토가 새벽감성을 이용해서 만든 명령어. 단비냐아의 광신도인 분들만 사용해주세요!', guild_ids = [959065568135241728])
     async def 단비냐아(self, ctx):
-        embed = discord.Embed(title=f'나, \'{ctx.author}\'는 선서합니다.',description='나는 다음의 명제가 사실임을 증명하며, 어떤 일이 있어도 단비냐아를 찬양하겠습니다.\n**하나!** 단비냐아는 **세상에서 제일 귀엽다.**\n**하나!** 단비냐아의 **목소리도** 세상에서 제일 **귀엽다.**\n**하나!** 단비냐아는 **천사만큼** 착하며 상냥하다.\n**하나!** 단비냐아는 그림도 엄청 잘 그린다.\n**하나!** 단비냐아는 노래도 잘 부른다.\n**하나!** 암튼 단비냐아는 여신이다.\n\n~~이래서 광신도만 쓰라고 한 거에요~~\n커밋 수 늘리기 위한 뻘짓!\n사진 출처 : https://twitter.com/mirage_star_602/status/1571415233142624257?s=20',color=0xffbbee)
+        embed = discord.Embed(title=f'나, \'{ctx.author}\'는 선서합니다.',description='나는 다음의 명제가 사실임을 증명하며, 어떤 일이 있어도 단비냐아를 찬양하겠습니다.\n**하나!** 단비냐아는 **세상에서 제일 귀엽다.**\n**하나!** 단비냐아의 **목소리도** 세상에서 제일 **귀엽다.**\n**하나!** 단비냐아는 **천사만큼** 착하며 상냥하다.\n**하나!** 단비냐아는 그림도 엄청 잘 그린다.\n**하나!** 단비냐아는 노래도 잘 부른다.\n**하나!** 암튼 단비냐아는 여신이다. 아메-ㄴ!\n\n~~이래서 광신도만 쓰라고 한 거에요~~\n커밋 수 늘리기 위한 뻘짓!\n사진 출처 : https://twitter.com/mirage_star_602/status/1571415233142624257?s=20',color=0xffbbee)
         embed.set_footer(text='설레봇 버전 3.1_20221220A3 rev 1.7 build 162\n하루에 103번 버전 갱신을 한 날을 기념하기 위해 버전 번호를 고정해놨습니다. 현재 버전은 /정보 명령어를 통해 확인해주세요! (사실 이것도 다른 거 다 하고 나니까 97번이라 100번 채우려고 만들었다고 하네요)')
         embed.set_image(url='https://pbs.twimg.com/media/Fc7Jy_8aUAMw949?format=jpg&name=large')
         await ctx.respond(embed=embed)
     
-    @commands.slash_command(name='핑', guild_ids=guild_ids, description="이나리가 '퐁!' 하면서 현재 봇의 레이턴시를 알려줘요!")
+    @commands.slash_command(name='핑', guild_ids=guild_ids, description="이나리가 '퐁!' 하면서 현재 설레봇의 레이턴시를 알려줘요!")
     async def ping(self, ctx):
         embed = discord.Embed(title="퐁!", description=f"포퐁! (현재의 레이턴시가 {round(round(self.bot.latency, 4)*1000)} ms라고 하는 것 같다.)", color=0x04ccff)
         embed.set_footer(text='설레봇 버전 {}'.format(self.bot.srver))
