@@ -47,6 +47,10 @@ class _기타(commands.Cog):
         embed.set_footer(text='설레봇 버전 {}'.format(self.bot.srver))
         await ctx.respond(embed=embed)
     
+    @commands.slash_command(name='업뎃내역',guild_ids=guild_ids,description='설레봇의 업데이트 내역이에요!')
+    async def 업뎃내역(self, ctx):
+        await ctx.respond(f'업데이트 내역은 아래의 링크에서 보실 수 있어요! 현재 설레봇의 버전은 {self.bot.srver}이에요.\nhttps://hato0832.notion.site/3-1-5a2571c36a174b86b83a644d4795b2a9')
+    
     @commands.slash_command(name='소개',guild_ids=guild_ids,description='설빈레피딕스와 유설레의 간단한 설명이에요!')
     async def 소개(self,ctx):
         embed = discord.Embed(color=0x04ccff)
