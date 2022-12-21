@@ -24,9 +24,9 @@ class _기타(commands.Cog):
     
     @commands.slash_command(name='핑', guild_ids=guild_ids, description="이나리가 '퐁!' 하면서 현재 봇의 레이턴시를 알려줘요!")
     async def ping(self, ctx):
-        embed = discord.Embed(title="퐁!", description=f"포퐁! (현재의 레이턴시가 {round(round(self.bot.latency, 4)*1000)} ms라고 하는 것 같다.)", color=0xFFFFFF)
+        embed = discord.Embed(title="퐁!", description=f"포퐁! (현재의 레이턴시가 {round(round(self.bot.latency, 4)*1000)} ms라고 하는 것 같다.)", color=0x04ccff)
         embed.set_footer(text='설레봇 버전 {}'.format(self.bot.srver))
-        embed.set_image(url='https://static.wikia.nocookie.net/summerpockets/images/a/aa/Inari01.png/revision/latest?cb=20180609000113')
+        embed.set_thumbnail(url='https://static.wikia.nocookie.net/summerpockets/images/a/aa/Inari01.png/revision/latest?cb=20180609000113')
         await ctx.respond(embed=embed)
     
     @commands.slash_command(name='타이머',guild_ids=guild_ids,description='일정 시간 이후에 지정한 메세지를 전송해요! (아메시 잡을 때 유용해요)')
@@ -40,7 +40,7 @@ class _기타(commands.Cog):
     async def 정보(self, ctx):
         embed = discord.Embed(title='설레봇의 정보입니다!',color=0x04ccff)
         embed.add_field(name='버전',value=self.bot.srver,inline = False)
-        embed.add_field(name='기반이 된 버전',value='코드 : 2.5_2021021703 rev 6.3 build 14 (2021년 2월 18일 1시 0분 45초)\nDB1 : PJU:K:C:B:2021103105 (2021년 10월 31일 4시 3분 51초)\nDB2 : b102dff1ef5ddf5e3e9d7a4028656a90aa921252 (2022년 9월 21일 2시 47분)',inline = False)
+        embed.add_field(name='기반이 된 버전',value='코드 : 2.5_2021021703 rev 6.3 build 14 (2021년 2월 18일 1시 0분 45초)\nDB1 : PJU:K:C:B:2021103105 (2021년 10월 31일 4시 3분 51초)\nDB2 : b102dff1ef5ddf5e3e9d7a4028656a90aa921252 (2022년 9월 21일 2시 47분)\n코드2 : 3.0_2022120500 rev 30.3 build 58 (2022년 12월 8일 23시 53분)',inline = False)
         embed.add_field(name='개발자',value='하늘토끼(ghwls030306@s-r.ze.am)',inline = False)
         embed.add_field(name='깃허브 링크',value='https://github.com/SkyRabbITs/SeolReBot-3.0',inline = False)
         embed.add_field(name='설레봇이 시작된 시간',value=self.bot.LoadedTime,inline = False)
