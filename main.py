@@ -6,7 +6,7 @@ from datetime import datetime as dt
 import os
 import sys
 bot = discord.Bot()
-ver = "3.1_2022122519 rev 2.27 build 191"
+ver = "3.1_2022122520 rev 2.28 build 192"
 guild_ids = [
     959065568135241728, #단비냐아 서버
     971037283513946113 #노브 파이터
@@ -16,7 +16,7 @@ bot.srver = ver
 @bot.event
 async def on_ready():
     global LoadedTime
-    LoadedTime = "{0:04d}년 {1:02d}월 {2:02d}일 {3:02d}시 {4:02d}분 {5:02d}.{6:03d}초".format(dt.now().year, dt.now().month, dt.now().day, dt.now().hour, dt.now().minute, dt.now().second, int(dt.now().microsecond/1000))
+    LoadedTime = dt.now().strftime("%Y년 %m월 %d일 %H시 %M분 %S.{0:03d}초".format(int(dt.now().microsecond/1000)))
     bot.LoadedTime = LoadedTime
     print('┌────────────────────────────────────────────────────────┐\n│   {name}(#{id})으로 로그인되었습니다.   │\n│ 봇이 시작된 시각 : {LoadedTime} │\n└────────────────────────────────────────────────────────┘'.format(name=bot.user.name,id=bot.user.id,LoadedTime=LoadedTime))
     await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name='/도움말 | 설레봇 v3.1'))

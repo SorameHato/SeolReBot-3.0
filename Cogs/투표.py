@@ -7,7 +7,6 @@ import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from main import guild_ids
 from datetime import datetime
-import time
 
 class VoteModal(discord.ui.Modal):
     def __init__(self, *args, **kwargs) -> None:
@@ -33,7 +32,7 @@ class VoteModal(discord.ui.Modal):
             embed = discord.Embed(title="아래와 같은 투표를 성공적으로 시작했어요!")
             embed.add_field(name="투표명", value=voteData[0],inline=False)
             embed.add_field(name="항목", value=itemList[:-1],inline=False)
-            embed.add_field(name="종료일", value=time.strftime("%Y년 %m월 %d일 %H시 %M분 %S초",voteData[2]),inline=True)
+            embed.add_field(name="종료일", value=voteData[2].strftime("%Y년 %m월 %d일 %H시 %M분 %S초"),inline=True)
             await interaction.response.send_message(embed=embed)
 
 class _투표(commands.Cog):
