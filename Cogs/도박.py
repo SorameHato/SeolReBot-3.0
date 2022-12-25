@@ -352,7 +352,7 @@ class c도박(commands.Cog):
     @도박g.command(name='룰렛',description='룰렛을 돌릴 수 있어요!',guild_ids=guild_ids)
     async def roulette(self,ctx,amount:discord.Option(int,'룰렛을 돌릴 금액을 입력해주세요!',name='금액',min_value=0)):
         화폐단위 = self.서버설정체크(ctx.guild.id,1)
-        if amount % 100 == 0 and amount > 0:
+        if amount % 100 == 0:
             embed1 = self.잭팟(ctx.author.id,amount,화폐단위)
             if embed1 == -1:
                 embed2 = discord.Embed(title='처리 중 오류가 발생했어요!',description='{}님의 데이터가 존재하지 않아요. 먼저 조회를 하시면, 등록해드릴게요!'.format(ctx.author),color=0xfae5fa)
@@ -367,7 +367,7 @@ class c도박(commands.Cog):
             else:
                 await ctx.respond('룰렛의 결과에요!\n> 소지금이 음수로 표시되는 경우 진짜로 잔액이 마이너스가 된 게 아니라 오류로 룰렛의 결과가 반영이 되지 않은 경우에요. 이 경우, 하늘토끼를 호출해주시면 반영해드릴게요.',embed=embed1)
         else:
-            await ctx.respond('float형의 데이터가 불안정한 문제가 있어 모든 데이터를 int형으로 처리하기 위해 도박 기능을 100원 단위로만 쓸 수 있게 제한중이에요. 금액을 100원 단위로 입력해주세요! 또는 금액이 음수에요. 금액은 양수로 입력해주세요!')
+            await ctx.respond('float형의 데이터가 불안정한 문제가 있어 모든 데이터를 int형으로 처리하기 위해 도박 기능을 100원 단위로만 쓸 수 있게 제한중이에요. 금액을 100원 단위로 입력해주세요!')
     
     @도박g.command(name='조회',description='소지금을 조회할 수 있어요! 새로 들어오신 분은 도박을 하기 위한 데이터를 등록할 수 있어요!',guild_ids=guild_ids)
     async def inquire(self,ctx):
