@@ -6,7 +6,7 @@ from datetime import datetime as dt
 import os
 import sys
 bot = discord.Bot()
-ver = "3.1_2022122517 rev 2.25 build 189"
+ver = "3.1_2022122519 rev 2.27 build 191"
 guild_ids = [
     959065568135241728, #단비냐아 서버
     971037283513946113 #노브 파이터
