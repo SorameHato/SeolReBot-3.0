@@ -58,6 +58,13 @@ class _기타(commands.Cog):
         embed.add_field(name='유설레는?',value="자기소개에요! 이름은 유설레, 생년월일은 1998년 04월 30일이에요. 2021년 2월 기준 하늘민국 양서도 유신시 엔유구 강냥동(그 이하는 비밀!)에 살고 있고, 직업은 설빈레피딕스 기관사 겸 마스코트에요. 배속 승무사업소는 한설승무사업소인데 이상하게 출근은 맨날 세안조차장이나 엔유승무사업소로 하는 중이에요. 유신시 한설구가 아니라 유신시 엔유구에서 살고 있기도 하고요.\n취미는 아케이드판 전차로Go에서 '4㎝ 오버런'하기에요. 원래는 그루브코스터 할 때 쓰던 NESiCA를 쓰고 있었는데, 그루브코스터가 2022년 11월 말에 하드 용량 부족으로 업데이트를 중단한다고 해서 @의 캐릭터가 그려진 반다이남코 패스포트로 갈아탔어요. 설정상 히나비타의 메우 메우, 10번의 KAC에서 11번을 우승한 타츠 못지 않은 리듬게임 랭커에요. 주력 기종은 BeatStream... 이었는데 BeatStream이 죽었네요..? 그래서 이젠 평범한 고수가 되었어요.",inline=False)
         embed.set_footer(text='설레봇 버전 {} | 2020년 7월에 작성한 내용을 약간씩만 고쳐서 재활용했습니다. 지금과는 다른 내용이 일부 들어가있을 수 있습니다.'.format(self.bot.srver))
         await ctx.respond('저와 설빈레피딕스의 간단한 설명이에요!',embed=embed)
+    
+    @commands.slash_command(name='근하신년',guild_ids=guild_ids,description='설레봇으로부터의 새해 인사에요!')
+    async def 근하신년(self, ctx):
+        embed = discord.Embed(color=0xffbbee,title='새해 복 많이 받으세요!',description='\'와카짱은 오늘도 잔망스러워\'의 사쿠라바 와카짱이 여러분의 새해 복을 같이 빌어드려요! 한 해동안 정말 고마웠어요! -하늘토끼')
+        embed.set_image(url='https://pbs.twimg.com/media/FlUHn8TagAcC1Og?format=jpg&name=4096x4096')
+        embed.set_footer(text='설레봇 버전 {}'.format(self.bot.srver))
+        await ctx.respond(embed=embed)
 
 def setup(bot):
     bot.add_cog(_기타(bot))
