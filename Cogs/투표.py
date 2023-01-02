@@ -8,6 +8,16 @@ sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from main import guild_ids
 from datetime import datetime
 
+'''
+InitialVoteLoad 클래스의 역할 : 입력받은 vote의 기간까지 wait, 기간이 종료되면 결과를 전송
+
+1. 매 투표 시작시마다 투표 목록을 sqlite로 저장, 입력받은 정보로 InitialVoteLoad 클래스를 호출
+2. 봇 시작 시, 저장되어 있는 모든 투표에 대해 InitialVoteLoad 클래스를 하나하나 호출
+'''
+
+class InitialVoteLoad():
+    pass
+
 class VoteModal(discord.ui.Modal):
     def __init__(self, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
