@@ -16,7 +16,7 @@ bot.srver = ver
 @bot.event
 async def on_ready():
     global LoadedTime
-    LoadedTime = dt.now().strftime("%Y년 %m월 %d일 %H시 %M분 %S.{0:03d}초".format(int(dt.now().microsecond/1000)))
+    LoadedTime = str(dt.now().strftime("%Y년 %m월 %d일 %H시 %M분 %S.%f"))[:-3]+"초"
     bot.LoadedTime = LoadedTime
     print('┌────────────────────────────────────────────────────────┐\n│   {name}(#{id})으로 로그인되었습니다.   │\n│ 봇이 시작된 시각 : {LoadedTime} │\n└────────────────────────────────────────────────────────┘'.format(name=bot.user.name,id=bot.user.id,LoadedTime=LoadedTime))
     await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name='/도움말 | 설레봇 v3.1'))
