@@ -66,7 +66,7 @@ class _열번분석(commands.Cog):
                 try:
                     열번 = int(arg[4:9])
                 except(ValueError):
-                    await ctx.respond('라이너 열차의 경우, SMLN 뒤의 다섯자리는 전부 숫자로 변경되었어요. 다시 확인하시고 입력해주세요.')
+                    await ctx.respond('라이너 열차의 경우, SMLN 뒤의 다섯자리는 전부 숫자로 변경되었어요. (N4001 등으로 표시되는 트익도 전산상으로는 SMLN34001) 다시 확인하시고 입력해주세요.')
                 else:
                     if(열번<=9999 or 열번>=40000):
                         await ctx.respond('라이너 열차의 열번이 올바르지 않아요.')
