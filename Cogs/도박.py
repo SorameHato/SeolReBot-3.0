@@ -378,14 +378,14 @@ class c도박(commands.Cog):
             embed.add_field(name='닉네임',value=ctx.author,inline=True)
             embed.add_field(name='소지금',value=f'{잔액}{화폐단위}',inline=True)
             embed.set_footer(text='설레봇 룰렛')
-            await ctx.respond(embed=embed)
+            await ctx.respond('현재 도박 기능은 매우 불안정한 상황이에요. 2023년 01월 07일 기준 959065568135241728(아메의 오\ufffd…), 971037283513946113(Knob Figh…) 서버에 계셨던 분들은 잔액이나 화폐단위가 올바르게 표시되지 않을 가능성이 있어요. 2023년 6월 이내로 변경을 마칠 예정이니, 양해 부탁드릴게요!',embed=embed)
         elif 잔액 == -1:
             s결과 = self.설정(ctx.author.id,int(self.서버설정체크(ctx.guild.id,2)))
             embed = discord.Embed(title='조회 결과에요!', color=0xccffff)
             embed.add_field(name='닉네임',value=ctx.author,inline=True)
             embed.add_field(name='소지금',value=f'{s결과 * -1}{화폐단위}',inline=True)
             embed.set_footer(text='설레봇 룰렛')
-            await ctx.respond('{}님의 데이터가 없어서 새로 등록했어요!'.format(ctx.author),embed=embed)
+            await ctx.respond('{}님의 데이터가 없어서 새로 등록했어요!\n현재 도박 기능은 매우 불안정한 상황이에요. 2023년 01월 07일 기준 959065568135241728(아메의 오\ufffd…), 971037283513946113(Knob Figh…) 서버에 계셨던 분들은 잔액이나 화폐단위가 올바르게 표시되지 않을 가능성이 있어요. 2023년 6월 이내로 변경을 마칠 예정이니, 양해 부탁드릴게요!'.format(ctx.author),embed=embed)
         else:
             embed = discord.Embed(title='처리 중 오류가 발생했어요!',description='데이터가 올바르게 읽히지 않았어요. csv 파일을 직접 수정해야 해요. 하늘토끼를 불러주세요.',color=0xfae5fa)
             embed.add_field(name='소지금',value=f'{잔액}{화폐단위}',inline=False)
