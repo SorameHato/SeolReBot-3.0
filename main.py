@@ -6,10 +6,12 @@ from datetime import datetime as dt
 import os
 import sys
 bot = discord.Bot()
-ver = "3.1_2023032100 rev 2.33 build 197"
+ver = "3.2_2023051100 rev 2.33-ReBirth 01 build 198"
 guild_ids = [
+    1030056186915082262 #테스트용 서버
     #959065568135241728, 단비냐아 서버
     #971037283513946113 노브 파이터
+    #현재 전부 더미처리됨
     ]
 bot.srver = ver
 
@@ -19,7 +21,7 @@ async def on_ready():
     LoadedTime = str(dt.now().strftime("%Y년 %m월 %d일 %H시 %M분 %S.%f"))[:-3]+"초"
     bot.LoadedTime = LoadedTime
     print('┌────────────────────────────────────────────────────────┐\n│   {name}(#{id})으로 로그인되었습니다.   │\n│ 봇이 시작된 시각 : {LoadedTime} │\n└────────────────────────────────────────────────────────┘'.format(name=bot.user.name,id=bot.user.id,LoadedTime=LoadedTime))
-    await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name='/도움말 | 설레봇 v3.1'))
+    await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.listening, name='/도움말 | 설레봇 v3.2'))
 
 @bot.event
 async def on_application_command_error(ctx, error):
