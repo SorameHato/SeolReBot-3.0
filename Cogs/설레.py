@@ -250,9 +250,19 @@ class _설레(commands.Cog):
             embed.add_field(name='약어',value='일반\n일쾌\n선쾌\n일급\n통급\n쾌급\n특급\n고속',inline=True)
             embed.add_field(name='전광판',value='ORdN\nOdSW\nPTSW\nOdRP\nCMRP\nLMRP\nXCRP\nEXRP',inline=True)
         elif(text=='라이너'):
-            embed.add_field(name='라이너명',value='Dawn Express\nGlowing Express\nSunset Liner\nSatellite Network\nRiverShore Express\nUrban Liner\n쿠로카제\n아오조라\n유키카제\n아메카제\n호시유메\nCassioPeia\nForest Liner\nStarlight Express\nTwilight Express NightLiner',inline=True)
-            embed.add_field(name='약어',value='다운\n글로\n선셋\n새틀\n리버\n어반\n쿠로\n아오\n유키\n아메\n호시\n카페\n포레\n스타\n트익',inline=True)
-            embed.add_field(name='전광판',value='dAWN\nGLOW\nSNST\nSTNW\nRIVR\nURBN\nKUR\nAO\nYUKI\nAME\nHOSH\nCASP\nFORE\nSTAR\nTWEX',inline=True)
+            dummyLinerList = [['Nocturn Express','녹턴','NCTN'],['CassioPeia Traveler','카페P','CsoP'],['CassioPeia Commuter','카페C','CsoC'],['Twilight Express NightLiner','트익','TWXP'],['아메','아메','AME'],['호시','호시','HOSH'],['시로','시로','SHIR'],['쿠로','쿠로','KURO'],['후유','후유','FUYU'],['S특급 닛소라 (구로테츠선)','닛소','NTSR']]
+            dummyLinerResultText = ''
+            for linerArray in dummyLinerList:
+                    for realName, shortName, segmentName in linerArray:
+                        dummyLinerResultText += '\n'
+                        dummyLinerResultText += __fixedWidth__(realName,30,0)
+                        dummyLinerResultText += __fixedWidth__(shortName,6,0)
+                        dummyLinerResultText += __fixedWidth__(segmentName,4,0)
+                            
+            embed.add_field(name'라이너',value=dummyLinerResultText[1:],inline=False)
+            # embed.add_field(name='라이너명',value='Dawn Express\nGlowing Express\nSunset Liner\nSatellite Network\nRiverShore Express\nUrban Liner\n쿠로카제\n아오조라\n유키카제\n아메카제\n호시유메\nCassioPeia\nForest Liner\nStarlight Express\nTwilight Express NightLiner',inline=True)
+            # embed.add_field(name='약어',value='다운\n글로\n선셋\n새틀\n리버\n어반\n쿠로\n아오\n유키\n아메\n호시\n카페\n포레\n스타\n트익',inline=True)
+            # embed.add_field(name='전광판',value='dAWN\nGLOW\nSNST\nSTNW\nRIVR\nURBN\nKUR\nAO\nYUKI\nAME\nHOSH\nCASP\nFORE\nSTAR\nTWEX',inline=True)
         else:
             embed.add_field(name='도시철도 약어 조회',value='/약어조회 도시철도',inline=False)
             embed.add_field(name='라이너 열차 약어 조회',value='/약어조회 라이너',inline=False)
