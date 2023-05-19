@@ -43,6 +43,16 @@ class _설레(commands.Cog):
         resultText += str(rightText)
         return resultText
     
+    def __fixedWidth__(text:str,length:int,array:int=0)
+        '''입력받은 텍스트를 왼쪽 정렬, 가운데 정렬, 또는 오른쪽 정렬로 해서 고정된 넓이로 출력하는 함수
+        예를 들어 길이 11로 가나다라라는 텍스트를 출력하는 경우
+        array : 0 (왼쪽 정렬)   '가나다라   '
+        array : 1 (가운데 정렬) ' 가나다라  ' (만약 글자수가 정확히 반으로 안 나누어 떨어지면 (2의 배수가 아니면) 왼쪽으로, 공백을 오른쪽이 더 많게) : 추후 구현 예정
+        array : 2 (오른쪽 정렬) '   가나다라'
+        array : 3 (가운데 정렬) '  가나다라 ' (만약 글자수가 정확히 반으로 안 나누어 떨어지면 (2의 배수가 아니면) 오른쪽으로, 공백을 왼쪽이 더 많게) : 추후 구현 예정
+        fullWidth를 적용하긴 조금 그런 3개 이상의 표를 만들 때 유용'''
+        pass
+    
     @commands.slash_command(name='열번분석',guild_ids=guild_ids,description='가상 철도회사 설빈레피딕스의 열차 번호를 분석해드려요!')
     async def 열번분석(self,ctx,*,arg:discord.Option(str,'\'SM\'으로 시작하는 9자리 열번을 입력해주세요.',name='열번')):
         if arg[0:2]=='SM' and len(arg) == 9: #설빈레피딕스 도시철도 열차
