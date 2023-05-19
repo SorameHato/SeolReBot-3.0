@@ -11,6 +11,38 @@ class _설레(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
     
+    def __charLen__(text:str):
+        '''입력받은 텍스트의 너비를 구하는 함수
+        \u001b는 무시하도록 짜여져 있긴 하지만 \n, \t 같은 건 1로 치니까 주의할 것
+        아래의 fullWidth와 연관되어서 사용하고 디버그용으로 단독 호출도 가능하게 했음
+        실제 배포시엔 단독 호출은 불가능하게 해야겠지..? 근데 아마 배포할 일 같은 건 없을거야 아마
+        2023년 5월 11일 기준으론 난 꿈도 희망도 가망도 없는 공시를 볼 예정인 허접 개발자인 걸
+        text : 글자수를 알고 싶은 텍스트'''
+        a = 0
+        ps = False
+        for header in text:
+            if header == '\u001b':
+                ps = True
+            if ps == True:
+                if header == 'm':
+                    ps = False
+            else:
+                a += 1 if unicodedata.east_asian_width(header) not in 'WF' else 2
+        return a
+    
+    def __fullWidth__(leftText:str,rightText:str):
+        '''입력받은 텍스트 두 개를 하나는 왼쪽 정렬로, 하나는 오른쪽 정렬로 해서 출력하는 함수
+        난 ANSI 이스케이프 코드 중 커서를 움직이는 것 같은 건 모르니까 그냥 공백을 출력하는 것으로 구현했음
+        먼저 leftText를 출력하고, 그 다음 터미널의 너비에서 leftText의 너비, rightText의 너비를 뺀 너비만큼 공백을 출력하고
+        그 다음에 rightText를 출력하고 \n을 출력하는 함수
+        즉 예전에 했던 걸 자동화(?)한거라고 보면 됨
+        charLen 함수와 연동되어서 작동함'''
+        resultText = str(leftText)
+        blanks = 50 - charLen(leftText) - charLen(rightText)
+        resultText += ' '*blanks
+        resultText += str(rightText)
+        return resultText
+    
     @commands.slash_command(name='열번분석',guild_ids=guild_ids,description='가상 철도회사 설빈레피딕스의 열차 번호를 분석해드려요!')
     async def 열번분석(self,ctx,*,arg:discord.Option(str,'\'SM\'으로 시작하는 9자리 열번을 입력해주세요.',name='열번')):
         if arg[0:2]=='SM' and len(arg) == 9: #설빈레피딕스 도시철도 열차
