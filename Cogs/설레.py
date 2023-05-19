@@ -7,7 +7,7 @@ import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from main import guild_ids
 
-class _열번분석(commands.Cog):
+class _설레(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
     
