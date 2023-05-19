@@ -44,7 +44,7 @@ class _설레(commands.Cog):
         resultText += str(rightText)
         return resultText
     
-    def __fixedWidth__(text:str,length:int,array:int=0)
+    def __fixedWidth__(text:str,length:int,array:int=0):
         '''입력받은 텍스트를 왼쪽 정렬, 가운데 정렬, 또는 오른쪽 정렬로 해서 고정된 넓이로 출력하는 함수
         예를 들어 길이 11로 가나다라라는 텍스트를 출력하는 경우
         array : 0 (왼쪽 정렬)   '가나다라   '
@@ -63,12 +63,12 @@ class _설레(commands.Cog):
         # 만약 홀수라면 array가 1이면 왼쪽은 int((txtLen - length) / 2) 오른쪽은 int((txtLen - length) / 2) + 1
         #              array가 3이면 왼쪽은 int((txtLen - length) / 2) + 1 오른쪽은 int((txtLen - length) / 2)
         if array == 0:
-            return text + (' '*(txtLen - length))
+            return text + (' '*(length - txtLen))
         elif array == 2:
-            return (' '*(txtLen - length)) + text
+            return (' '*(length - txtLen)) + text
         elif array == 1 or array == 3:
-            halfLen = int((txtLen - length) / 2)
-            if (txtLen - length)%2 == 0:
+            halfLen = int((length - txtLen) / 2)
+            if (length - txtLen)%2 == 0:
                 return (' '*halfLen) + text + (' '*halfLen)
             else:
                 if array == 1:
