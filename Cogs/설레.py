@@ -250,14 +250,15 @@ class _설레(commands.Cog):
             embed.add_field(name='약어',value='일반\n일쾌\n선쾌\n일급\n통급\n쾌급\n특급\n고속',inline=True)
             embed.add_field(name='전광판',value='ORdN\nOdSW\nPTSW\nOdRP\nCMRP\nLMRP\nXCRP\nEXRP',inline=True)
         elif(text=='라이너'):
-            dummyLinerList = [['라이너명','약어','전광판'],['Nocturn Express','녹턴','NCTN'],['CassioPeia Traveler','카페P','CsoP'],['CassioPeia Commuter','카페C','CsoC'],['Twilight Express NightLiner','트익','TWXP'],['아메','아메','AME'],['호시','호시','HOSH'],['시로','시로','SHIR'],['쿠로','쿠로','KURO'],['후유','후유','FUYU'],['S특급 닛소라 (구로테츠선)','닛소','NTSR']]
-            dummyLinerResultText = ''
+            dummyLinerList = [['Nocturn Express','녹턴','NCTN'],['CassioPeia Traveler','카페P','CsoP'],['CassioPeia Commuter','카페C','CsoC'],['Twilight Express NightLiner','트익','TWXP'],['아메','아메','AME'],['호시','호시','HOSH'],['시로','시로','SHIR'],['쿠로','쿠로','KURO'],['후유','후유','FUYU'],['S특급 닛소라 (구로테츠선)','닛소','NTSR']]
+            dummyLinerResultText = __fixedWidth__('라이너명',30,1)
+            dummyLinerResultText += __fixedWidth__('약어',6,0)
+            dummyLinerResultText += __fixedWidth__('전광판',4,0)
             for linerArray in dummyLinerList:
-                    dummyLinerResultText += '\n'
-                    dummyLinerResultText += __fixedWidth__(linerArray[0],30,0)
-                    dummyLinerResultText += __fixedWidth__(linerArray[1],6,0)
-                    dummyLinerResultText += __fixedWidth__(linerArray[2],4,0)
-                            
+                dummyLinerResultText += '\n'
+                dummyLinerResultText += __fixedWidth__(linerArray[0],30,0)
+                dummyLinerResultText += __fixedWidth__(linerArray[1],6,0)
+                dummyLinerResultText += __fixedWidth__(linerArray[2],4,0)
             embed.add_field(name'라이너',value=dummyLinerResultText[1:],inline=False)
             # embed.add_field(name='라이너명',value='Dawn Express\nGlowing Express\nSunset Liner\nSatellite Network\nRiverShore Express\nUrban Liner\n쿠로카제\n아오조라\n유키카제\n아메카제\n호시유메\nCassioPeia\nForest Liner\nStarlight Express\nTwilight Express NightLiner',inline=True)
             # embed.add_field(name='약어',value='다운\n글로\n선셋\n새틀\n리버\n어반\n쿠로\n아오\n유키\n아메\n호시\n카페\n포레\n스타\n트익',inline=True)
