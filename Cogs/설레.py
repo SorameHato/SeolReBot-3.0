@@ -4,6 +4,7 @@ from discord.ext import commands
 global guild_ids
 import os
 import sys
+import unicodedata
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from main import guild_ids
 
@@ -50,8 +51,32 @@ class _설레(commands.Cog):
         array : 1 (가운데 정렬) ' 가나다라  ' (만약 글자수가 정확히 반으로 안 나누어 떨어지면 (2의 배수가 아니면) 왼쪽으로, 공백을 오른쪽이 더 많게) : 추후 구현 예정
         array : 2 (오른쪽 정렬) '   가나다라'
         array : 3 (가운데 정렬) '  가나다라 ' (만약 글자수가 정확히 반으로 안 나누어 떨어지면 (2의 배수가 아니면) 오른쪽으로, 공백을 왼쪽이 더 많게) : 추후 구현 예정
-        fullWidth를 적용하긴 조금 그런 3개 이상의 표를 만들 때 유용'''
-        pass
+        fullWidth를 적용하긴 조금 그렇고 각 열의 데이터의 글자수가 일정한 열 3개 이상의 표를 만들 때 유용
+        만약 text의 길이가 length보다 길면 그냥 그 text 자체를 추가 공백 없이 return 함'''
+        # 먼저 text의 길이를 체크
+        txtLen = __charLen__(text)
+        # 그 다음 text의 길이가 length보다 긴지 아닌지 체크
+        if txtLen >= length:
+            return text
+        # 그 다음 array의 종류를 체크, 0이나 2면 단순히 txtLen - length 만큼의 공백을 붙인 str열을 return
+        # 1이나 3이면 txtLen - length가 짝수면 단순히 양쪽에 int((txtLen - length) / 2) 만큼의 공백을 붙여서 출력하고
+        # 만약 홀수라면 array가 1이면 왼쪽은 int((txtLen - length) / 2) 오른쪽은 int((txtLen - length) / 2) + 1
+        #              array가 3이면 왼쪽은 int((txtLen - length) / 2) + 1 오른쪽은 int((txtLen - length) / 2)
+        if array == 0:
+            return text + (' '*(txtLen - length))
+        elif array == 2:
+            return (' '*(txtLen - length)) + text
+        elif array == 1 or array == 3:
+            halfLen = int((txtLen - length) / 2)
+            if (txtLen - length)%2 == 0:
+                return (' '*halfLen) + text + (' '*halfLen)
+            else:
+                if array == 1:
+                    return (' '*halfLen) + text + (' '*(halfLen+1))
+                else:
+                    return (' '*(halfLen+1)) + text + (' '*halfLen)
+        else:
+            return text
     
     @commands.slash_command(name='열번분석',guild_ids=guild_ids,description='가상 철도회사 설빈레피딕스의 열차 번호를 분석해드려요!')
     async def 열번분석(self,ctx,*,arg:discord.Option(str,'\'SM\'으로 시작하는 9자리 열번을 입력해주세요.',name='열번')):
