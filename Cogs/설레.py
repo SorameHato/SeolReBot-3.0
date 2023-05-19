@@ -246,20 +246,30 @@ class _설레(commands.Cog):
         embed = discord.Embed(title='전산 상 약어 목록이에요!',description='설빈레피딕스의 STORM 전산망에서 쓰이는 약어 목록이에요.',color=0x04ccff)
         embed.set_footer(text='설빈레피딕스 전산 약어 조회 결과')
         if(text=='도시철도'):
-            embed.add_field(name='등급명',value='일반\n일반쾌속\n선별쾌속\n일반급행\n통근급행\n쾌속급행\n특별급행\n고속급행',inline=True)
-            embed.add_field(name='약어',value='일반\n일쾌\n선쾌\n일급\n통급\n쾌급\n특급\n고속',inline=True)
-            embed.add_field(name='전광판',value='ORdN\nOdSW\nPTSW\nOdRP\nCMRP\nLMRP\nXCRP\nEXRP',inline=True)
+            dummyMetroList = [['일반','일반','ORdN'],['일반쾌속','일쾌','OdSW'],['선별쾌속','선쾌','PTSW'],['일반급행','일급','OdRP'],['통근급행','통급','CMRP'],['쾌속급행','쾌급','LMRP'],['특별급행','특급','XCRP'],['고속급행','고속','EXRP']]
+            dummyMetroResultText = __fixedWidth__('등급명',9,1)
+            dummyMetroResultText += __fixedWidth__('약어',5,0)
+            dummyMetroResultText += __fixedWidth__('전광판',6,2)
+            for metroArray in dummyMetroList:
+                dummyMetroResultText += '\n'
+                dummyMetroResultText += __fixedWidth__(metroArray[0],9,0)
+                dummyMetroResultText += __fixedWidth__(metroArray[1],5,0)
+                dummyMetroResultText += __fixedWidth__(metroArray[2],6,2)
+            embed.add_field(name'도시철도 약어 목록',value=dummyMetroResultText[1:],inline=False)
+            # embed.add_field(name='등급명',value='일반\n일반쾌속\n선별쾌속\n일반급행\n통근급행\n쾌속급행\n특별급행\n고속급행',inline=True)
+            # embed.add_field(name='약어',value='일반\n일쾌\n선쾌\n일급\n통급\n쾌급\n특급\n고속',inline=True)
+            # embed.add_field(name='전광판',value='ORdN\nOdSW\nPTSW\nOdRP\nCMRP\nLMRP\nXCRP\nEXRP',inline=True)
         elif(text=='라이너'):
-            dummyLinerList = [['Nocturn Express','녹턴','NCTN'],['CassioPeia Traveler','카페P','CsoP'],['CassioPeia Commuter','카페C','CsoC'],['Twilight Express NightLiner','트익','TWXP'],['아메','아메','AME'],['호시','호시','HOSH'],['시로','시로','SHIR'],['쿠로','쿠로','KURO'],['후유','후유','FUYU'],['S특급 닛소라 (구로테츠선)','닛소','NTSR']]
+            dummyLinerList = [['Nocturn Express','녹턴','NCTN'],['CassioPeia Traveler','카페P','CsoP'],['CassioPeia Commuter','카페C','CsoC'],['Twilight Express NightLiner','트익','TWXP'],['아메','아메','AME '],['호시','호시','HOSH'],['시로','시로','SHIR'],['쿠로','쿠로','KURO'],['후유','후유','FUYU'],['S특급 닛소라 (구로테츠선)','닛소','NTSR']]
             dummyLinerResultText = __fixedWidth__('라이너명',30,1)
             dummyLinerResultText += __fixedWidth__('약어',6,0)
-            dummyLinerResultText += __fixedWidth__('전광판',4,0)
+            dummyLinerResultText += __fixedWidth__('전광판',6,2)
             for linerArray in dummyLinerList:
                 dummyLinerResultText += '\n'
                 dummyLinerResultText += __fixedWidth__(linerArray[0],30,0)
                 dummyLinerResultText += __fixedWidth__(linerArray[1],6,0)
-                dummyLinerResultText += __fixedWidth__(linerArray[2],4,0)
-            embed.add_field(name'라이너',value=dummyLinerResultText[1:],inline=False)
+                dummyLinerResultText += __fixedWidth__(linerArray[2],6,2)
+            embed.add_field(name'라이너 열차 약어 목록',value=dummyLinerResultText[1:],inline=False)
             # embed.add_field(name='라이너명',value='Dawn Express\nGlowing Express\nSunset Liner\nSatellite Network\nRiverShore Express\nUrban Liner\n쿠로카제\n아오조라\n유키카제\n아메카제\n호시유메\nCassioPeia\nForest Liner\nStarlight Express\nTwilight Express NightLiner',inline=True)
             # embed.add_field(name='약어',value='다운\n글로\n선셋\n새틀\n리버\n어반\n쿠로\n아오\n유키\n아메\n호시\n카페\n포레\n스타\n트익',inline=True)
             # embed.add_field(name='전광판',value='dAWN\nGLOW\nSNST\nSTNW\nRIVR\nURBN\nKUR\nAO\nYUKI\nAME\nHOSH\nCASP\nFORE\nSTAR\nTWEX',inline=True)
