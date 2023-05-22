@@ -12,8 +12,10 @@ class _시간(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
     
-    def 시간사담(self,hour,minute):
-        tcode = hour * 60 + minute
+    def 시간사담(self, now):
+        # now 변수는 슬래시커맨드가 호출될 때 초기화되는 datetime 클래스를 그대로 상속시켜야 함 (이유 : tcode, weekcode 계산 방식 변경)
+        tcode = now.hour * 60 + now.minute
+        weekcode = 0 # 추후 dt 라이브러리를 구워삶아서 추가, 메세지를 월 6:30~금 18:00, 금 18:00~24:00, 토 00:00~24:00, 일 00:00~월 06:30으로 세분화하기
         if(tcode <= 30 or tcode > 1380):
             return('슬슬 잘 준비를 해야 할 시간이네요! 저는 오늘 야간 운행이라 못 자지만요. 하암...')
         elif(tcode > 30 and tcode <= 330):
@@ -33,11 +35,12 @@ class _시간(commands.Cog):
         elif(tcode > 1260 and tcode <= 1380):
             return('이제 완전히 밤이네요. 이 시간에는 평소에 하지 못 했던 취미생활을 해 보는 게 어떨까요?')
         else:
-            return('오류가 발생해 사담을 처리하지 못했어요. 명령어를 처리하는 도중에 각 시 59분 59초가 지나면 드물게 발생할 수 있는 오류니까, 다시 한 번 시도해주세요!')
+            return('오류가 발생해 사담을 처리하지 못했어요. 명령어를 처리하는 도중에 각 시 29분 59초나 59분 59초가 지나면 드물게 발생할 수 있는 오류니까, 다시 한 번 시도해주세요!')
     
     @commands.slash_command(name='시간',guild_ids=guild_ids,description='현재 시간을 간단한 사담을 덧붙여서 알려줘요!')
     async def 시간(self,ctx):
-        await ctx.respond('삐, 삐, 삐! 당신의 설레임과 함께, 설빈레피딕스에서 {0:04d}년 {1:02d}월 {2:02d}일 {3:02d}시 {4:02d}분 {5:02d}.{6:03d}초를 알려드립니다.\n{7}\n이 사담은 2020년 9월 경 설레봇을 \'신 교통동호인 채팅방\'에서 돌릴 때 작성되었어요. 하늘토끼의 가상국가/가상철도 세계관과 관련되어 있거나 지금과는 맞지 않는 내용이 있을 수 있으니 양해 부탁드려요!'.format(dt.now().year, dt.now().month, dt.now().day, dt.now().hour, dt.now().minute, dt.now().second, int(dt.now().microsecond/1000),self.시간사담(dt.now().hour,dt.now().minute)))
+        now = dt.now()
+        await ctx.respond('삐, 삐, 삐! 당신의 설레임과 함께, 설빈레피딕스에서 {0:04d}년 {1:02d}월 {2:02d}일 {3:02d}시 {4:02d}분 {5:02d}.{6:03d}초를 알려드립니다.\n{7}\n이 사담은 2020년 9월 경 설레봇을 \'신 교통동호인 채팅방\'에서 돌릴 때 작성되었어요. 하늘토끼의 가상국가/가상철도 세계관과 관련되어 있거나 지금과는 맞지 않는 내용이 있을 수 있으니 양해 부탁드려요!'.format(now.year, now.month, now.day, now.hour, now.minute, now.second, int(now.microsecond/1000),self.시간사담(now)))
 
 def setup(bot):
     bot.add_cog(_시간(bot))
