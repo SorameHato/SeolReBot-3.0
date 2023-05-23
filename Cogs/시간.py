@@ -16,12 +16,14 @@ class _시간(commands.Cog):
         self.bot = bot
     
     def __time__(self, hour, minute=0, second=0)
-        return time(hour=hour,minute=minute,second=second)
+        return time(hour=hour,minute=minute,second=second,tzinfo=tz(td(hours=9)))
     
     def 시간사담(self, now):
         # now 변수는 슬래시커맨드가 호출될 때 초기화되는 datetime 클래스를 그대로 상속시켜야 함 (이유 : tcode, weekcode 계산 방식 변경)
         tcode = __time__(now.hour, now.minute, now.second) # 시간 형식으로 변경
         weekcode = now.isoweekday() # 추후 dt 라이브러리를 구워삶아서 추가, 메세지를 월 6:30~금 18:00, 금 18:00~24:00, 토 00:00~24:00, 일 00:00~월 06:30으로 세분화하기
+        # weekcode는 월요일이 1, 화요일이 2 ... 일요일이 7인 int형 값
+        # tcode는 datetime.time형의 데이터
         if(tcode <= __time__(0,30) or tcode > time(23)):
             return('슬슬 잘 준비를 해야 할 시간이네요! 저는 오늘 야간 운행이라 못 자지만요. 하암...')
         elif(tcode > __time__(0,30) and tcode <= __time__(6,30)):
