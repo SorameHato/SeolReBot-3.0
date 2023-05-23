@@ -10,13 +10,12 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from main import guild_ids
+def __time__(self, hour, minute=0, second=0):
+    return time(hour=hour,minute=minute,second=second,tzinfo=tz(td(hours=9)))
 
 class _시간(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
-    
-    def __time__(self, hour, minute=0, second=0):
-        return time(hour=hour,minute=minute,second=second,tzinfo=tz(td(hours=9)))
     
     def 시간사담(self, now):
         # now 변수는 슬래시커맨드가 호출될 때 초기화되는 datetime 클래스를 그대로 상속시켜야 함 (이유 : tcode, weekcode 계산 방식 변경)
