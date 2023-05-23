@@ -279,4 +279,4 @@ class _설레(commands.Cog):
         await ctx.respond(embed=embed)
 
 def setup(bot):
-    bot.add_cog(_열번분석(bot))
+    bot.add_cog(_설레(bot))
