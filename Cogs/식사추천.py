@@ -22,19 +22,19 @@ class _식사추천(commands.Cog):
     
     @commands.slash_command(name='아침추천',guild_ids=guild_ids,description='설레봇이 아침 메뉴를 추천해드려요!')
     async def 아침메뉴추천(self, ctx):
-        await ctx.respond("유설레가 추천하는 오늘의 아침 메뉴는? "+self.식사추천()+"입니다!\n점심, 저녁식사 메뉴를 추천하는 함수를 돌려 쓰고 있어서 아침으로 먹기에는 부담스러운 음식이 나올지도 몰라요. 양해해주세요!")
+        await ctx.respond("유설레가 추천하는 오늘의 아침 메뉴는? "+self.식사추천()+"(이)에요!\n점심, 저녁식사 메뉴를 추천하는 함수를 돌려 쓰고 있어서 아침으로 먹기에는 부담스러운 음식이 나올지도 몰라요. 양해해주세요!")
 
     @commands.slash_command(name='점심추천',guild_ids=guild_ids,description='설레봇이 점심 메뉴를 추천해드려요!')
     async def 점심메뉴추천(self, ctx):
-        await ctx.respond("유설레가 추천하는 오늘의 점심 메뉴는? "+self.식사추천()+"입니다!\n저녁식사 메뉴를 추천하는 함수를 돌려 쓰고 있어서 점심으로 먹기에는 부담스러운 음식이 나올지도 몰라요. 양해해주세요!")
+        await ctx.respond("유설레가 추천하는 오늘의 점심 메뉴는? "+self.식사추천()+"(이)에요!\n저녁식사 메뉴를 추천하는 함수를 돌려 쓰고 있어서 점심으로 먹기에는 부담스러운 음식이 나올지도 몰라요. 양해해주세요!")
 
     @commands.slash_command(name='저녁추천',guild_ids=guild_ids,description='설레봇이 저녁 메뉴를 추천해드려요!')
     async def 저녁메뉴추천(self, ctx):
-        await ctx.respond("유설레가 추천하는 오늘의 저녁 메뉴는? "+self.식사추천()+"입니다!")
+        await ctx.respond("유설레가 추천하는 오늘의 저녁 메뉴는? "+self.식사추천()+"(이)에요!")
 
     @commands.slash_command(name='야식추천',guild_ids=guild_ids,description='설레봇이 야식 메뉴를 추천해드려요!')
     async def 야식메뉴추천(self, ctx):
-        await ctx.respond("유설레가 추천하는 오늘의 야식 메뉴는? "+self.야식추천()+"입니다!")
+        await ctx.respond("유설레가 추천하는 오늘의 야식 메뉴는? "+self.야식추천()+"(이)에요!")
 
 def setup(bot):
     bot.add_cog(_식사추천(bot))
