@@ -15,7 +15,7 @@ class _시간(commands.Cog):
     def __init__(self,bot):
         self.bot = bot
     
-    def __time__(self, hour, minute=0, second=0)
+    def __time__(self, hour, minute=0, second=0):
         return time(hour=hour,minute=minute,second=second,tzinfo=tz(td(hours=9)))
     
     def 시간사담(self, now):
@@ -24,6 +24,9 @@ class _시간(commands.Cog):
         weekcode = now.isoweekday() # 추후 dt 라이브러리를 구워삶아서 추가, 메세지를 월 6:30~금 18:00, 금 18:00~24:00, 토 00:00~24:00, 일 00:00~월 06:30으로 세분화하기
         # weekcode는 월요일이 1, 화요일이 2 ... 일요일이 7인 int형 값
         # tcode는 datetime.time형의 데이터
+        if weekcode == 1:
+            pass #추후 대사 작성
+        '''
         if(tcode <= __time__(0,30) or tcode > time(23)):
             return('슬슬 잘 준비를 해야 할 시간이네요! 저는 오늘 야간 운행이라 못 자지만요. 하암...')
         elif(tcode > __time__(0,30) and tcode <= __time__(6,30)):
@@ -44,6 +47,7 @@ class _시간(commands.Cog):
             return('이제 완전히 밤이네요. 이 시간에는 평소에 하지 못 했던 취미생활을 해 보는 게 어떨까요?')
         else:
             return('오류가 발생해 사담을 처리하지 못했어요. 명령어를 처리하는 도중에 각 시 n9분 59초가 지나면 드물게 발생할 수 있는 오류니까, 다시 한 번 시도해주세요!')
+        '''
     
     @commands.slash_command(name='시간',guild_ids=guild_ids,description='현재 시간을 간단한 사담을 덧붙여서 알려줘요!')
     async def 시간(self,ctx):
