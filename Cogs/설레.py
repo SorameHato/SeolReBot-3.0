@@ -39,7 +39,7 @@ class _설레(commands.Cog):
         즉 예전에 했던 걸 자동화(?)한거라고 보면 됨
         charLen 함수와 연동되어서 작동함'''
         resultText = str(leftText)
-        blanks = 50 - charLen(leftText) - charLen(rightText)
+        blanks = 50 - self.__charLen__(leftText) - self.__charLen__(rightText)
         resultText += ' '*blanks
         resultText += str(rightText)
         return resultText
@@ -54,7 +54,7 @@ class _설레(commands.Cog):
         fullWidth를 적용하긴 조금 그렇고 각 열의 데이터의 글자수가 일정한 열 3개 이상의 표를 만들 때 유용
         만약 text의 길이가 length보다 길면 그냥 그 text 자체를 추가 공백 없이 return 함'''
         # 먼저 text의 길이를 체크
-        txtLen = __charLen__(text)
+        txtLen = self.__charLen__(text)
         # 그 다음 text의 길이가 length보다 긴지 아닌지 체크
         if txtLen >= length:
             return text
@@ -247,28 +247,28 @@ class _설레(commands.Cog):
         embed.set_footer(text='설빈레피딕스 전산 약어 조회 결과')
         if(text=='도시철도'):
             dummyMetroList = [['일반','일반','ORdN'],['일반쾌속','일쾌','OdSW'],['선별쾌속','선쾌','PTSW'],['일반급행','일급','OdRP'],['통근급행','통급','CMRP'],['쾌속급행','쾌급','LMRP'],['특별급행','특급','XCRP'],['고속급행','고속','EXRP']]
-            dummyMetroResultText = __fixedWidth__('등급명',9,1)
-            dummyMetroResultText += __fixedWidth__('약어',5,0)
-            dummyMetroResultText += __fixedWidth__('전광판',6,2)
+            dummyMetroResultText = self.__fixedWidth__('등급명',9,1)
+            dummyMetroResultText += self.__fixedWidth__('약어',5,0)
+            dummyMetroResultText += self.__fixedWidth__('전광판',6,2)
             for metroArray in dummyMetroList:
                 dummyMetroResultText += '\n'
-                dummyMetroResultText += __fixedWidth__(metroArray[0],9,0)
-                dummyMetroResultText += __fixedWidth__(metroArray[1],5,0)
-                dummyMetroResultText += __fixedWidth__(metroArray[2],6,2)
+                dummyMetroResultText += self.__fixedWidth__(metroArray[0],9,0)
+                dummyMetroResultText += self.__fixedWidth__(metroArray[1],5,0)
+                dummyMetroResultText += self.__fixedWidth__(metroArray[2],6,2)
             embed.add_field(name'도시철도 약어 목록',value=dummyMetroResultText[1:],inline=False)
             # embed.add_field(name='등급명',value='일반\n일반쾌속\n선별쾌속\n일반급행\n통근급행\n쾌속급행\n특별급행\n고속급행',inline=True)
             # embed.add_field(name='약어',value='일반\n일쾌\n선쾌\n일급\n통급\n쾌급\n특급\n고속',inline=True)
             # embed.add_field(name='전광판',value='ORdN\nOdSW\nPTSW\nOdRP\nCMRP\nLMRP\nXCRP\nEXRP',inline=True)
         elif(text=='라이너'):
             dummyLinerList = [['Nocturn Express','녹턴','NCTN'],['CassioPeia Traveler','카페P','CsoP'],['CassioPeia Commuter','카페C','CsoC'],['Twilight Express NightLiner','트익','TWXP'],['아메','아메','AME '],['호시','호시','HOSH'],['시로','시로','SHIR'],['쿠로','쿠로','KURO'],['후유','후유','FUYU'],['S특급 닛소라 (구로테츠선)','닛소','NTSR']]
-            dummyLinerResultText = __fixedWidth__('라이너명',30,1)
-            dummyLinerResultText += __fixedWidth__('약어',6,0)
-            dummyLinerResultText += __fixedWidth__('전광판',6,2)
+            dummyLinerResultText = self.__fixedWidth__('라이너명',30,1)
+            dummyLinerResultText += self.__fixedWidth__('약어',6,0)
+            dummyLinerResultText += self.__fixedWidth__('전광판',6,2)
             for linerArray in dummyLinerList:
                 dummyLinerResultText += '\n'
-                dummyLinerResultText += __fixedWidth__(linerArray[0],30,0)
-                dummyLinerResultText += __fixedWidth__(linerArray[1],6,0)
-                dummyLinerResultText += __fixedWidth__(linerArray[2],6,2)
+                dummyLinerResultText += self.__fixedWidth__(linerArray[0],30,0)
+                dummyLinerResultText += self.__fixedWidth__(linerArray[1],6,0)
+                dummyLinerResultText += self.__fixedWidth__(linerArray[2],6,2)
             embed.add_field(name'라이너 열차 약어 목록',value=dummyLinerResultText[1:],inline=False)
             # embed.add_field(name='라이너명',value='Dawn Express\nGlowing Express\nSunset Liner\nSatellite Network\nRiverShore Express\nUrban Liner\n쿠로카제\n아오조라\n유키카제\n아메카제\n호시유메\nCassioPeia\nForest Liner\nStarlight Express\nTwilight Express NightLiner',inline=True)
             # embed.add_field(name='약어',value='다운\n글로\n선셋\n새틀\n리버\n어반\n쿠로\n아오\n유키\n아메\n호시\n카페\n포레\n스타\n트익',inline=True)
