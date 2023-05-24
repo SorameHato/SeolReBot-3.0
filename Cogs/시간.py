@@ -10,8 +10,32 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.abspath(os.path.dirname(__file__))))
 from main import guild_ids
-def __time__(self, hour, minute=0, second=0):
+def __time__(hour, minute=0, second=0):
     return time(hour=hour,minute=minute,second=second,tzinfo=tz(td(hours=9)))
+
+def __checkBetween__(tcode, beginHour, beginMinute, endHour, endMinute):
+    return (tcode >= __time__(beginHour, beginMinute) and tcode < __time__(endHour, endMinute))
+
+__대사__ = [ #월요일
+    ['주말이 끝났어요... 조금 힘드시겠지만 그래도 조금만 힘을 내 주세요! 저도 힘 내서 열심히 여러분을 가시는 목적지까지 모셔다 드릴 테니까요! 화이팅이에요!', #일 2300 ~ 월 0030
+     '좋은 아침이에요! 월요일이라 힘들긴 하지만 그래도 상쾌한 아침이라 기분이 좋은 것 같아요. 오늘 하루도 설빈레피딕스 열차를 타고 기분 좋게, 상쾌하게 시작해요!', #월 0630 ~ 월 0800
+     '하늘이 참 맑죠? 하늘민국은 강수량이 적고 그마저도 겨울에 폭설로 내리는 게 대부분이라 이렇게 맨날 하늘이 파랗고 맑아요. 월요일이라 힘드시겠지만, 이 푸른 하늘을 보면서 힘내서 열심히 일해요! 눈 깜짝할 사이에 점심시간이 올 테니까요!' #월 0900 ~ 월 1100
+     '슬슬 점심시간이네요... 오늘의 구내식당 점심은 뭐일려나요? 설빈레피딕스에서 직영하는 빛리역 구내식당은 엄청 맛있는데, 외부 업체에서 하는 서지은역 구내식당은 별로인 것 같아요.\n근데 전 이상하게 빛리승무본부보단 서지은승무본부에 배치되는 경우가 많더라고요... 공식 캐릭터 보정은 못 받는 걸까요?', #월 1100~1300
+     '다행히 오늘은 빛리승무본부 배속이라 맛있는 점심을 먹었어요! 배가 불러서 졸리겠지만, 힘 내서 퇴근할 때 까지 열심히 일해봐요!', #월 1300 ~ 월 1630
+     '월요일이라 월요병 때문에 힘드셨을 것 같은데, 그래도 열심히 일하시느라 수고하셨어요! 빠른 설빈레피딕스 열차를 타고 빛의 속도로 퇴근해요!', #월 1800 ~ 월 1930
+     '슬슬 해가 지는 것 같네요. 가벼운 산책은 어떠신가요? 전 해가 지고 난 직후의 풍경을 좋아해서, 비번인 날에는 항상 저녁을 먹고 나와서 북해 해안가 산책로를 산책하고 있어요.', #월 1930 ~ 월 2100
+     '이제 완전히 밤이네요. 평소에 못 했던 취미 생활에 도전해보시는 건 어떤가요? 전 요새 그림에 도전하고 있어요! 언젠가 금손 작가님 유설레가 되는 날까지, 열심히 노력하려고요!', #월 2100 ~ 월 2300
+    ]
+]
+
+__공통대사__ = [#평일
+    ['엣, 이렇게 늦었는데 아직까지도 안 주무시는 건가요? 얼른 주무세요!', #월 0030 ~ 월 0200 / 평일 공통대사
+     '저기... 밤이 늦었거든요..? 밤을 새실 건가요? 내일 엄청 피곤해하실 거에요. 지금 바로 폰이나 컴퓨터를 끄고 침대나 이부자리로 가서 누우세요!', #월 0200 ~ 월 0630 / 평일 공통대사
+     '출근 전쟁 중이신가요? 조금만 더 버티면 분명 금방 회사나 학교에 도착할 테니까, 조금만 더 힘 내 주세요!', #월 0800 ~ 월 0900, 평일 공통대사
+     '조금만 더 일하면 퇴근이에요! 마지막까지 힘내주세요!', #월 1630 ~ 월 1800, 평일 공통대사
+    ]
+]
+    
 
 class _시간(commands.Cog):
     def __init__(self,bot):
@@ -24,7 +48,33 @@ class _시간(commands.Cog):
         # weekcode는 월요일이 1, 화요일이 2 ... 일요일이 7인 int형 값
         # tcode는 datetime.time형의 데이터
         if weekcode == 1:
-            pass #추후 대사 작성
+            if __checkBetween__(tcode, 0, 0, 0, 30):
+                return(__대사__[0][0])
+            elif __checkBetween__(tcode, 0, 30, 2, 0):
+                return(__공통대사__[0][0])
+            elif __checkBetween__(tcode, 2, 0, 6, 30):
+                return(__공통대사__[0][1])
+            elif __checkBetween__(tcode, 6, 30, 8, 0):
+                return(__대사__[0][1])
+            elif __checkBetween__(tcode, 8, 0, 9, 0):
+                return(__공통대사__[0][2])
+            elif __checkBetween__(tcode, 9, 0, 11, 0):
+                return(__대사__[0][2])
+            elif __checkBetween__(tcode, 11, 0, 13, 0):
+                return(__대사__[0][3])
+            elif __checkBetween__(tcode, 13, 0, 16, 30):
+                return(__대사__[0][4])
+            elif __checkBetween__(tcode, 16, 30, 18, 0):
+                return(__공통대사__[0][3])
+            elif __checkBetween__(tcode, 18, 0, 19, 30):
+                return(__대사__[0][5])
+            elif __checkBetween__(tcode, 19, 30, 21, 0):
+                return(__대사__[0][6])
+            elif __checkBetween__(tcode, 21, 0, 23, 0):
+                return(__대사__[0][7])
+            elif __checkBetween__(tcode, 23, 0, 23, 59):
+                return(__대사__[1][0])
+            
         '''
         if(tcode <= __time__(0,30) or tcode > time(23)):
             return('슬슬 잘 준비를 해야 할 시간이네요! 저는 오늘 야간 운행이라 못 자지만요. 하암...')
