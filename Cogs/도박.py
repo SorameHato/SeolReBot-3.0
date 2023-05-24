@@ -345,7 +345,7 @@ class c도박(commands.Cog):
                     exist = True
                     return line[amount]
         if exist == False:
-            return -1
+             return f'({svid} 서버의 데이터가 없음)'
     
     도박g = SlashCommandGroup(name="도박",description="도박과 관련된 명령어에요!",guild_ids=guild_ids)
     
