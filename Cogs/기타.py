@@ -34,7 +34,7 @@ class _기타(commands.Cog):
     async def 정보(self, ctx):
         embed = discord.Embed(title='설레봇의 정보입니다!',color=0x04ccff)
         embed.add_field(name='버전',value=self.bot.srver,inline = False)
-        embed.add_field(name='기반이 된 버전',value='코드 : 2.5_2021021703 rev 6.3 build 14 (2021년 2월 18일 1시 0분 45초)\nDB1 : PJU:K:C:B:2021103105 (2021년 10월 31일 4시 3분 51초)\nDB2 : b102dff1ef5ddf5e3e9d7a4028656a90aa921252 (2022년 9월 21일 2시 47분)\n코드2 : 3.0_2022120500 rev 30.3 build 58 (2022년 12월 8일 23시 53분)',inline = False)
+        embed.add_field(name='기반이 된 버전',value='코드 : 2.5_2021021703 rev 6.3 build 14 (2021년 2월 18일 1시 0분 45초)\nDB1 : PJU:K:C:B:2021103105 (2021년 10월 31일 4시 3분 51초)\nDB2 : b102dff1ef5ddf5e3e9d7a4028656a90aa921252 (2022년 9월 21일 2시 47분)\n코드2 : 3.0_2022120500 rev 30.3 build 58 (2022년 12월 8일 23시 53분)\n코드3 : 3.1_2022123101 rev 2.31 build 195 (2022년 12월 31일 23시 58분)',inline = False)
         embed.add_field(name='개발자',value='하늘토끼(ghwls030306@s-r.ze.am)',inline = False)
         embed.add_field(name='깃허브 링크',value='https://github.com/SorameHato/SeolReBot-3.0',inline = False)
         embed.add_field(name='설레봇이 시작된 시간',value=self.bot.LoadedTime,inline = False)
