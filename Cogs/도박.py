@@ -345,7 +345,7 @@ class c도박(commands.Cog):
                     exist = True
                     return line[amount]
         if exist == False:
-            return -1
+            return f'({svid} 서버의 데이터가 없음)'
     
     도박g = SlashCommandGroup(name="도박",description="도박과 관련된 명령어에요!",guild_ids=guild_ids)
     
@@ -397,17 +397,17 @@ class c도박(commands.Cog):
         화폐단위 = self.서버설정체크(ctx.guild.id,1)
         h결과 = self.회생일체크(ctx.author.id)
         if int(h결과) >= time.time()-604800:
-            await ctx.respond('회생은 일주일에 한 번만 할 수 있어요!\n한국도박문제예방치유원에서 운영하는 도박문제 전화상담 헬프라인은 국번 없이 1336번이에요. 한 번 전화해서 도움을 받아보시는 게 어떤가요?')
+            await ctx.respond('선생님, 회생은 일주일에 한 번만 할 수 있어요!\n한국도박문제예방치유원에서 운영하는 도박문제 전화상담 헬프라인은 국번 없이 1336번이에요. 유우카 씨에게 걸리기 전에 도움을 받아보시는 게 어떤가요?')
         else:
             if text=='신청':
                 s결과 = self.설정(ctx.author.id,int(self.서버설정체크(ctx.guild.id,2)),True)
-                embed = discord.Embed(title='회생 절차가 완료되었어요!', color=0xccffff)
+                embed = discord.Embed(title='청계천의 용하모토=상의 은총을 받아 회생 절차가 완료되었어요! 유우카 씨에게 걸리면 화 낼 게 뻔하니까 도박은 적당히 돌려주세요!', color=0xccffff)
                 embed.add_field(name='닉네임',value=ctx.author,inline=True)
                 embed.add_field(name='소지금',value=f'{s결과}{화폐단위}',inline=True)
                 embed.set_footer(text='설레봇 룰렛')
                 await ctx.respond(embed=embed)
             else:
-                await ctx.respond(f'정말로 회생 신청을 하실건가요? 소지금액이 {self.서버설정체크(ctx.guild.id,2)}{화폐단위}로 초기화돼요.\n정말로 회생 신청을 하고 싶으시면, /도박 회생 신청 을 입력해주세요.')
+                await ctx.respond(f'선생님... 유우카 씨가 화 낼 것 같아요... 회생 신청을 하시면 소지금액이 {self.서버설정체크(ctx.guild.id,2)}{화폐단위}로 초기화돼요.\n정말로 회생 신청을 하고 싶으시면, /도박 회생 신청 을 입력해주세요!')
     
     @도박g.command(name='임베드',description='6배율 이상인 경우 표시되는 임베드를 미리 볼 수 있는 명령어에요. 옛날에 하토가 디버그 용으로 썼었어요.',guild_ids=guild_ids)
     async def embed(self,ctx,amount:discord.Option(int,'임베드 번호를 입력해주세요.',min_value=0,max_value=52)):
