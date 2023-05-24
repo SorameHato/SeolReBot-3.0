@@ -16,6 +16,9 @@ def __time__(hour, minute=0, second=0):
 def __checkBetween__(tcode, beginHour, beginMinute, endHour, endMinute):
     return (tcode >= __time__(beginHour, beginMinute) and tcode < __time__(endHour, endMinute))
 
+def __checkLess__(tcode, endHour, endMinute):
+    return (tcode < __time__(endHour, endMinute))
+
 __대사__ = [ #월요일
     ['주말이 끝났어요... 조금 힘드시겠지만 그래도 조금만 힘을 내 주세요! 저도 힘 내서 열심히 여러분을 가시는 목적지까지 모셔다 드릴 테니까요! 화이팅이에요!', #일 2300 ~ 월 0030
      '좋은 아침이에요! 월요일이라 힘들긴 하지만 그래도 상쾌한 아침이라 기분이 좋은 것 같아요. 오늘 하루도 설빈레피딕스 열차를 타고 기분 좋게, 상쾌하게 시작해요!', #월 0630 ~ 월 0800
@@ -44,36 +47,36 @@ class _시간(commands.Cog):
     def 시간사담(self, now):
         # now 변수는 슬래시커맨드가 호출될 때 초기화되는 datetime 클래스를 그대로 상속시켜야 함 (이유 : tcode, weekcode 계산 방식 변경)
         tcode = __time__(now.hour, now.minute, now.second) # 시간 형식으로 변경
-        weekcode = now.isoweekday() # 추후 dt 라이브러리를 구워삶아서 추가, 메세지를 월 6:30~금 18:00, 금 18:00~24:00, 토 00:00~24:00, 일 00:00~월 06:30으로 세분화하기
-        # weekcode는 월요일이 1, 화요일이 2 ... 일요일이 7인 int형 값
+        weekcode = now.weekday() # 추후 dt 라이브러리를 구워삶아서 추가, 메세지를 월 6:30~금 18:00, 금 18:00~24:00, 토 00:00~24:00, 일 00:00~월 06:30으로 세분화하기
+        # weekcode는 월요일이 0, 화요일이 1 ... 일요일이 6인 int형 값
         # tcode는 datetime.time형의 데이터
-        if weekcode == 1:
-            if __checkBetween__(tcode, 0, 0, 0, 30):
-                return(__대사__[0][0])
-            elif __checkBetween__(tcode, 0, 30, 2, 0):
+        if weekcode <= 4 : #평일
+            if __checkBetween__(tcode, 0, 0, 0, 30): # 평일 0000~0030 요일변 대사
+                return(__대사__[weekcode][0])
+            elif __checkBetween__(tcode, 0, 30, 2, 0): # 평일 0030~0200 공통 대사 : 엣, 이렇게 늦었는데 ~
                 return(__공통대사__[0][0])
-            elif __checkBetween__(tcode, 2, 0, 6, 30):
+            elif __checkBetween__(tcode, 2, 0, 6, 30): # 평일 0200~0630 공통 대사 : 저기... 밤이 늦었거든요..? ~
                 return(__공통대사__[0][1])
-            elif __checkBetween__(tcode, 6, 30, 8, 0):
-                return(__대사__[0][1])
-            elif __checkBetween__(tcode, 8, 0, 9, 0):
+            elif __checkBetween__(tcode, 6, 30, 8, 0): # 평일 0630~0800 요일별 대사
+                return(__대사__[weekcode][1])
+            elif __checkBetween__(tcode, 8, 0, 9, 0): # 평일 0800~0900 공통 대사 : 출근 전쟁 중이신가요? ~
                 return(__공통대사__[0][2])
-            elif __checkBetween__(tcode, 9, 0, 11, 0):
-                return(__대사__[0][2])
-            elif __checkBetween__(tcode, 11, 0, 13, 0):
-                return(__대사__[0][3])
-            elif __checkBetween__(tcode, 13, 0, 16, 30):
-                return(__대사__[0][4])
-            elif __checkBetween__(tcode, 16, 30, 18, 0):
+            elif __checkBetween__(tcode, 9, 0, 11, 0): # 평일 0900~1100 요일별 대사
+                return(__대사__[weekcode][2])
+            elif __checkBetween__(tcode, 11, 0, 13, 0): # 평일 1100~1300 요일별 대사
+                return(__대사__[weekcode][3])
+            elif __checkBetween__(tcode, 13, 0, 16, 30): # 평일 1300~1630 요일별 대사
+                return(__대사__[weekcode][4])
+            elif __checkBetween__(tcode, 16, 30, 18, 0): # 평일 1630~1800 공통 대사 : 조금만 더 일하면 퇴근이에요! ~
                 return(__공통대사__[0][3])
-            elif __checkBetween__(tcode, 18, 0, 19, 30):
-                return(__대사__[0][5])
-            elif __checkBetween__(tcode, 19, 30, 21, 0):
-                return(__대사__[0][6])
-            elif __checkBetween__(tcode, 21, 0, 23, 0):
-                return(__대사__[0][7])
-            elif __checkBetween__(tcode, 23, 0, 23, 59):
-                return(__대사__[1][0])
+            elif __checkBetween__(tcode, 18, 0, 19, 30): # 평일 1800~1930 요일별 대사
+                return(__대사__[weekcode][5])
+            elif __checkBetween__(tcode, 19, 30, 21, 0): #평일 1930~2100 요일별 대사
+                return(__대사__[weekcode][6])
+            elif __checkBetween__(tcode, 21, 0, 23, 0): #평일 2100~2300 요일별 대사
+                return(__대사__[weekcode][7])
+            else
+                return(__대사__[weekcode+1 if weekcode<4 else 0][0])
             
         '''
         if(tcode <= __time__(0,30) or tcode > time(23)):
