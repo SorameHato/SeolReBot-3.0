@@ -118,7 +118,7 @@ class _시간(commands.Cog):
             elif __checkLess__(tcode, 23, 0): #평일 2100~2300 요일별 대사
                 return(__대사__[weekcode][8])
             else
-                return(__대사__[weekcode+1 if weekcode<4 else 0][0])
+                return(__대사__[weekcode+1][0])
             
         '''
         if(tcode <= __time__(0,30) or tcode > time(23)):
