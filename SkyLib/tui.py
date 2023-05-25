@@ -1,3 +1,5 @@
+import unicodedata
+
 def __charLen__(text:str):
     '''입력받은 텍스트의 너비를 구하는 함수
     \u001b는 무시하도록 짜여져 있긴 하지만 \n, \t 같은 건 1로 치니까 주의할 것
