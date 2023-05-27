@@ -75,8 +75,8 @@ __대사__ = [ #월요일
     ]
 ]
 
-__공통대사__ = #평일
-['엣, 이렇게 늦었는데 아직까지도 안 주무시는 건가요? 얼른 주무세요!', #월 0030 ~ 월 0200 / 평일 공통대사
+__공통대사__ = [ #평일
+ '엣, 이렇게 늦었는데 아직까지도 안 주무시는 건가요? 얼른 주무세요!', #월 0030 ~ 월 0200 / 평일 공통대사
  '저기... 밤이 늦었거든요..? 밤을 새실 건가요? 내일 엄청 피곤해하실 거에요. 지금 바로 폰이나 컴퓨터를 끄고 침대나 이부자리로 가서 누우세요!', #월 0200 ~ 월 0630 / 평일, 주말 공통대사
  '출근 전쟁 중이신가요? 조금만 더 버티면 분명 금방 회사나 학교에 도착할 테니까, 조금만 더 힘 내 주세요!', #월 0800 ~ 월 0900, 평일 공통대사
  '조금만 더 일하면 퇴근이에요! 마지막까지 힘내주세요!' #월 1630 ~ 월 1800, 평일 공통대사
@@ -151,8 +151,8 @@ class _시간(commands.Cog):
     @commands.slash_command(name='시간',guild_ids=guild_ids,description='현재 시간을 간단한 사담을 덧붙여서 알려줘요!')
     async def 시간(self,ctx):
         now = dt.now(tz(td(hours=9)))
-        embed = discord.Embed(title=f'당신의 설레임과 함께, 설빈레피딕스에서 {str(now.strftime("%Y년 %m월 %d일 %H시 %M분 %S.%f"))[:-3]}초를 알려드립니다!',description=self.시간사담(now),color=0xccffff)
-        
+        embed = discord.Embed(title=f'삐, 삐, 삐! 당신의 설레임과 함께, 설빈레피딕스에서\n{str(now.strftime("%Y년 %m월 %d일 %H시 %M분 %S.%f"))[:-3]}초를 알려드립니다!',description=self.시간사담(now),color=0xccffff)
+        await ctx.respond(embed=embed)
         # await ctx.respond('삐, 삐, 삐! 당신의 설레임과 함께, 설빈레피딕스에서 {0:04d}년 {1:02d}월 {2:02d}일 {3:02d}시 {4:02d}분 {5:02d}.{6:03d}초를 알려드립니다.\n{7}\n이 사담은 2020년 9월 경 설레봇을 \'신 교통동호인 채팅방\'에서 돌릴 때 작성되었어요. 하늘토끼의 가상국가/가상철도 세계관과 관련되어 있거나 지금과는 맞지 않는 내용이 있을 수 있으니 양해 부탁드려요!'.format(now.year, now.month, now.day, now.hour, now.minute, now.second, int(now.microsecond/1000),self.시간사담(now)))
 
 def setup(bot):
