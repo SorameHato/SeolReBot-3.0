@@ -71,6 +71,7 @@ __대사__ = [ #월요일
     ], #토요일
     ['드디어 주말이에요! 주말동안 불타기 위해서라도 오늘은 일찍 자야겠어요! 안녕히 주무세요!', # 금 2300 ~ 토 0030
      '아직도 안 주무시는 건가요? 제대로 놀기 위해선 제대로 주무셔야 해요! 얼른 주무세요!', # 토 0030 ~ 토 0200, 0200 ~ 0630은 평일 공통 대사 사용
+     '토요일의 아침 공기는 토요일이라서 더 선선하고 특별한 것 같아요! 안녕히 주무셨나요? 드디어 주말이 시작되었어요!' # 토 0630 ~ 토 0800
     ]
 ]
 
@@ -121,6 +122,8 @@ class _시간(commands.Cog):
                 return(__대사__[weekcode][8])
             else:
                 return(__대사__[weekcode+1][0])
+        else:
+            return('아직 토요일, 일요일의 사담은 준비중이에요! 조금만 기다려주세요!')
             
         '''
         if(tcode <= __time__(0,30) or tcode > time(23)):
@@ -148,7 +151,9 @@ class _시간(commands.Cog):
     @commands.slash_command(name='시간',guild_ids=guild_ids,description='현재 시간을 간단한 사담을 덧붙여서 알려줘요!')
     async def 시간(self,ctx):
         now = dt.now(tz(td(hours=9)))
-        await ctx.respond('삐, 삐, 삐! 당신의 설레임과 함께, 설빈레피딕스에서 {0:04d}년 {1:02d}월 {2:02d}일 {3:02d}시 {4:02d}분 {5:02d}.{6:03d}초를 알려드립니다.\n{7}\n이 사담은 2020년 9월 경 설레봇을 \'신 교통동호인 채팅방\'에서 돌릴 때 작성되었어요. 하늘토끼의 가상국가/가상철도 세계관과 관련되어 있거나 지금과는 맞지 않는 내용이 있을 수 있으니 양해 부탁드려요!'.format(now.year, now.month, now.day, now.hour, now.minute, now.second, int(now.microsecond/1000),self.시간사담(now)))
+        embed = discord.Embed(title=f'당신의 설레임과 함께, 설빈레피딕스에서 {str(now.strftime("%Y년 %m월 %d일 %H시 %M분 %S.%f"))[:-3]}초를 알려드립니다!',description=self.시간사담(now),color=0xccffff)
+        
+        # await ctx.respond('삐, 삐, 삐! 당신의 설레임과 함께, 설빈레피딕스에서 {0:04d}년 {1:02d}월 {2:02d}일 {3:02d}시 {4:02d}분 {5:02d}.{6:03d}초를 알려드립니다.\n{7}\n이 사담은 2020년 9월 경 설레봇을 \'신 교통동호인 채팅방\'에서 돌릴 때 작성되었어요. 하늘토끼의 가상국가/가상철도 세계관과 관련되어 있거나 지금과는 맞지 않는 내용이 있을 수 있으니 양해 부탁드려요!'.format(now.year, now.month, now.day, now.hour, now.minute, now.second, int(now.microsecond/1000),self.시간사담(now)))
 
 def setup(bot):
     bot.add_cog(_시간(bot))
