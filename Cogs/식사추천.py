@@ -18,9 +18,9 @@ class _식사추천(commands.Cog):
         nameEnd = name[-1]
         if "가" <= nameEnd <= "힣":
             if (ord(nameEnd)-ord("가")) % 28 > 0:
-                return name + '에요!'
-            else:
                 return name + '이에요!'
+            else:
+                return name + '에요!'
         else:
             return name + '(이)에요!'
     
