@@ -429,7 +429,7 @@ class c도박(commands.Cog):
             await ctx.respond('이 메뉴는 하늘토끼만 사용할 수 있어요.')
     
     @도박g.command(name='변경',description='하늘토끼의 디버그용 명령어로, 소지금을 변경할 수 있는 명령어에요.',guild_ids=guild_ids)
-    async def setting(self,ctx,user:discord.Option(discord.SlashCommandOptionType.user,'소지금을 변경할 사용자를 입력해주세요.',name='사용자'),amount:discord.Option(int,'변경할 금액을 입력해주세요. 소지금을 더하려면 양수로, 소지금을 빼려면 음수로 입력해주세요.',name='값')):
+    async def changing(self,ctx,user:discord.Option(discord.SlashCommandOptionType.user,'소지금을 변경할 사용자를 입력해주세요.',name='사용자'),amount:discord.Option(int,'변경할 금액을 입력해주세요. 소지금을 더하려면 양수로, 소지금을 빼려면 음수로 입력해주세요.',name='값')):
         화폐단위 = self.서버설정체크(ctx.guild.id,1)
         if ctx.author.id == 971036318035501066:
             s결과 = self.변경(user.id,amount,True)
