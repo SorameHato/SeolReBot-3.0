@@ -308,7 +308,7 @@ class c도박(commands.Cog):
             embed.set_image(url='https://pbs.twimg.com/media/Ff2uBqVVEAADdOr?format=jpg&name=large')
         else:
             배율 = 1
-            embed = discord.Embed(title='처리 중 오류가 발생했어요!',description='배율이 6배율 이하지만, 고배율 처리 함수가 호출되었어요. 이게 다 제가 귀찮아서 막 복붙해버린 탓이에요. 죄송합니다... 근데 너무 기력이 없어요. 일단은 하늘토끼를 불러주세요. 수동으로 처리해 드릴게요.',color=0xfae5fa)
+            embed = discord.Embed(title='처리 중 오류가 발생했어요!',description='배율이 6배율 이하지만, 고배율 처리 함수가 호출되었어요. 이게 다 제가 귀찮아서 막 복붙해버린 탓이에요. 죄송합니다... 근데 너무 기력이 없어요. 일단은 하토를 불러주세요. 수동으로 처리해 드릴게요.',color=0xfae5fa)
             print('{} 현재 룰렛에서 올바르지 않은 결과 발생!'.format(dt.now()))
         return embed,배율
      
@@ -365,7 +365,7 @@ class c도박(commands.Cog):
                 embed2.set_footer(text='설레봇 룰렛 | code = {}'.format(embed1))
                 await ctx.respond('돈이 부족해요!',embed=embed2)
             else:
-                await ctx.respond('룰렛의 결과에요!\n> 소지금이 음수로 표시되는 경우 진짜로 잔액이 마이너스가 된 게 아니라 오류로 룰렛의 결과가 반영이 되지 않은 경우에요. 이 경우, 하늘토끼를 호출해주시면 반영해드릴게요.',embed=embed1)
+                await ctx.respond('룰렛의 결과에요!\n> 소지금이 음수로 표시되는 경우 진짜로 잔액이 마이너스가 된 게 아니라 오류로 룰렛의 결과가 반영이 되지 않은 경우에요. 이 경우, 하토를 호출해주시면 반영해드릴게요.',embed=embed1)
         else:
             await ctx.respond('float형의 데이터가 불안정한 문제가 있어 모든 데이터를 int형으로 처리하기 위해 도박 기능을 100원 단위로만 쓸 수 있게 제한중이에요. 금액을 100원 단위로 입력해주세요!')
     
@@ -387,7 +387,7 @@ class c도박(commands.Cog):
             embed.set_footer(text='설레봇 룰렛')
             await ctx.respond('{}님의 데이터가 없어서 새로 등록했어요!\n현재 도박 기능은 매우 불안정한 상황이에요. 2023년 01월 07일 기준 959065568135241728(아메의 오\ufffd…), 971037283513946113(Knob Figh…) 서버에 계셨던 분들은 잔액이나 화폐단위가 올바르게 표시되지 않을 가능성이 있어요. 2023년 6월 이내로 변경을 마칠 예정이니, 양해 부탁드릴게요!'.format(ctx.author),embed=embed)
         else:
-            embed = discord.Embed(title='처리 중 오류가 발생했어요!',description='데이터가 올바르게 읽히지 않았어요. csv 파일을 직접 수정해야 해요. 하늘토끼를 불러주세요.',color=0xfae5fa)
+            embed = discord.Embed(title='처리 중 오류가 발생했어요!',description='데이터가 올바르게 읽히지 않았어요. csv 파일을 직접 수정해야 해요. 하토를 불러주세요.',color=0xfae5fa)
             embed.add_field(name='소지금',value=f'{잔액}{화폐단위}',inline=False)
             embed.set_footer(text='설레봇 룰렛 | code = {}'.format(잔액))
             await ctx.respond(embed=embed)
@@ -412,11 +412,11 @@ class c도박(commands.Cog):
     @도박g.command(name='임베드',description='6배율 이상인 경우 표시되는 임베드를 미리 볼 수 있는 명령어에요. 옛날에 하토가 디버그 용으로 썼었어요.',guild_ids=guild_ids)
     async def embed(self,ctx,amount:discord.Option(int,'임베드 번호를 입력해주세요.',min_value=0,max_value=52)):
         embed, 배율 = self.고배율임베드(amount)
-        embed.add_field(name='소지금',value='하늘토끼가 수동으로 계산할 예정입니다.',inline=False)
+        embed.add_field(name='소지금',value='하토가 수동으로 계산할 예정입니다.',inline=False)
         embed.set_footer(text='설레봇 룰렛 | code = {}'.format(amount))
         await ctx.respond('하토님, 소지금 수동으로 처리하는 거 잊지 마세요! 룰렛 돌린 금액 × (배율-1) 만큼 더하셔야 돼요.',embed=embed)
     
-    @도박g.command(name='설정',description='하늘토끼의 디버그용 명령어로, 소지금을 설정할 수 있는 명령어에요.',guild_ids=guild_ids)
+    @도박g.command(name='설정',description='하토의 디버그용 명령어로, 소지금을 설정할 수 있는 명령어에요.',guild_ids=guild_ids)
     async def setting(self,ctx,user:discord.Option(discord.SlashCommandOptionType.user,'소지금을 설정할 사용자를 입력해주세요.',name='사용자'),amount:discord.Option(int,'설정할 금액을 입력해주세요.',min_value=0,name='값')):
         화폐단위 = self.서버설정체크(ctx.guild.id,1)
         if ctx.author.id == 971036318035501066:
@@ -426,9 +426,9 @@ class c도박(commands.Cog):
             else:
                 await ctx.respond(f'{user}님의 소지금을 {s결과}{화폐단위}(으)로 설정했어요!')
         else:
-            await ctx.respond('이 메뉴는 하늘토끼만 사용할 수 있어요.')
+            await ctx.respond('이 메뉴는 하토만 사용할 수 있어요.')
     
-    @도박g.command(name='변경',description='하늘토끼의 디버그용 명령어로, 소지금을 변경할 수 있는 명령어에요.',guild_ids=guild_ids)
+    @도박g.command(name='변경',description='하토의 디버그용 명령어로, 소지금을 변경할 수 있는 명령어에요.',guild_ids=guild_ids)
     async def changing(self,ctx,user:discord.Option(discord.SlashCommandOptionType.user,'소지금을 변경할 사용자를 입력해주세요.',name='사용자'),amount:discord.Option(int,'변경할 금액을 입력해주세요. 소지금을 더하려면 양수로, 소지금을 빼려면 음수로 입력해주세요.',name='값')):
         화폐단위 = self.서버설정체크(ctx.guild.id,1)
         if ctx.author.id == 971036318035501066:
@@ -440,12 +440,12 @@ class c도박(commands.Cog):
             elif s결과 == -2:
                 await ctx.respond(f'{user}님의 잔고가 부족해 소지금을 변경할 수 없었어요.')
             else:
-                embed = discord.Embed(title='처리 중 오류가 발생했어요!',description='데이터가 올바르게 읽히지 않았어요. csv 파일을 직접 수정해야 해요. 하늘토끼를 불러주세요.',color=0xfae5fa)
+                embed = discord.Embed(title='처리 중 오류가 발생했어요!',description='데이터가 올바르게 읽히지 않았어요. csv 파일을 직접 수정해야 해요. 하토를 불러주세요.',color=0xfae5fa)
                 embed.add_field(name='소지금',value=f'{잔액}{화폐단위}',inline=False)
                 embed.set_footer(text='설레봇 룰렛 | code = {}'.format(s결과))
                 await ctx.respond(embed=embed)
         else:
-            await ctx.respond('이 메뉴는 하늘토끼만 사용할 수 있어요.')
+            await ctx.respond('이 메뉴는 하토만 사용할 수 있어요.')
     
     @도박g.command(name='이체',description='소지금을 다른 분께 이체할 수 있어요!',guild_ids=guild_ids)
     async def transfer(self,ctx,user:discord.Option(discord.SlashCommandOptionType.user,'소지금을 누구에게 이체할 지 입력해주세요.',name='사용자'),amount:discord.Option(int,'이체할 금액을 양수로 입력해주세요.',min_value=0,name='금액')):
@@ -456,7 +456,7 @@ class c도박(commands.Cog):
             if 상대소지금 == -1:
                 await ctx.respond(f'{user}님의 데이터가 없어서 이체에 실패했어요. 확인 후 다시 입력해주세요.')
             elif 상대소지금 < 0:
-                await ctx.respond(f'{user}님의 데이터가 손상되어서 이체에 실패했어요. 하늘토끼를 불러주세요.')
+                await ctx.respond(f'{user}님의 데이터가 손상되어서 이체에 실패했어요. 하토를 불러주세요.')
             else:
                 결과1 = self.변경(ctx.author.id,amount * -1)
                 결과2 = self.변경(user.id,amount)
@@ -464,7 +464,7 @@ class c도박(commands.Cog):
                 embed.add_field(name='닉네임',value=f'보내는 분 : {ctx.author}\n　받는 분 : {user}',inline=True)
                 embed.add_field(name='소지금',value=f'{결과1}{화폐단위}\n{결과2}{화폐단위}',inline=True)
                 embed.set_footer(text='설레봇 룰렛')
-                await ctx.respond('혹시 소지금이 음수로 나오면 하늘토끼를 불러주세요! 오류가 발생한 거에요.',embed=embed)
+                await ctx.respond('혹시 소지금이 음수로 나오면 하토를 불러주세요! 오류가 발생한 거에요.',embed=embed)
                 with open('log.txt','a',encoding='utf-8') as b:
                     b.write(f'{dt.now()}\t{ctx.author.id}\t이체\t받는 분 : {user.id}, amount : {amount}, 결과1 : {결과1}, 결과2 : {결과2}\n')
         else:
