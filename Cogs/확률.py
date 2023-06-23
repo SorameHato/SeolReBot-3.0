@@ -12,6 +12,10 @@ class _prob(commands.Cog): #prob은 probability의 약자
     
     def probCalc(self,arg):
         #arg문 정제(?)
+        if(arg[-2:] == '은?'):
+            arg = arg[:-2]
+        if(arg[-1:] == '?'):
+            arg = arg[:-1]
         if(arg[-2:] == '확률'):
             arg = arg[:-2]
         if(arg[-3:] == '가능성'):
