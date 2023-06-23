@@ -1,0 +1,10 @@
+# coding: utf-8
+import discord
+from discord.ext import commands
+
+class 클래스명(commands.Cog):
+    def __init__(self,bot):
+        self.bot = bot
+
+async def setup(bot):
+    await commands.add_cog(Ping(bot))
